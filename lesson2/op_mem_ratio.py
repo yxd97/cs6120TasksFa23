@@ -18,9 +18,9 @@ def name_basic_blk(basic_blk, func_name, bblk_count):
         0, 1, 2... -th basic block of this function.
     '''
     if isinstance(basic_blk.instrs[0], bu.Label):
-        bblk_name = f'{func_name}.bb.{basic_blk.instrs[0].label}'
+        bblk_name = f'{func_name}.{basic_blk.instrs[0].label}'
     else:
-        bblk_name = f'{func_name}.bb.{bblk_count}'
+        bblk_name = f'{func_name}.bb_{bblk_count}'
     basic_blk.name = bblk_name
 
 def get_baisc_blks(func:bu.Function) -> List[BasicBlk]:

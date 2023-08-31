@@ -1,0 +1,25 @@
+rand.bb_0: 8/2 = 4.0
+randarray.bb_0: no operation
+randarray.loop: no memory access
+randarray.body: no operation
+randarray.loop_end: no memory access
+randarray.done: no operation
+printarray.bb_0: no operation
+printarray.loop: no memory access
+printarray.body: no operation
+printarray.loop_end: no memory access
+printarray.done: no operation
+matmul.bb_0: no operation
+matmul.row.loop: no memory access
+matmul.row.body: no operation
+matmul.col.loop: no memory access
+matmul.col.body: no operation
+matmul.sum.loop: no memory access
+matmul.sum.body: 6/2 = 3.0
+matmul.sum.loop_end: no memory access
+matmul.sum.done: 2/1 = 2.0
+matmul.col.loop_end: no memory access
+matmul.col.done: no operation
+matmul.row.loop_end: no memory access
+matmul.row.done: no operation
+main.bb_0: 1/1 = 1.0

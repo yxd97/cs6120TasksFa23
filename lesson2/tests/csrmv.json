@@ -1,0 +1,1672 @@
+{
+  "functions": [
+    {
+      "args": [
+        {
+          "name": "x",
+          "type": "bool"
+        },
+        {
+          "name": "y",
+          "type": "bool"
+        }
+      ],
+      "instrs": [
+        {
+          "args": [
+            "x"
+          ],
+          "dest": "xn",
+          "op": "not",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "y"
+          ],
+          "dest": "yn",
+          "op": "not",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "x",
+            "yn"
+          ],
+          "dest": "xyn",
+          "op": "and",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "xn",
+            "y"
+          ],
+          "dest": "xny",
+          "op": "and",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "xyn",
+            "xny"
+          ],
+          "dest": "res",
+          "op": "or",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "res"
+          ],
+          "op": "ret"
+        }
+      ],
+      "name": "xor",
+      "type": "bool"
+    },
+    {
+      "args": [
+        {
+          "name": "x",
+          "type": "int"
+        },
+        {
+          "name": "position",
+          "type": "int"
+        }
+      ],
+      "instrs": [
+        {
+          "dest": "one",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "dest": "two",
+          "op": "const",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "dest": "i",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "label": "loop_cond"
+        },
+        {
+          "args": [
+            "i",
+            "position"
+          ],
+          "dest": "cond",
+          "op": "lt",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_body",
+            "loop_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_body"
+        },
+        {
+          "args": [
+            "x",
+            "two"
+          ],
+          "dest": "x",
+          "op": "div",
+          "type": "int"
+        },
+        {
+          "args": [
+            "i",
+            "one"
+          ],
+          "dest": "i",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_exit"
+        },
+        {
+          "args": [
+            "x",
+            "two"
+          ],
+          "dest": "halfx",
+          "op": "div",
+          "type": "int"
+        },
+        {
+          "args": [
+            "halfx",
+            "two"
+          ],
+          "dest": "twohalfx",
+          "op": "mul",
+          "type": "int"
+        },
+        {
+          "args": [
+            "twohalfx",
+            "x"
+          ],
+          "dest": "iszero",
+          "op": "eq",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "iszero"
+          ],
+          "dest": "res",
+          "op": "not",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "res"
+          ],
+          "op": "ret"
+        }
+      ],
+      "name": "getbit",
+      "type": "bool"
+    },
+    {
+      "args": [
+        {
+          "name": "state",
+          "type": {
+            "ptr": "int"
+          }
+        }
+      ],
+      "instrs": [
+        {
+          "args": [
+            "state"
+          ],
+          "dest": "s",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "dest": "two",
+          "op": "const",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "dest": "one",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "dest": "head0_pos",
+          "op": "const",
+          "type": "int",
+          "value": 11
+        },
+        {
+          "dest": "head1_pos",
+          "op": "const",
+          "type": "int",
+          "value": 13
+        },
+        {
+          "dest": "head2_pos",
+          "op": "const",
+          "type": "int",
+          "value": 14
+        },
+        {
+          "dest": "head3_pos",
+          "op": "const",
+          "type": "int",
+          "value": 16
+        },
+        {
+          "args": [
+            "s",
+            "head0_pos"
+          ],
+          "dest": "head0",
+          "funcs": [
+            "getbit"
+          ],
+          "op": "call",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "s",
+            "head1_pos"
+          ],
+          "dest": "head1",
+          "funcs": [
+            "getbit"
+          ],
+          "op": "call",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "s",
+            "head2_pos"
+          ],
+          "dest": "head2",
+          "funcs": [
+            "getbit"
+          ],
+          "op": "call",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "s",
+            "head3_pos"
+          ],
+          "dest": "head3",
+          "funcs": [
+            "getbit"
+          ],
+          "op": "call",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "head0",
+            "head1"
+          ],
+          "dest": "fb",
+          "funcs": [
+            "xor"
+          ],
+          "op": "call",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "fb",
+            "head2"
+          ],
+          "dest": "fb",
+          "funcs": [
+            "xor"
+          ],
+          "op": "call",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "fb",
+            "head3"
+          ],
+          "dest": "fb",
+          "funcs": [
+            "xor"
+          ],
+          "op": "call",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "s",
+            "two"
+          ],
+          "dest": "s",
+          "op": "mul",
+          "type": "int"
+        },
+        {
+          "args": [
+            "fb"
+          ],
+          "labels": [
+            "add_one",
+            "end"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "add_one"
+        },
+        {
+          "args": [
+            "s",
+            "one"
+          ],
+          "dest": "s",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "label": "end"
+        },
+        {
+          "args": [
+            "state",
+            "s"
+          ],
+          "op": "store"
+        }
+      ],
+      "name": "rand"
+    },
+    {
+      "args": [
+        {
+          "name": "x",
+          "type": "int"
+        },
+        {
+          "name": "m",
+          "type": "int"
+        }
+      ],
+      "instrs": [
+        {
+          "dest": "one",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "args": [
+            "x",
+            "m"
+          ],
+          "dest": "q",
+          "op": "div",
+          "type": "int"
+        },
+        {
+          "args": [
+            "q",
+            "m"
+          ],
+          "dest": "multiple",
+          "op": "mul",
+          "type": "int"
+        },
+        {
+          "args": [
+            "x",
+            "multiple"
+          ],
+          "dest": "r",
+          "op": "sub",
+          "type": "int"
+        },
+        {
+          "args": [
+            "r"
+          ],
+          "op": "ret"
+        }
+      ],
+      "name": "mod",
+      "type": "int"
+    },
+    {
+      "args": [
+        {
+          "name": "rows",
+          "type": "int"
+        },
+        {
+          "name": "cols",
+          "type": "int"
+        },
+        {
+          "name": "degree",
+          "type": "int"
+        },
+        {
+          "name": "csr_rowptr",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "name": "csr_colidx",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "name": "csr_values",
+          "type": {
+            "ptr": "int"
+          }
+        }
+      ],
+      "instrs": [
+        {
+          "dest": "one",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "dest": "zero",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "args": [
+            "degree",
+            "rows"
+          ],
+          "dest": "nnz",
+          "op": "mul",
+          "type": "int"
+        },
+        {
+          "dest": "i",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "args": [
+            "csr_rowptr",
+            "zero"
+          ],
+          "op": "store"
+        },
+        {
+          "label": "loop_gen_rptr_cond"
+        },
+        {
+          "args": [
+            "i",
+            "rows"
+          ],
+          "dest": "cond",
+          "op": "le",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_gen_rptr_body",
+            "loop_gen_rptr_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_gen_rptr_body"
+        },
+        {
+          "args": [
+            "csr_rowptr",
+            "i"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "degree",
+            "i"
+          ],
+          "dest": "v",
+          "op": "mul",
+          "type": "int"
+        },
+        {
+          "args": [
+            "p",
+            "v"
+          ],
+          "op": "store"
+        },
+        {
+          "args": [
+            "i",
+            "one"
+          ],
+          "dest": "i",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_gen_rptr_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_gen_rptr_exit"
+        },
+        {
+          "dest": "i",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "args": [
+            "cols",
+            "degree"
+          ],
+          "dest": "colidx_incr",
+          "op": "div",
+          "type": "int"
+        },
+        {
+          "label": "loop_gen_cidx_cond"
+        },
+        {
+          "args": [
+            "i",
+            "nnz"
+          ],
+          "dest": "cond",
+          "op": "lt",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_gen_cidx_body",
+            "loop_gen_cidx_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_gen_cidx_body"
+        },
+        {
+          "args": [
+            "i",
+            "degree"
+          ],
+          "dest": "rid",
+          "op": "div",
+          "type": "int"
+        },
+        {
+          "args": [
+            "i",
+            "colidx_incr"
+          ],
+          "dest": "v",
+          "op": "mul",
+          "type": "int"
+        },
+        {
+          "args": [
+            "v",
+            "rid"
+          ],
+          "dest": "v",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "args": [
+            "v",
+            "cols"
+          ],
+          "dest": "cid",
+          "funcs": [
+            "mod"
+          ],
+          "op": "call",
+          "type": "int"
+        },
+        {
+          "args": [
+            "csr_colidx",
+            "i"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p",
+            "cid"
+          ],
+          "op": "store"
+        },
+        {
+          "args": [
+            "i",
+            "one"
+          ],
+          "dest": "i",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_gen_cidx_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_gen_cidx_exit"
+        },
+        {
+          "dest": "i",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "args": [
+            "one"
+          ],
+          "dest": "rng",
+          "op": "alloc",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "dest": "seed",
+          "op": "const",
+          "type": "int",
+          "value": 72160722
+        },
+        {
+          "args": [
+            "rng",
+            "seed"
+          ],
+          "op": "store"
+        },
+        {
+          "dest": "ten",
+          "op": "const",
+          "type": "int",
+          "value": 10
+        },
+        {
+          "label": "loop_gen_vals_cond"
+        },
+        {
+          "args": [
+            "i",
+            "nnz"
+          ],
+          "dest": "cond",
+          "op": "lt",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_gen_vals_body",
+            "loop_gen_vals_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_gen_vals_body"
+        },
+        {
+          "args": [
+            "rng"
+          ],
+          "funcs": [
+            "rand"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "rng"
+          ],
+          "dest": "v",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "v",
+            "ten"
+          ],
+          "dest": "v",
+          "funcs": [
+            "mod"
+          ],
+          "op": "call",
+          "type": "int"
+        },
+        {
+          "args": [
+            "csr_values",
+            "i"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p",
+            "v"
+          ],
+          "op": "store"
+        },
+        {
+          "args": [
+            "i",
+            "one"
+          ],
+          "dest": "i",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_gen_vals_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_gen_vals_exit"
+        },
+        {
+          "args": [
+            "rng"
+          ],
+          "op": "free"
+        },
+        {
+          "op": "ret"
+        }
+      ],
+      "name": "gen_uniform_csr"
+    },
+    {
+      "args": [
+        {
+          "name": "len",
+          "type": "int"
+        },
+        {
+          "name": "data",
+          "type": {
+            "ptr": "int"
+          }
+        }
+      ],
+      "instrs": [
+        {
+          "dest": "one",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "dest": "i",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "args": [
+            "one"
+          ],
+          "dest": "rng",
+          "op": "alloc",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "dest": "seed",
+          "op": "const",
+          "type": "int",
+          "value": 85817256
+        },
+        {
+          "args": [
+            "rng",
+            "seed"
+          ],
+          "op": "store"
+        },
+        {
+          "dest": "ten",
+          "op": "const",
+          "type": "int",
+          "value": 10
+        },
+        {
+          "label": "loop_cond"
+        },
+        {
+          "args": [
+            "i",
+            "len"
+          ],
+          "dest": "cond",
+          "op": "lt",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_body",
+            "loop_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_body"
+        },
+        {
+          "args": [
+            "rng"
+          ],
+          "funcs": [
+            "rand"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "rng"
+          ],
+          "dest": "v",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "v",
+            "ten"
+          ],
+          "dest": "v",
+          "funcs": [
+            "mod"
+          ],
+          "op": "call",
+          "type": "int"
+        },
+        {
+          "args": [
+            "data",
+            "i"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p",
+            "v"
+          ],
+          "op": "store"
+        },
+        {
+          "args": [
+            "i",
+            "one"
+          ],
+          "dest": "i",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_exit"
+        },
+        {
+          "args": [
+            "rng"
+          ],
+          "op": "free"
+        },
+        {
+          "op": "ret"
+        }
+      ],
+      "name": "gen_vec"
+    },
+    {
+      "args": [
+        {
+          "name": "rows",
+          "type": "int"
+        },
+        {
+          "name": "cols",
+          "type": "int"
+        },
+        {
+          "name": "csr_rowptr",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "name": "csr_colidx",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "name": "csr_values",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "name": "vec",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "name": "res",
+          "type": {
+            "ptr": "int"
+          }
+        }
+      ],
+      "instrs": [
+        {
+          "dest": "one",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "dest": "zero",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "dest": "i",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "label": "loop_init_cond"
+        },
+        {
+          "args": [
+            "i",
+            "rows"
+          ],
+          "dest": "cond",
+          "op": "lt",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_init_body",
+            "loop_init_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_init_body"
+        },
+        {
+          "args": [
+            "res",
+            "i"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p",
+            "zero"
+          ],
+          "op": "store"
+        },
+        {
+          "args": [
+            "i",
+            "one"
+          ],
+          "dest": "i",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_init_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_init_exit"
+        },
+        {
+          "dest": "rid",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "label": "loop_rows_cond"
+        },
+        {
+          "args": [
+            "rid",
+            "rows"
+          ],
+          "dest": "cond",
+          "op": "lt",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_rows_body",
+            "loop_rows_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_rows_body"
+        },
+        {
+          "args": [
+            "csr_rowptr",
+            "rid"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p"
+          ],
+          "dest": "start",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "p",
+            "one"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p"
+          ],
+          "dest": "end",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "start",
+            "zero"
+          ],
+          "dest": "j",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "label": "loop_nnzs_cond"
+        },
+        {
+          "args": [
+            "j",
+            "end"
+          ],
+          "dest": "cond",
+          "op": "lt",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_nnzs_body",
+            "loop_nnzs_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_nnzs_body"
+        },
+        {
+          "args": [
+            "csr_colidx",
+            "j"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p"
+          ],
+          "dest": "cid",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "csr_values",
+            "j"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p"
+          ],
+          "dest": "mat_val",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "vec",
+            "cid"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p"
+          ],
+          "dest": "vec_val",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "res",
+            "rid"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p"
+          ],
+          "dest": "acc",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "mat_val",
+            "vec_val"
+          ],
+          "dest": "incr",
+          "op": "mul",
+          "type": "int"
+        },
+        {
+          "args": [
+            "acc",
+            "incr"
+          ],
+          "dest": "acc",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "args": [
+            "p",
+            "acc"
+          ],
+          "op": "store"
+        },
+        {
+          "args": [
+            "j",
+            "one"
+          ],
+          "dest": "j",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_nnzs_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_nnzs_exit"
+        },
+        {
+          "args": [
+            "rid",
+            "one"
+          ],
+          "dest": "rid",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_rows_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_rows_exit"
+        },
+        {
+          "op": "ret"
+        }
+      ],
+      "name": "csr_spmv"
+    },
+    {
+      "args": [
+        {
+          "name": "arr",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "name": "size",
+          "type": "int"
+        }
+      ],
+      "instrs": [
+        {
+          "dest": "one",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "dest": "i",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "label": "loop_cond"
+        },
+        {
+          "args": [
+            "i",
+            "size"
+          ],
+          "dest": "cond",
+          "op": "lt",
+          "type": "bool"
+        },
+        {
+          "args": [
+            "cond"
+          ],
+          "labels": [
+            "loop_body",
+            "loop_exit"
+          ],
+          "op": "br"
+        },
+        {
+          "label": "loop_body"
+        },
+        {
+          "args": [
+            "arr",
+            "i"
+          ],
+          "dest": "p",
+          "op": "ptradd",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "p"
+          ],
+          "dest": "v",
+          "op": "load",
+          "type": "int"
+        },
+        {
+          "args": [
+            "v"
+          ],
+          "op": "print"
+        },
+        {
+          "args": [
+            "i",
+            "one"
+          ],
+          "dest": "i",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "labels": [
+            "loop_cond"
+          ],
+          "op": "jmp"
+        },
+        {
+          "label": "loop_exit"
+        },
+        {
+          "op": "ret"
+        }
+      ],
+      "name": "print_arr"
+    },
+    {
+      "args": [
+        {
+          "name": "rows",
+          "type": "int"
+        },
+        {
+          "name": "cols",
+          "type": "int"
+        },
+        {
+          "name": "degree",
+          "type": "int"
+        }
+      ],
+      "instrs": [
+        {
+          "dest": "one",
+          "op": "const",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "args": [
+            "rows",
+            "one"
+          ],
+          "dest": "rptr_len",
+          "op": "add",
+          "type": "int"
+        },
+        {
+          "args": [
+            "rows",
+            "degree"
+          ],
+          "dest": "nnz",
+          "op": "mul",
+          "type": "int"
+        },
+        {
+          "args": [
+            "rptr_len"
+          ],
+          "dest": "csr_rowptr",
+          "op": "alloc",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "nnz"
+          ],
+          "dest": "csr_colidx",
+          "op": "alloc",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "nnz"
+          ],
+          "dest": "csr_values",
+          "op": "alloc",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "rows",
+            "cols",
+            "degree",
+            "csr_rowptr",
+            "csr_colidx",
+            "csr_values"
+          ],
+          "funcs": [
+            "gen_uniform_csr"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "csr_rowptr",
+            "rptr_len"
+          ],
+          "funcs": [
+            "print_arr"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "csr_colidx",
+            "nnz"
+          ],
+          "funcs": [
+            "print_arr"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "csr_values",
+            "nnz"
+          ],
+          "funcs": [
+            "print_arr"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "cols"
+          ],
+          "dest": "vec",
+          "op": "alloc",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "cols",
+            "vec"
+          ],
+          "funcs": [
+            "gen_vec"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "vec",
+            "cols"
+          ],
+          "funcs": [
+            "print_arr"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "rows"
+          ],
+          "dest": "res",
+          "op": "alloc",
+          "type": {
+            "ptr": "int"
+          }
+        },
+        {
+          "args": [
+            "rows",
+            "cols",
+            "csr_rowptr",
+            "csr_colidx",
+            "csr_values",
+            "vec",
+            "res"
+          ],
+          "funcs": [
+            "csr_spmv"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "res",
+            "rows"
+          ],
+          "funcs": [
+            "print_arr"
+          ],
+          "op": "call"
+        },
+        {
+          "args": [
+            "csr_rowptr"
+          ],
+          "op": "free"
+        },
+        {
+          "args": [
+            "csr_colidx"
+          ],
+          "op": "free"
+        },
+        {
+          "args": [
+            "csr_values"
+          ],
+          "op": "free"
+        },
+        {
+          "args": [
+            "vec"
+          ],
+          "op": "free"
+        },
+        {
+          "args": [
+            "res"
+          ],
+          "op": "free"
+        },
+        {
+          "dest": "good",
+          "op": "const",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "args": [
+            "good"
+          ],
+          "op": "ret"
+        }
+      ],
+      "name": "main",
+      "type": "int"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+xor.bb_0: no memory access
+getbit.bb_0: no operation
+getbit.loop_cond: no memory access
+getbit.loop_body: no memory access
+getbit.loop_exit: no memory access
+rand.bb_0: 1/1 = 1.0
+rand.add_one: no memory access
+rand.end: no operation
+mod.bb_0: no memory access
+gen_uniform_csr.bb_0: 1/1 = 1.0
+gen_uniform_csr.loop_gen_rptr_cond: no memory access
+gen_uniform_csr.loop_gen_rptr_body: 2/1 = 2.0
+gen_uniform_csr.loop_gen_rptr_exit: no memory access
+gen_uniform_csr.loop_gen_cidx_cond: no memory access
+gen_uniform_csr.loop_gen_cidx_body: 4/1 = 4.0
+gen_uniform_csr.loop_gen_cidx_exit: no operation
+gen_uniform_csr.loop_gen_vals_cond: no memory access
+gen_uniform_csr.loop_gen_vals_body: 1/2 = 0.5
+gen_uniform_csr.loop_gen_vals_exit: no operation
+gen_vec.bb_0: no operation
+gen_vec.loop_cond: no memory access
+gen_vec.loop_body: 1/2 = 0.5
+gen_vec.loop_exit: no operation
+csr_spmv.bb_0: no operation
+csr_spmv.loop_init_cond: no memory access
+csr_spmv.loop_init_body: 1/1 = 1.0
+csr_spmv.loop_init_exit: no operation
+csr_spmv.loop_rows_cond: no memory access
+csr_spmv.loop_rows_body: 1/2 = 0.5
+csr_spmv.loop_nnzs_cond: no memory access
+csr_spmv.loop_nnzs_body: 3/5 = 0.6
+csr_spmv.loop_nnzs_exit: no memory access
+csr_spmv.loop_rows_exit: no operation
+print_arr.bb_0: no operation
+print_arr.loop_cond: no memory access
+print_arr.loop_body: 1/1 = 1.0
+print_arr.loop_exit: no operation
+main.bb_0: no memory access
