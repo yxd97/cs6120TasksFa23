@@ -1,6 +1,7 @@
 import sys, copy
 from typing import List
 
+sys.path.append('..')
 import bril_utils as bu
 
 class BasicBlk:
