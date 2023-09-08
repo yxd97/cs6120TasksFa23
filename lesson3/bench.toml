@@ -1,5 +1,5 @@
 extract = 'total_dyn_inst: (\d+)'
-benchmarks = '../../bril/benchmarks/core/*.bril'
+benchmarks = '../../bril/benchmarks/*/*.bril'
 
 [runs.baseline]
 pipeline = [
@@ -10,7 +10,24 @@ pipeline = [
 [runs.dce]
 pipeline = [
     "bril2json",
-    "python3 dead_code_elimination.py",
+    "python3 ./unit_passes/dead_code_elimination.py",
     "bril2json",
     "brili -p {args}",
 ]
+
+[runs.rod]
+pipeline = [
+    "bril2json",
+    "python3 ./unit_passes/rename_old_defs.py",
+    "bril2json",
+    "brili -p {args}",
+]
+
+[runs.lvn]
+pipeline = [
+    "bril2json",
+    "python3 lvn_opt.py",
+    "bril2json",
+    "brili -p {args}",
+]
+

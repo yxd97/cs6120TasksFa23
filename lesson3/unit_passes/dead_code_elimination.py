@@ -1,6 +1,7 @@
-import sys, copy
+import sys, copy, os
 
-sys.path.append('..')
+TASKS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(TASKS_ROOT)
 import bril_utils as bu
 
 SIDE_EFFECT_INSTR = ['call']

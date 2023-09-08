@@ -6,5 +6,7 @@
   jmp .label;
 .label:
   prod: int = mul sum1 sum2;
+  sum11: int = id sum1;
   print prod;
+  print sum11;
 }

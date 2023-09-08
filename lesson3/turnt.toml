@@ -1,0 +1,5 @@
+[envs.ref]
+command = "bril2json < {filename} | brili {args}"
+
+[envs.lvn]
+command = "bril2json < {filename} | python3 lvn_opt.py | bril2json | brili {args}"

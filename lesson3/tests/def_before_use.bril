@@ -1,0 +1,16 @@
+@foo(x: int, y:int) {
+  r:int = add x y;
+  ret r;
+}
+
+@main {
+  a: int = const 1;
+  b: int = const 2;
+.label1:
+  x: int = id a;
+  y: int = const 3;
+  c: int = call @foo x y;
+  a: int = id c;
+.label2:
+  print a b y;
+}

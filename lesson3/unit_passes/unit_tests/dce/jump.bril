@@ -1,0 +1,12 @@
+@main{
+  a: int = const 1;
+  jmp .label;
+  b: int = const 2;
+  c: int = const 3;
+  d: int = add a b;
+  print d;
+.label:
+  d: int = const 6;
+  e: int = mul a d;
+  print e;
+}

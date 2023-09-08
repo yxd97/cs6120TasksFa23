@@ -1,0 +1,11 @@
+@main {
+    a: int = const 1;
+    cond: bool = const true;
+    br cond .t .f;
+.t:
+    print a;
+.f:
+    a: int = const 3;
+    a: int = const 4;
+    print a;
+}

@@ -1,4 +1,5 @@
-import json, sys
+import json, sys, copy
+from typing import List, Union
 
 class Type:
     def __init__(self, type) -> None:
@@ -33,6 +34,9 @@ class Label:
 
     def __str__(self):
         return f'.{self.label}'
+
+    def __repr__(self):
+        return str(self)
 
     def __format__(self, __format_spec: str) -> str:
         return str(self)
@@ -83,16 +87,19 @@ class Instruction:
     def __format__(self, __format_spec: str) -> str:
         return str(self)
 
+    def __repr__(self):
+        return str(self)
+
     def terminate_baisc_blk(self) -> bool:
         return self.op in ['jmp', 'br']
 
 class Function:
-    def __init__(self, func_dict) -> None:
+    def __init__(self, func_dict = None) -> None:
         self.name:str = func_dict['name']
         if 'args' in func_dict:
             self.args = [FunctionArg(arg) for arg in func_dict['args']]
         if 'type' in func_dict:
-            self.type = func_dict['type']
+            self.type = Type(func_dict['type'])
         self.instrs = []
         for instr_or_lbl in func_dict['instrs']:
             if 'op' in instr_or_lbl:
@@ -147,3 +154,66 @@ class Program:
             for func in self.functions:
                 f.writelines(func.to_lines())
                 f.write('\n')
+
+class BasicBlk:
+    def __init__(self, name = None) -> None:
+        self.name = name
+        self.instrs = []
+
+    def is_empty(self):
+        return len(self.instrs) == 0
+
+def name_basic_blk(basic_blk, func_name, bblk_count):
+    '''
+        Generate a name for a basic block. If the block starts with
+        a label, use the label as its name; otherwise, name is as the
+        0, 1, 2... -th basic block of this function.
+    '''
+    if isinstance(basic_blk.instrs[0], Label):
+        bblk_name = f'{func_name}_{basic_blk.instrs[0].label}'
+    else:
+        bblk_name = f'{func_name}_bb{bblk_count}'
+    basic_blk.name = bblk_name
+
+def get_baisc_blks(func:Function) -> List[BasicBlk]:
+    '''
+        Separate a function into a list of basic blocks
+    '''
+    basic_blks:List[BasicBlk] = []
+    bblk_count = 0
+    curr_blk = BasicBlk()
+    for i, instr in enumerate(func.instrs):
+        # commit a basic block when it's the last instruction
+        if i == len(func.instrs) - 1:
+            curr_blk.instrs.append(instr)
+            name_basic_blk(curr_blk, func.name, bblk_count)
+            bblk_count += 1
+            basic_blks.append(copy.deepcopy(curr_blk))
+        # add label if current block is empty, otherwise commit a block
+        elif isinstance(instr, Label):
+            if curr_blk.is_empty():
+                curr_blk.instrs.append(instr)
+            else:
+                name_basic_blk(curr_blk, func.name, bblk_count)
+                bblk_count += 1
+                basic_blks.append(copy.deepcopy(curr_blk))
+                curr_blk = BasicBlk()
+                curr_blk.instrs.append(instr)
+        # for instructions, check if it terminates a block
+        else:
+            curr_blk.instrs.append(instr)
+            if instr.terminate_baisc_blk():
+                name_basic_blk(curr_blk, func.name, bblk_count)
+                bblk_count += 1
+                basic_blks.append(copy.deepcopy(curr_blk))
+                curr_blk = BasicBlk()
+    return basic_blks
+
+def concat_basic_blks(basic_blks:List[BasicBlk]) -> List[Union[Label, Instruction]]:
+    '''
+        Form a list of instructions|labels from a list of basic blocks.
+    '''
+    result = []
+    for blk in basic_blks:
+        result.extend(blk.instrs)
+    return result

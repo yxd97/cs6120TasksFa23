@@ -1,0 +1,6 @@
+#ARGS: 1
+@main(a:int) {
+  t: int = id a;
+  a: int = const 2;
+  print a t;
+}

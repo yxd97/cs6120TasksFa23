@@ -1,0 +1,18 @@
+@foo (x: int, y: int): int {
+  a: int = add x y;
+  b: int = mul x y;
+  r: int = sub b a;
+  ret r;
+}
+
+@main {
+  a: int = const 4;
+  b: int = const 2;
+  c: int = call @foo a b;
+  c: int = call @foo a b;
+  sum1: int = add a b;
+  sum2: int = add b a;
+  prod: int = mul sum1 sum2;
+  print prod;
+  print c;
+}

@@ -1,0 +1,8 @@
+[envs.ref]
+command = "bril2json < {filename} | brili {args}"
+
+[envs.dce]
+command = "bril2json < {filename} | python3 dead_code_elimination.py | bril2json | brili {args}"
+
+[envs.rod]
+command = "bril2json < {filename} | python3 rename_old_defs.py | bril2json | brili {args}"
