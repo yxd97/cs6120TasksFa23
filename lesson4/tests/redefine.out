@@ -1,0 +1,11 @@
+@main {
+  a: int = const 1; # defs: a_DEF1, 
+  print a;          # uses: USE1,    # reaching defs: a_DEF1, 
+  a: int = const 2; # defs: a_DEF2, 
+  a: int = const 3; # defs: a_DEF3, 
+  print a;          # uses: USE2,    # reaching defs: a_DEF3, 
+  a: int = const 4; # defs: a_DEF4, 
+  a: int = const 5; # defs: a_DEF5, 
+  print a;          # uses: USE3,    # reaching defs: a_DEF5, 
+  print a;          # uses: USE4,    # reaching defs: a_DEF5, 
+}

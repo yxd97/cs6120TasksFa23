@@ -1,0 +1,26 @@
+@main(x:int) {
+  one: int = const 1;
+  two: int = const 2;
+  three: int = const 3;
+  count: int = const 0;
+.while_cond:
+  cond: bool = eq x one;
+  cond: bool = not cond;
+  br cond .while_body .while_exit;
+.while_body:
+  half_x: int = div x two;
+  two_halves_x: int = mul half_x two;
+  even: bool = eq x two_halves_x;
+  br even .even .odd;
+.even:
+  x: int = div x two;
+  jmp .endif;
+.odd:
+  x: int = mul x three;
+  x: int = add x one;
+.endif:
+  print x;
+  count: int = add count one;
+  jmp .while_cond;
+.while_exit:
+}

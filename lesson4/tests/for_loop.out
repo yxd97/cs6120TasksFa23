@@ -1,0 +1,15 @@
+@main {
+  i: int = const 0;            # defs: i_DEF1, 
+  one: int = const 1;          # defs: one_DEF1, 
+  bound: int = const 10;       # defs: bound_DEF1, 
+  acc: int = const 0;          # defs: acc_DEF1, 
+.for_cond:
+  cond: bool = lt i bound;     # defs: cond_DEF1, uses: USE1,  # reaching defs: acc_DEF1, bound_DEF1, one_DEF1, i_DEF1, cond_DEF1, i_DEF2, acc_DEF2, 
+  br cond .for_body .for_exit; # uses: USE2,                   # reaching defs: acc_DEF1, bound_DEF1, one_DEF1, i_DEF1, i_DEF2, acc_DEF2, cond_DEF1, 
+.for_body:
+  acc: int = add acc i;        # defs: acc_DEF2, uses: USE3,   # reaching defs: acc_DEF1, bound_DEF1, one_DEF1, i_DEF1, i_DEF2, acc_DEF2, cond_DEF1, 
+  i: int = add i one;          # defs: i_DEF2, uses: USE4,     # reaching defs: bound_DEF1, one_DEF1, i_DEF1, i_DEF2, cond_DEF1, acc_DEF2, 
+  jmp .for_cond;
+.for_exit:
+  print acc;                   # uses: USE5,                   # reaching defs: acc_DEF1, bound_DEF1, one_DEF1, i_DEF1, i_DEF2, acc_DEF2, cond_DEF1, 
+}

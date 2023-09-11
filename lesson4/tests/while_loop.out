@@ -1,0 +1,26 @@
+@main(x: int) {                       # defs: x_DEF1, 
+  one: int = const 1;                 # defs: one_DEF1, 
+  two: int = const 2;                 # defs: two_DEF1, 
+  three: int = const 3;               # defs: three_DEF1, 
+  count: int = const 0;               # defs: count_DEF1, 
+.while_cond:
+  cond: bool = eq x one;              # defs: cond_DEF1, uses: USE1,          # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, cond_DEF2, even_DEF1, two_halves_x_DEF1, half_x_DEF1, x_DEF2, x_DEF4, count_DEF2, 
+  cond: bool = not cond;              # defs: cond_DEF2, uses: USE2,          # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, even_DEF1, two_halves_x_DEF1, half_x_DEF1, x_DEF2, x_DEF4, count_DEF2, cond_DEF1, 
+  br cond .while_body .while_exit;    # uses: USE3,                           # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, even_DEF1, two_halves_x_DEF1, half_x_DEF1, x_DEF2, x_DEF4, count_DEF2, cond_DEF2, 
+.while_body:
+  half_x: int = div x two;            # defs: half_x_DEF1, uses: USE4,        # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, even_DEF1, two_halves_x_DEF1, half_x_DEF1, x_DEF2, x_DEF4, count_DEF2, cond_DEF2, 
+  two_halves_x: int = mul half_x two; # defs: two_halves_x_DEF1, uses: USE5,  # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, even_DEF1, two_halves_x_DEF1, x_DEF2, x_DEF4, count_DEF2, cond_DEF2, half_x_DEF1, 
+  even: bool = eq x two_halves_x;     # defs: even_DEF1, uses: USE6,          # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, even_DEF1, x_DEF2, x_DEF4, count_DEF2, cond_DEF2, half_x_DEF1, two_halves_x_DEF1, 
+  br even .even .odd;                 # uses: USE7,                           # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, x_DEF2, x_DEF4, count_DEF2, cond_DEF2, half_x_DEF1, two_halves_x_DEF1, even_DEF1, 
+.even:
+  x: int = div x two;                 # defs: x_DEF2, uses: USE8,             # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, x_DEF2, x_DEF4, count_DEF2, cond_DEF2, even_DEF1, two_halves_x_DEF1, half_x_DEF1, 
+  jmp .endif;
+.odd:
+  x: int = mul x three;               # defs: x_DEF3, uses: USE9,             # reaching defs: x_DEF1, count_DEF1, three_DEF1, two_DEF1, one_DEF1, x_DEF2, x_DEF4, count_DEF2, cond_DEF2, even_DEF1, two_halves_x_DEF1, half_x_DEF1, 
+  x: int = add x one;                 # defs: x_DEF4, uses: USE10,            # reaching defs: count_DEF1, three_DEF1, two_DEF1, one_DEF1, count_DEF2, cond_DEF2, even_DEF1, two_halves_x_DEF1, half_x_DEF1, x_DEF3, 
+.endif:
+  print x;                            # uses: USE11,                          # reaching defs: count_DEF1, three_DEF1, two_DEF1, one_DEF1, count_DEF2, cond_DEF2, even_DEF1, two_halves_x_DEF1, half_x_DEF1, x_DEF2, x_DEF4, 
+  count: int = add count one;         # defs: count_DEF2, uses: USE12,        # reaching defs: count_DEF1, three_DEF1, two_DEF1, one_DEF1, count_DEF2, cond_DEF2, even_DEF1, two_halves_x_DEF1, half_x_DEF1, x_DEF2, x_DEF4, 
+  jmp .while_cond;
+.while_exit:
+}

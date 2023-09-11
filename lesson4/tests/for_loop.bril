@@ -1,0 +1,15 @@
+@main {
+  i: int = const 0;
+  one: int = const 1;
+  bound: int = const 10;
+  acc: int = const 0;
+.for_cond:
+  cond: bool = lt i bound;
+  br cond .for_body .for_exit;
+.for_body:
+  acc: int = add acc i;
+  i: int = add i one;
+  jmp .for_cond;
+.for_exit:
+  print acc;
+}

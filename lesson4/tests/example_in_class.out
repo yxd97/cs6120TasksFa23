@@ -1,0 +1,18 @@
+@main(cond: bool) {     # defs: cond_DEF1, 
+  a: int = const 47;    # defs: a_DEF1, 
+  b: int = const 42;    # defs: b_DEF1, 
+  br cond .left .right; # uses: USE1,                # reaching defs: cond_DEF1, a_DEF1, b_DEF1, 
+.left:
+  b: int = const 1;     # defs: b_DEF2, 
+  c: int = const 5;     # defs: c_DEF1, 
+  jmp .end;
+.right:
+  a: int = const 2;     # defs: a_DEF2, 
+  c: int = const 10;    # defs: c_DEF2, 
+  jmp .end;
+.end:
+  d: int = sub a c;     # defs: d_DEF1, uses: USE2,  # reaching defs: cond_DEF1, a_DEF1, c_DEF1, b_DEF2, b_DEF1, c_DEF2, a_DEF2, 
+  print d;              # uses: USE3,                # reaching defs: cond_DEF1, a_DEF1, c_DEF1, b_DEF2, b_DEF1, c_DEF2, a_DEF2, d_DEF1, 
+.ret:
+  ret;
+}

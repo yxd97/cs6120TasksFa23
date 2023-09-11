@@ -1,0 +1,24 @@
+@main(cond1: bool, cond2: bool) { # defs: cond1_DEF1, cond2_DEF1, 
+  a: int = const 1;               # defs: a_DEF1, 
+  br cond1 .then1 .else1;         # uses: USE1,                    # reaching defs: cond2_DEF1, cond1_DEF1, a_DEF1, 
+.then1:
+  a: int = const 2;               # defs: a_DEF2, 
+  b: int = const 3;               # defs: b_DEF1, 
+  c: int = mul a b;               # defs: c_DEF1, uses: USE2,      # reaching defs: cond2_DEF1, cond1_DEF1, a_DEF2, b_DEF1, 
+  d: ptr<int> = alloc c;          # defs: d_DEF1, uses: USE3,      # reaching defs: cond2_DEF1, cond1_DEF1, a_DEF2, b_DEF1, c_DEF1, 
+  br cond2 .then2 .else2;         # uses: USE4,                    # reaching defs: cond2_DEF1, cond1_DEF1, a_DEF2, b_DEF1, c_DEF1, d_DEF1, 
+.then2:
+  free d;                         # uses: USE5,                    # reaching defs: cond2_DEF1, cond1_DEF1, d_DEF1, c_DEF1, b_DEF1, a_DEF2, 
+  c: int = mul b a;               # defs: c_DEF2, uses: USE6,      # reaching defs: cond2_DEF1, cond1_DEF1, d_DEF1, c_DEF1, b_DEF1, a_DEF2, 
+  d: ptr<int> = alloc c;          # defs: d_DEF2, uses: USE7,      # reaching defs: cond2_DEF1, cond1_DEF1, d_DEF1, b_DEF1, a_DEF2, c_DEF2, 
+  jmp .endif2;
+.else2:
+  store d a;                      # uses: USE8,                    # reaching defs: cond2_DEF1, cond1_DEF1, d_DEF1, c_DEF1, b_DEF1, a_DEF2, 
+.endif2:
+  jmp .endif1;
+.else1:
+  store d c;                      # uses: USE9,                    # reaching defs: cond2_DEF1, cond1_DEF1, a_DEF1, 
+  e: int = load d;                # defs: e_DEF1, uses: USE10,     # reaching defs: cond2_DEF1, cond1_DEF1, a_DEF1, 
+.endif1:
+  free d;                         # uses: USE11,                   # reaching defs: cond2_DEF1, cond1_DEF1, b_DEF1, a_DEF2, d_DEF2, c_DEF2, d_DEF1, c_DEF1, a_DEF1, e_DEF1, 
+}

@@ -60,21 +60,22 @@ class Instruction:
         s = ''
         if 'dest' in self.__dict__:
             s += f'{self.dest}: {str(self.type)} = '
-        s += f'{self.op} '
+        s += f'{self.op}'
         if self.op == 'const':
             # bool consts in bril are in lower case
             if self.value is True:
-                return s + 'true;'
+                return s + ' true;'
             if self.value is False:
-                return s + 'false;'
-            return s + f'{self.value};'
+                return s + ' false;'
+            return s + f' {self.value};'
         if self.op == 'jmp':
-            return s + f'.{self.labels[0]};'
+            return s + f' .{self.labels[0]};'
         if self.op == 'br':
-            return s + f'{self.args[0]} .{self.labels[0]} .{self.labels[1]};'
+            return s + f' {self.args[0]} .{self.labels[0]} .{self.labels[1]};'
         if self.op == 'call':
-            s += f'@{self.funcs[0]} '
+            s += f' @{self.funcs[0]} '
         if hasattr(self, 'args'):
+            s += ' '
             for i, arg in enumerate(self.args):
                 s += f'{arg}'
                 if i < len(self.args) - 1:
@@ -156,14 +157,27 @@ class Program:
                 f.write('\n')
 
 class BasicBlk:
-    def __init__(self, name = None) -> None:
+    def __init__(
+        self,
+        name:Union[str, None] = None,
+        start:Union[int, None] = None,
+        end:Union[int, None] = None,
+    ) -> None:
         self.name = name
-        self.instrs = []
+        self.instrs:List[Union[Instruction, Label]] = []
+        self.start = start
+        self.end = end
 
     def is_empty(self):
         return len(self.instrs) == 0
 
-def name_basic_blk(basic_blk, func_name, bblk_count):
+    def has_label(self):
+        return isinstance(self.instrs[0], Label)
+
+    def __str__(self):
+        return f'{self.name} ({self.start}:{self.end})'
+
+def __name_basic_blk(basic_blk, func_name, bblk_count):
     '''
         Generate a name for a basic block. If the block starts with
         a label, use the label as its name; otherwise, name is as the
@@ -181,32 +195,37 @@ def get_baisc_blks(func:Function) -> List[BasicBlk]:
     '''
     basic_blks:List[BasicBlk] = []
     bblk_count = 0
-    curr_blk = BasicBlk()
+    curr_blk = BasicBlk(start = 0)
     for i, instr in enumerate(func.instrs):
         # commit a basic block when it's the last instruction
         if i == len(func.instrs) - 1:
             curr_blk.instrs.append(instr)
-            name_basic_blk(curr_blk, func.name, bblk_count)
+            __name_basic_blk(curr_blk, func.name, bblk_count)
             bblk_count += 1
+            curr_blk.end = i + 1
             basic_blks.append(copy.deepcopy(curr_blk))
         # add label if current block is empty, otherwise commit a block
         elif isinstance(instr, Label):
             if curr_blk.is_empty():
                 curr_blk.instrs.append(instr)
             else:
-                name_basic_blk(curr_blk, func.name, bblk_count)
+                __name_basic_blk(curr_blk, func.name, bblk_count)
                 bblk_count += 1
+                curr_blk.end = i
                 basic_blks.append(copy.deepcopy(curr_blk))
                 curr_blk = BasicBlk()
+                curr_blk.start = i
                 curr_blk.instrs.append(instr)
         # for instructions, check if it terminates a block
         else:
             curr_blk.instrs.append(instr)
             if instr.terminate_baisc_blk():
-                name_basic_blk(curr_blk, func.name, bblk_count)
+                __name_basic_blk(curr_blk, func.name, bblk_count)
                 bblk_count += 1
+                curr_blk.end = i + 1
                 basic_blks.append(copy.deepcopy(curr_blk))
                 curr_blk = BasicBlk()
+                curr_blk.start = i + 1
     return basic_blks
 
 def concat_basic_blks(basic_blks:List[BasicBlk]) -> List[Union[Label, Instruction]]:
@@ -217,3 +236,9 @@ def concat_basic_blks(basic_blks:List[BasicBlk]) -> List[Union[Label, Instructio
     for blk in basic_blks:
         result.extend(blk.instrs)
     return result
+
+def instr_idx_to_blk(instr_idx:int, basic_blks:List[BasicBlk]) -> int:
+    for i, blk in enumerate(basic_blks):
+        if instr_idx in range(blk.start, blk.end):
+            return i
+    raise IndexError("Instruction not found in function!")

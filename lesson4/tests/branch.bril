@@ -1,0 +1,24 @@
+@main(cond1:bool, cond2:bool) {
+  a: int = const 1;
+  br cond1 .then1 .else1;
+.then1:
+  a: int = const 2;
+  b: int = const 3;
+  c: int = mul a b;
+  d: ptr<int> = alloc c;
+  br cond2 .then2 .else2;
+.then2:
+  free d;
+  c: int = mul b a;
+  d: ptr<int> = alloc c;
+  jmp .endif2;
+.else2:
+  store d a;
+.endif2:
+  jmp .endif1;
+.else1:
+  store d c;
+  e: int = load d;
+.endif1:
+  free d;
+}
