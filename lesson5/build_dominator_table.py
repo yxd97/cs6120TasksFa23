@@ -56,16 +56,17 @@ def main():
     prog = bu.Program()
     prog.read_json_stdin()
     for func in prog.functions:
-        print(f"Dominator Table of {func}:")
+        print(f"==== Dominator Table of {func}:")
         cfg = bdf.CtrlFlowGraph()
         cfg.build_from_blocks(bu.get_baisc_blks(func))
         dom_table = find_dominators(cfg)
         print_dom_tab(dom_table, cfg)
-        print()
         if verify_dominator_table(dom_table, cfg):
-            print("Results are correct!")
+            print("==== Results are correct!")
         else:
-            print("Results are WRONG!")
+            print("==== Results are WRONG!")
+        print("")
+
 
 if __name__ == "__main__":
     main()

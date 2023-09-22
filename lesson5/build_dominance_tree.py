@@ -99,6 +99,7 @@ def verify_dominance_tree(tree:DominanceTree, table:DominatorTable, cfg:bdf.Ctrl
                 for b in test:
                     if b != node.cfg_vid:
                         print(f"{cfg.vertices[b].blk.name}", end=', ')
+                print("")
                 passing = False
     return passing
 
@@ -106,17 +107,19 @@ def main():
     prog = bu.Program()
     prog.read_json_stdin()
     for func in prog.functions:
-        print(f"Dominance Tree of {func}:")
+        print(f"==== Dominance Tree of {func}:")
         cfg = bdf.CtrlFlowGraph()
         cfg.build_from_blocks(bu.get_baisc_blks(func))
         dom_table = find_dominators(cfg)
         dom_tree = construct_dominance_tree(dom_table)
         print_dom_tree(dom_tree, cfg)
-        print()
         if verify_dominance_tree(dom_tree, dom_table, cfg):
-            print("Results are correct!")
+            print("==== Results are correct!")
         else:
-            print("Results are WRONG!")
+            cfg.print()
+            print("==== Results are WRONG!")
+        print("")
+
 
 if __name__ == "__main__":
     main()
