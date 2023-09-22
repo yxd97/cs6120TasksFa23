@@ -111,11 +111,11 @@ class CtrlFlowGraph:
                     if found_blk_f and found_blk_t:
                         break
             elif last_instr.op == 'ret': # exit in the middle
-                self.add_edge(blk, -1)
+                self.add_edge(blk, blocks[-1])
             elif i < len(blocks) - 1: # no targets and not the last
                 self.add_edge(blk, blocks[i + 1])
             else: # if is the last, go to EXIT
-                self.add_edge(blk, -1)
+                self.add_edge(blk, blocks[-1])
 
     def print(self):
         print("Vertices:")
