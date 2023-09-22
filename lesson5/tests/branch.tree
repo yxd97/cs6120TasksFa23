@@ -1,0 +1,12 @@
+Dominance Tree of main(cond1: bool, cond2: bool):
+(ENTRY: main_bb0)
+(main_bb0: main_else1, main_endif1, main_then1)
+(main_else1)
+(main_endif1)
+(main_then1: main_then2, main_else2, main_endif2)
+(main_then2: EXIT)
+(EXIT)
+(main_else2)
+(main_endif2)
+
+Results are correct!

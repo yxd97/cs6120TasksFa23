@@ -1,0 +1,12 @@
+Dominator Table of main(cond: bool):
+Block Name    Dominators
+------------  -----------------------------------------------------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+main_left     ENTRY, main_bb0, main_left,
+main_right    ENTRY, main_bb0, main_right,
+main_end      ENTRY, main_bb0, main_end,
+main_ret      ENTRY, main_bb0, main_end, main_ret,
+EXIT          ENTRY, main_bb0, main_left, main_right, main_end, main_ret, EXIT,
+
+Results are correct!

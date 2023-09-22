@@ -1,0 +1,5 @@
+@main(a:int) {
+  print a;
+  a: int = id a;
+  print a;
+}

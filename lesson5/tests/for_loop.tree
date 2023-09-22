@@ -1,0 +1,9 @@
+Dominance Tree of main:
+(ENTRY: main_bb0)
+(main_bb0: main_for_cond)
+(main_for_cond: main_for_body, main_for_exit)
+(main_for_body: EXIT)
+(EXIT)
+(main_for_exit)
+
+Results are correct!

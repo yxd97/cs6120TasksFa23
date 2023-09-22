@@ -1,0 +1,10 @@
+Dominance Tree of main(cond: bool):
+(ENTRY: main_bb0)
+(main_bb0: main_left, main_right, main_end)
+(main_left: EXIT)
+(EXIT)
+(main_right)
+(main_end: main_ret)
+(main_ret)
+
+Results are correct!

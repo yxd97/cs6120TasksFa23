@@ -1,0 +1,11 @@
+Dominator Table of main:
+Block Name     Dominators
+-------------  -------------------------------------------------------------------
+ENTRY          ENTRY,
+main_bb0       ENTRY, main_bb0,
+main_for_cond  ENTRY, main_bb0, main_for_cond,
+main_for_body  ENTRY, main_bb0, main_for_cond, main_for_body,
+main_for_exit  ENTRY, main_bb0, main_for_cond, main_for_exit,
+EXIT           ENTRY, main_bb0, main_for_cond, main_for_body, main_for_exit, EXIT,
+
+Results are correct!

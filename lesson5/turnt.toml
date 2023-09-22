@@ -1,0 +1,11 @@
+[envs.table]
+command = "bril2json < {filename} | python3 build_dominator_table.py"
+output.table = "-"
+
+[envs.tree]
+command = "bril2json < {filename} | python3 build_dominance_tree.py"
+output.tree = "-"
+
+[envs.frontier]
+command = "bril2json < {filename} | python3 find_dominance_frontiers.py"
+output.frontier = "-"
