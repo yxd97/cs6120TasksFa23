@@ -82,13 +82,17 @@ class CtrlFlowGraph:
             self.add_blk(blk)
         # add exit block
         self.add_blk(bu.BasicBlk(name='EXIT'))
+        exit_blk_vid = len(self.vertices) - 1
         # add edges
         self.add_edge(0, blocks[0]) # from entry to the first block
         for i, blk in enumerate(blocks):
             last_instr = blk.instrs[-1]
-            if isinstance(last_instr, bu.Label): # this block only serves as target
-                continue
-            if last_instr.op == 'jmp': # has 1 target
+            if isinstance(last_instr, bu.Label): # empty block, fall through
+                if i < len(blocks) - 1:
+                    self.add_edge(blk, blocks[i + 1])
+                else:
+                    self.add_edge(blk, exit_blk_vid)
+            elif last_instr.op == 'jmp': # has 1 target
                 target_label = last_instr.labels[0]
                 for b in blocks:
                     label = getattr(b.instrs[0], 'label', None)
@@ -111,11 +115,11 @@ class CtrlFlowGraph:
                     if found_blk_f and found_blk_t:
                         break
             elif last_instr.op == 'ret': # exit in the middle
-                self.add_edge(blk, blocks[-1])
+                self.add_edge(blk, exit_blk_vid)
             elif i < len(blocks) - 1: # no targets and not the last
                 self.add_edge(blk, blocks[i + 1])
             else: # if is the last, go to EXIT
-                self.add_edge(blk, blocks[-1])
+                self.add_edge(blk, exit_blk_vid)
 
     def print(self):
         print("Vertices:")
