@@ -26,6 +26,8 @@ def get_dominance_frontier(
     return dom_frontier
 
 def print_dom_frontier(src_vid:int, dom_frontier:Set[int], cfg:bdf.CtrlFlowGraph):
+    if len(dom_frontier) == 0:
+        return
     print(f"The dominance frontier of {cfg.vertices[src_vid].blk.name} is: ",end='')
     for i, df in enumerate(dom_frontier):
         print(cfg.vertices[df].blk.name, end='')

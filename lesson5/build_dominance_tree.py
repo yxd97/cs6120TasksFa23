@@ -30,8 +30,7 @@ def print_dom_tree(dom_tree:DominanceTree, cfg:bdf.CtrlFlowGraph):
                 print(f'{cfg.vertices[child].blk.name}', end='')
                 if i < len(node.children_ids) - 1:
                     print(', ',end='')
-        print(") ", end='')
-    print("")
+        print(")")
 
 class DominatingTableEntry:
     def __init__(self, cfg_vid:int, dominating_vertices:List[int]) -> None:
