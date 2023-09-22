@@ -1,0 +1,23 @@
+==== Dominator Table of main(x: int, y: int):
+Block Name        Dominators
+----------------  ---------------------------------------------------------------------------------
+ENTRY             ENTRY,
+main_bb0          ENTRY, main_bb0,
+main_then.1       ENTRY, main_bb0, main_then.1,
+main_else.1       ENTRY, main_bb0, main_else.1,
+main_endif.1      ENTRY, main_bb0, main_endif.1,
+main_foreverloop  ENTRY, main_bb0, main_endif.1, main_foreverloop,
+main_then.2       ENTRY, main_bb0, main_endif.1, main_foreverloop, main_then.2,
+main_else.2       ENTRY, main_bb0, main_endif.1, main_foreverloop, main_else.2,
+main_loopend      ENTRY, main_bb0, main_endif.1, main_foreverloop, main_then.2, main_loopend,
+EXIT              ENTRY, main_bb0, main_endif.1, main_foreverloop, main_then.2, main_loopend, EXIT,
+==== Results are correct!
+
+==== Dominator Table of getMod(val: int, mod: int): int:
+Block Name    Dominators
+------------  ------------------------
+ENTRY         ENTRY,
+getMod_bb0    ENTRY, getMod_bb0,
+EXIT          ENTRY, getMod_bb0, EXIT,
+==== Results are correct!
+

@@ -1,0 +1,12 @@
+==== Dominance Frontier of main(x: int):
+ENTRY: 
+main_bb0: 
+main_cond: main_print
+main_loop: main_print
+main_even: main_print
+main_odd: main_print
+main_print: 
+main_end: 
+EXIT: 
+==== Results are correct!
+

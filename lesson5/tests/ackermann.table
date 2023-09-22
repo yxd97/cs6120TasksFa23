@@ -1,0 +1,20 @@
+==== Dominator Table of ack(m: int, n: int): int:
+Block Name     Dominators
+-------------  ---------------------------------------------
+ENTRY          ENTRY,
+ack_bb0        ENTRY, ack_bb0,
+ack_m_zero     ENTRY, ack_bb0, ack_m_zero,
+ack_m_nonzero  ENTRY, ack_bb0, ack_m_nonzero,
+ack_n_zero     ENTRY, ack_bb0, ack_m_nonzero, ack_n_zero,
+ack_n_nonzero  ENTRY, ack_bb0, ack_m_nonzero, ack_n_nonzero,
+EXIT           ENTRY, ack_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of main(m: int, n: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+

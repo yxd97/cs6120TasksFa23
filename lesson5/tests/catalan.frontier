@@ -1,0 +1,17 @@
+==== Dominance Frontier of main(input: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of catalan(n: int): int:
+ENTRY: 
+catalan_bb0: 
+catalan_if: EXIT
+catalan_else: EXIT
+catalan_while: EXIT
+catalan_while.body: catalan_while
+catalan_while.end: EXIT
+EXIT: 
+==== Results are correct!
+

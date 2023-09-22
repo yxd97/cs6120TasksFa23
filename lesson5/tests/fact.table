@@ -1,0 +1,18 @@
+==== Dominator Table of main(a: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of fact(a: int): int:
+Block Name    Dominators
+------------  -----------------------------------
+ENTRY         ENTRY,
+fact_bb0      ENTRY, fact_bb0,
+fact_then.0   ENTRY, fact_bb0, fact_then.0,
+fact_else.0   ENTRY, fact_bb0, fact_else.0,
+EXIT          ENTRY, fact_bb0, fact_else.0, EXIT,
+==== Results are correct!
+

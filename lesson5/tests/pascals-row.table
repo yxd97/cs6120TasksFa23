@@ -1,0 +1,19 @@
+==== Dominator Table of main:
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of generateNthRow(x: int):
+Block Name                 Dominators
+-------------------------  -------------------------------------------------------------------------------------
+ENTRY                      ENTRY,
+generateNthRow_bb0         ENTRY, generateNthRow_bb0,
+generateNthRow_for.cond.3  ENTRY, generateNthRow_bb0, generateNthRow_for.cond.3,
+generateNthRow_for.body.3  ENTRY, generateNthRow_bb0, generateNthRow_for.cond.3, generateNthRow_for.body.3,
+generateNthRow_for.end.3   ENTRY, generateNthRow_bb0, generateNthRow_for.cond.3, generateNthRow_for.end.3,
+EXIT                       ENTRY, generateNthRow_bb0, generateNthRow_for.cond.3, generateNthRow_for.end.3, EXIT,
+==== Results are correct!
+

@@ -1,0 +1,34 @@
+==== Dominator Table of main(n: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of totient(n: int): int:
+Block Name                Dominators
+------------------------  ---------------------------------------------------------------------------------------------------------------------------
+ENTRY                     ENTRY,
+totient_bb0               ENTRY, totient_bb0,
+totient_for.set.cond      ENTRY, totient_bb0, totient_for.set.cond,
+totient_for.set.body      ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.body,
+totient_if_lbl            ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.body, totient_if_lbl,
+totient_while.set.cond    ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.body, totient_if_lbl, totient_while.set.cond,
+totient_while.body        ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.body, totient_if_lbl, totient_while.set.cond, totient_while.body,
+totient_while.end         ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.body, totient_if_lbl, totient_while.set.cond, totient_while.end,
+totient_else_lbl          ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.body, totient_else_lbl,
+totient_for.set.end       ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.end,
+totient_final_if_label    ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.end, totient_final_if_label,
+totient_final_else_label  ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.end, totient_final_else_label,
+EXIT                      ENTRY, totient_bb0, totient_for.set.cond, totient_for.set.end, totient_final_else_label, EXIT,
+==== Results are correct!
+
+==== Dominator Table of mod(a: int, b: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+mod_bb0       ENTRY, mod_bb0,
+EXIT          ENTRY, mod_bb0, EXIT,
+==== Results are correct!
+

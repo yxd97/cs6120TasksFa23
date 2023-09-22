@@ -1,0 +1,16 @@
+==== Dominator Table of main(width1: int, height1: int, width2: int, height2: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of fitsInside(w1: int, h1: int, w2: int, h2: int): bool:
+Block Name      Dominators
+--------------  ----------------------------
+ENTRY           ENTRY,
+fitsInside_bb0  ENTRY, fitsInside_bb0,
+EXIT            ENTRY, fitsInside_bb0, EXIT,
+==== Results are correct!
+

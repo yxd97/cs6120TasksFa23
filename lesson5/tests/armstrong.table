@@ -1,0 +1,40 @@
+==== Dominator Table of main(input: int):
+Block Name    Dominators
+------------  --------------------------------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+main_loop     ENTRY, main_bb0, main_loop,
+main_body     ENTRY, main_bb0, main_loop, main_body,
+main_done     ENTRY, main_bb0, main_loop, main_done,
+EXIT          ENTRY, main_bb0, main_loop, main_done, EXIT,
+==== Results are correct!
+
+==== Dominator Table of getDigits(n: int): int:
+Block Name      Dominators
+--------------  -------------------------------------
+ENTRY           ENTRY,
+getDigits_bb0   ENTRY, getDigits_bb0,
+getDigits_then  ENTRY, getDigits_bb0, getDigits_then,
+getDigits_else  ENTRY, getDigits_bb0, getDigits_else,
+EXIT            ENTRY, getDigits_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of mod(a: int, b: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+mod_bb0       ENTRY, mod_bb0,
+EXIT          ENTRY, mod_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of power(base: int, exp: int): int:
+Block Name    Dominators
+------------  -----------------------------------------------
+ENTRY         ENTRY,
+power_bb0     ENTRY, power_bb0,
+power_loop    ENTRY, power_bb0, power_loop,
+power_body    ENTRY, power_bb0, power_loop, power_body,
+power_done    ENTRY, power_bb0, power_loop, power_done,
+EXIT          ENTRY, power_bb0, power_loop, power_done, EXIT,
+==== Results are correct!
+

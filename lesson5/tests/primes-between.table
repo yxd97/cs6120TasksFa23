@@ -1,0 +1,29 @@
+==== Dominator Table of main(a: int, b: int):
+Block Name           Dominators
+-------------------  --------------------------------------------------------------------------------------------------------------------------------------------------------
+ENTRY                ENTRY,
+main_for.outer.init  ENTRY, main_for.outer.init,
+main_true            ENTRY, main_for.outer.init, main_true,
+main_false           ENTRY, main_for.outer.init, main_false,
+main_for.outer.cond  ENTRY, main_for.outer.init, main_for.outer.cond,
+main_for.outer.body  ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body,
+main_for.inner.init  ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body, main_for.inner.init,
+main_for.inner.cond  ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body, main_for.inner.init, main_for.inner.cond,
+main_for.inner.body  ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body, main_for.inner.init, main_for.inner.cond, main_for.inner.body,
+main_if.inner.body   ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body, main_for.inner.init, main_for.inner.cond, main_for.inner.body, main_if.inner.body,
+main_if.inner.end    ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body, main_for.inner.init, main_for.inner.cond, main_for.inner.body, main_if.inner.end,
+main_for.inner.end   ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body, main_for.inner.init, main_for.inner.cond, main_for.inner.end,
+main_if.outer.body   ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body, main_for.inner.init, main_for.inner.cond, main_for.inner.end, main_if.outer.body,
+main_if.outer.end    ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.body, main_for.inner.init, main_for.inner.cond, main_for.inner.end, main_if.outer.end,
+main_for.outer.end   ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.end,
+EXIT                 ENTRY, main_for.outer.init, main_for.outer.cond, main_for.outer.end, EXIT,
+==== Results are correct!
+
+==== Dominator Table of mod(a: int, b: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+mod_bb0       ENTRY, mod_bb0,
+EXIT          ENTRY, mod_bb0, EXIT,
+==== Results are correct!
+

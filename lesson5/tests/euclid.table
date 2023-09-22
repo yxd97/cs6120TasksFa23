@@ -1,0 +1,27 @@
+==== Dominator Table of main:
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of mod(r: int, s: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+mod_bb0       ENTRY, mod_bb0,
+EXIT          ENTRY, mod_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of gcd(a: int, b: int): int:
+Block Name      Dominators
+--------------  ----------------------------------------------------
+ENTRY           ENTRY,
+gcd_bb0         ENTRY, gcd_bb0,
+gcd_for.cond.5  ENTRY, gcd_bb0, gcd_for.cond.5,
+gcd_for.body.5  ENTRY, gcd_bb0, gcd_for.cond.5, gcd_for.body.5,
+gcd_for.end.5   ENTRY, gcd_bb0, gcd_for.cond.5, gcd_for.end.5,
+EXIT            ENTRY, gcd_bb0, gcd_for.cond.5, gcd_for.end.5, EXIT,
+==== Results are correct!
+

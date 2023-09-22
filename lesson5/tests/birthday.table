@@ -1,0 +1,19 @@
+==== Dominator Table of main(n: float):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of probability(n: float): float:
+Block Name              Dominators
+----------------------  ----------------------------------------------------------------------------
+ENTRY                   ENTRY,
+probability_bb0         ENTRY, probability_bb0,
+probability_for.cond.1  ENTRY, probability_bb0, probability_for.cond.1,
+probability_for.body.1  ENTRY, probability_bb0, probability_for.cond.1, probability_for.body.1,
+probability_for.end.1   ENTRY, probability_bb0, probability_for.cond.1, probability_for.end.1,
+EXIT                    ENTRY, probability_bb0, probability_for.cond.1, probability_for.end.1, EXIT,
+==== Results are correct!
+

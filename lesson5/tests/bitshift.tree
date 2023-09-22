@@ -1,0 +1,35 @@
+==== Dominance Tree of pow(x: int, n: int): int:
+(ENTRY: pow_bb0)
+(pow_bb0: pow_then.0, pow_else.0)
+(pow_then.0)
+(pow_else.0: pow_then.12, pow_else.12, pow_endif.12)
+(pow_then.12)
+(pow_else.12)
+(pow_endif.12: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of mod(a: int, b: int): int:
+(ENTRY: mod_bb0)
+(mod_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of LEFTSHIFT(x: int, step: int): int:
+(ENTRY: LEFTSHIFT_bb0)
+(LEFTSHIFT_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of RIGHTSHIFT(x: int, step: int): int:
+(ENTRY: RIGHTSHIFT_bb0)
+(RIGHTSHIFT_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of main(a: int, b: int, c: int, d: int):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

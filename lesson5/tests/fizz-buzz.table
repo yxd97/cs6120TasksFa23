@@ -1,0 +1,20 @@
+==== Dominator Table of main(input: int):
+Block Name       Dominators
+---------------  -------------------------------------------------------------------------------
+ENTRY            ENTRY,
+main_bb0         ENTRY, main_bb0,
+main_for.cond.0  ENTRY, main_bb0, main_for.cond.0,
+main_for.body.0  ENTRY, main_bb0, main_for.cond.0, main_for.body.0,
+main_then.21     ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_then.21,
+main_then.23     ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_then.21, main_then.23,
+main_else.23     ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_then.21, main_else.23,
+main_endif.23    ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_then.21, main_endif.23,
+main_else.21     ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_else.21,
+main_then.33     ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_else.21, main_then.33,
+main_else.33     ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_else.21, main_else.33,
+main_endif.33    ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_else.21, main_endif.33,
+main_endif.21    ENTRY, main_bb0, main_for.cond.0, main_for.body.0, main_endif.21,
+main_for.end.0   ENTRY, main_bb0, main_for.cond.0, main_for.end.0,
+EXIT             ENTRY, main_bb0, main_for.cond.0, main_for.end.0, EXIT,
+==== Results are correct!
+

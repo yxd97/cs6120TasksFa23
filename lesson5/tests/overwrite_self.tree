@@ -1,6 +1,6 @@
-Dominance Tree of main:
+==== Dominance Tree of main:
 (ENTRY: main_bb0)
 (main_bb0: EXIT)
 (EXIT)
+==== Results are correct!
 
-Results are correct!

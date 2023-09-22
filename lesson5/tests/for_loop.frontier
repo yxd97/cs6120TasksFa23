@@ -1,3 +1,9 @@
-Dominance Frontier of main:
-The dominance frontier of main_for_body is: main_for_cond
-Results are correct!
+==== Dominance Frontier of main:
+ENTRY: 
+main_bb0: 
+main_for_cond: 
+main_for_body: main_for_cond
+main_for_exit: 
+EXIT: 
+==== Results are correct!
+

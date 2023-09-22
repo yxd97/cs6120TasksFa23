@@ -1,0 +1,24 @@
+==== Dominance Tree of main(a: int, b: int, c: int):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of sqrt(x: int): int:
+(ENTRY: sqrt_bb0)
+(sqrt_bb0: sqrt_for.cond.0)
+(sqrt_for.cond.0: sqrt_for.end.0, EXIT, sqrt_for.body.0)
+(sqrt_for.end.0)
+(EXIT)
+(sqrt_for.body.0: sqrt_then.7, sqrt_else.7)
+(sqrt_then.7)
+(sqrt_else.7: sqrt_endif.7)
+(sqrt_endif.7)
+==== Results are correct!
+
+==== Dominance Tree of quadratic(a: int, b: int, c: int):
+(ENTRY: quadratic_bb0)
+(quadratic_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

@@ -1,0 +1,32 @@
+==== Dominance Tree of main(input: int):
+(ENTRY: main_bb0)
+(main_bb0: main_loop)
+(main_loop: main_body, main_done)
+(main_body)
+(main_done: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of getDigits(n: int): int:
+(ENTRY: getDigits_bb0)
+(getDigits_bb0: getDigits_then, getDigits_else, EXIT)
+(getDigits_then)
+(getDigits_else)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of mod(a: int, b: int): int:
+(ENTRY: mod_bb0)
+(mod_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of power(base: int, exp: int): int:
+(ENTRY: power_bb0)
+(power_bb0: power_loop)
+(power_loop: power_body, power_done)
+(power_body)
+(power_done: EXIT)
+(EXIT)
+==== Results are correct!
+

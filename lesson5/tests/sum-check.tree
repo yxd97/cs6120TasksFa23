@@ -1,0 +1,21 @@
+==== Dominance Tree of main(n: int):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of sum_by_loop(n: int): int:
+(ENTRY: sum_by_loop_bb0)
+(sum_by_loop_bb0: sum_by_loop_for_start)
+(sum_by_loop_for_start: sum_by_loop_for, sum_by_loop_end)
+(sum_by_loop_for)
+(sum_by_loop_end: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of sum_by_formula(n: int): int:
+(ENTRY: sum_by_formula_bb0)
+(sum_by_formula_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

@@ -1,0 +1,14 @@
+==== Dominance Frontier of dot_product(vectorA: ptr<int>, vectorB: ptr<int>, size: int): int:
+ENTRY: 
+dot_product_bb0: 
+dot_product_loop: 
+dot_product_done: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of main:
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+

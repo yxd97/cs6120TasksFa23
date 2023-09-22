@@ -1,0 +1,24 @@
+==== Dominance Frontier of main(x: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of is_decreasing(x: int): bool:
+ENTRY: 
+is_decreasing_bb0: 
+is_decreasing_label4: 
+is_decreasing_label5: is_decreasing_label4
+is_decreasing_label11: is_decreasing_label13
+is_decreasing_label12: is_decreasing_label13
+is_decreasing_label13: is_decreasing_label4
+is_decreasing_label6: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of last_digit(x: int): int:
+ENTRY: 
+last_digit_bb0: 
+EXIT: 
+==== Results are correct!
+

@@ -1,0 +1,48 @@
+==== Dominance Frontier of abs(a: int): int:
+ENTRY: 
+abs_bb0: 
+abs_mul_neg_one: abs_abs_res
+abs_abs_res: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of mod(a: int, b: int): int:
+ENTRY: 
+mod_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of gcd(a: int, b: int): int:
+ENTRY: 
+gcd_while.cond: 
+gcd_while.body: gcd_while.cond
+gcd_while.finish: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of lcm(a: int, b: int): int:
+ENTRY: 
+lcm_bb0: 
+lcm_check_b: lcm_is_good, EXIT
+lcm_special_case: EXIT
+lcm_is_good: EXIT
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of orders(u: int, n: int, use_lcm: bool):
+ENTRY: 
+orders_for.cond: 
+orders_for.body: orders_for.cond
+orders_lcm: orders_for.body.print
+orders_gcd: orders_for.body.print
+orders_for.body.print: orders_for.cond
+orders_for.finish: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of main(n: int, use_lcm: bool):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+

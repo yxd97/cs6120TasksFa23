@@ -1,0 +1,18 @@
+==== Dominator Table of hanoi(disks: int, src: int, dst: int, spare: int):
+Block Name    Dominators
+------------  -----------------------------------
+ENTRY         ENTRY,
+hanoi_bb0     ENTRY, hanoi_bb0,
+hanoi_then    ENTRY, hanoi_bb0, hanoi_then,
+hanoi_else    ENTRY, hanoi_bb0, hanoi_else,
+EXIT          ENTRY, hanoi_bb0, hanoi_else, EXIT,
+==== Results are correct!
+
+==== Dominator Table of main(disks: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+

@@ -1,0 +1,47 @@
+==== Dominator Table of main:
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of mod(a: int, b: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+mod_bb0       ENTRY, mod_bb0,
+EXIT          ENTRY, mod_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of gcd(a: int, b: int): int:
+Block Name    Dominators
+------------  ------------------------------------------------------
+ENTRY         ENTRY,
+gcd_bb0       ENTRY, gcd_bb0,
+gcd_then.0    ENTRY, gcd_bb0, gcd_then.0,
+gcd_else.0    ENTRY, gcd_bb0, gcd_else.0,
+gcd_endif.0   ENTRY, gcd_bb0, gcd_endif.0,
+gcd_then.7    ENTRY, gcd_bb0, gcd_endif.0, gcd_then.7,
+gcd_else.7    ENTRY, gcd_bb0, gcd_endif.0, gcd_else.7,
+gcd_then.12   ENTRY, gcd_bb0, gcd_endif.0, gcd_else.7, gcd_then.12,
+gcd_else.12   ENTRY, gcd_bb0, gcd_endif.0, gcd_else.7, gcd_else.12,
+gcd_endif.12  ENTRY, gcd_bb0, gcd_endif.0, gcd_else.7, gcd_endif.12,
+gcd_endif.7   ENTRY, gcd_bb0, gcd_endif.7, gcd_endif.0,
+EXIT          ENTRY, gcd_bb0, gcd_endif.0, gcd_endif.7, EXIT,
+==== Results are correct!
+
+==== Dominator Table of relative_primes(a: int):
+Block Name                  Dominators
+--------------------------  ------------------------------------------------------------------------------------------------------------
+ENTRY                       ENTRY,
+relative_primes_bb0         ENTRY, relative_primes_bb0,
+relative_primes_for.cond.0  ENTRY, relative_primes_bb0, relative_primes_for.cond.0,
+relative_primes_for.body.0  ENTRY, relative_primes_bb0, relative_primes_for.cond.0, relative_primes_for.body.0,
+relative_primes_then.7      ENTRY, relative_primes_bb0, relative_primes_for.cond.0, relative_primes_for.body.0, relative_primes_then.7,
+relative_primes_else.7      ENTRY, relative_primes_bb0, relative_primes_for.cond.0, relative_primes_for.body.0, relative_primes_else.7,
+relative_primes_endif.7     ENTRY, relative_primes_bb0, relative_primes_for.cond.0, relative_primes_for.body.0, relative_primes_endif.7,
+relative_primes_for.end.0   ENTRY, relative_primes_bb0, relative_primes_for.cond.0, relative_primes_for.end.0,
+EXIT                        ENTRY, relative_primes_bb0, relative_primes_for.cond.0, relative_primes_for.end.0, EXIT,
+==== Results are correct!
+

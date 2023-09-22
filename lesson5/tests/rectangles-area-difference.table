@@ -1,0 +1,18 @@
+==== Dominator Table of main(x1: int, y1: int, x2: int, y2: int):
+Block Name    Dominators
+------------  --------------------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+main_flip     ENTRY, main_bb0, main_flip,
+main_end      ENTRY, main_bb0, main_end,
+EXIT          ENTRY, main_bb0, main_end, EXIT,
+==== Results are correct!
+
+==== Dominator Table of area(x: int, y: int): int:
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+area_bb0      ENTRY, area_bb0,
+EXIT          ENTRY, area_bb0, EXIT,
+==== Results are correct!
+

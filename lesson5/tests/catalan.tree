@@ -1,0 +1,17 @@
+==== Dominance Tree of main(input: int):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of catalan(n: int): int:
+(ENTRY: catalan_bb0)
+(catalan_bb0: catalan_if, EXIT, catalan_else)
+(catalan_if)
+(EXIT)
+(catalan_else: catalan_while)
+(catalan_while: catalan_while.body, catalan_while.end)
+(catalan_while.body)
+(catalan_while.end)
+==== Results are correct!
+

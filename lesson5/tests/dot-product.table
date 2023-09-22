@@ -1,0 +1,18 @@
+==== Dominator Table of dot_product(vectorA: ptr<int>, vectorB: ptr<int>, size: int): int:
+Block Name        Dominators
+----------------  -----------------------------------------------------------------
+ENTRY             ENTRY,
+dot_product_bb0   ENTRY, dot_product_bb0,
+dot_product_loop  ENTRY, dot_product_bb0, dot_product_loop,
+dot_product_done  ENTRY, dot_product_bb0, dot_product_loop, dot_product_done,
+EXIT              ENTRY, dot_product_bb0, dot_product_loop, dot_product_done, EXIT,
+==== Results are correct!
+
+==== Dominator Table of main:
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+

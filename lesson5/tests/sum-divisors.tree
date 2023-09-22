@@ -1,0 +1,18 @@
+==== Dominance Tree of main(n: int):
+(ENTRY: main_bb0)
+(main_bb0: main_neg, main_begin)
+(main_neg)
+(main_begin: main_end, main_check)
+(main_end: EXIT)
+(EXIT)
+(main_check: main_body)
+(main_body: main_then)
+(main_then)
+==== Results are correct!
+
+==== Dominance Tree of mod(dividend: int, divisor: int): int:
+(ENTRY: mod_bb0)
+(mod_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

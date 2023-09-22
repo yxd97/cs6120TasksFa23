@@ -1,6 +1,6 @@
-Dominator Table of main(x: int):
+==== Dominator Table of main(x: int):
 Block Name       Dominators
----------------  ----------------------------------------------------------------------------------------------------------
+---------------  --------------------------------------------------------------
 ENTRY            ENTRY,
 main_bb0         ENTRY, main_bb0,
 main_while_cond  ENTRY, main_bb0, main_while_cond,
@@ -9,6 +9,6 @@ main_even        ENTRY, main_bb0, main_while_cond, main_while_body, main_even,
 main_odd         ENTRY, main_bb0, main_while_cond, main_while_body, main_odd,
 main_endif       ENTRY, main_bb0, main_while_cond, main_while_body, main_endif,
 main_while_exit  ENTRY, main_bb0, main_while_cond, main_while_exit,
-EXIT             ENTRY, main_bb0, main_while_cond, main_while_body, main_even, main_odd, main_endif, main_while_exit, EXIT,
+EXIT             ENTRY, main_bb0, main_while_cond, main_while_exit, EXIT,
+==== Results are correct!
 
-Results are correct!

@@ -1,0 +1,23 @@
+==== Dominance Tree of main(input: int):
+(ENTRY: main_bb0)
+(main_bb0: main_begin)
+(main_begin: main_check_result)
+(main_check_result: main_process_result, main_check_done)
+(main_process_result)
+(main_check_done: main_done)
+(main_done: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of is_single_digit(input: int): bool:
+(ENTRY: is_single_digit_bb0)
+(is_single_digit_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of peel_last_digit(input: int): int:
+(ENTRY: peel_last_digit_bb0)
+(peel_last_digit_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

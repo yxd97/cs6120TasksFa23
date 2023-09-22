@@ -1,0 +1,22 @@
+==== Dominator Table of main(n: int, arrows: int, repeats: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of up_arrow(num: int, arrows: int, repeats: int): int:
+Block Name                   Dominators
+---------------------------  ----------------------------------------------------------------------------------------
+ENTRY                        ENTRY,
+up_arrow_bb0                 ENTRY, up_arrow_bb0,
+up_arrow_loopstart           ENTRY, up_arrow_bb0, up_arrow_loopstart,
+up_arrow_loopbody            ENTRY, up_arrow_bb0, up_arrow_loopstart, up_arrow_loopbody,
+up_arrow_base                ENTRY, up_arrow_bb0, up_arrow_loopstart, up_arrow_loopbody, up_arrow_base,
+up_arrow_arrowsgreaterthan1  ENTRY, up_arrow_bb0, up_arrow_loopstart, up_arrow_loopbody, up_arrow_arrowsgreaterthan1,
+up_arrow_finally             ENTRY, up_arrow_bb0, up_arrow_loopstart, up_arrow_loopbody, up_arrow_finally,
+up_arrow_endloop             ENTRY, up_arrow_bb0, up_arrow_loopstart, up_arrow_endloop,
+EXIT                         ENTRY, up_arrow_bb0, up_arrow_loopstart, up_arrow_endloop, EXIT,
+==== Results are correct!
+

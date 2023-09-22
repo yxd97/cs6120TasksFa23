@@ -1,0 +1,14 @@
+==== Dominance Tree of main(op1: int, op2: int):
+(ENTRY: main_bb0)
+(main_bb0: main_cmp.val)
+(main_cmp.val: main_if.1, main_else.1, main_loop.bound)
+(main_if.1)
+(main_else.1)
+(main_loop.bound: main_program.end, main_update.val)
+(main_program.end: EXIT)
+(EXIT)
+(main_update.val: main_if.2, main_else.2)
+(main_if.2)
+(main_else.2)
+==== Results are correct!
+

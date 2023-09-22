@@ -1,0 +1,14 @@
+==== Dominator Table of main(n: int):
+Block Name           Dominators
+-------------------  ---------------------------------------------------------------------------------------------------------------
+ENTRY                ENTRY,
+main_bb0             ENTRY, main_bb0,
+main_outer_loop      ENTRY, main_bb0, main_outer_loop,
+main_inner_loop      ENTRY, main_bb0, main_outer_loop, main_inner_loop,
+main_found           ENTRY, main_bb0, main_outer_loop, main_inner_loop, main_found,
+main_inner_continue  ENTRY, main_bb0, main_outer_loop, main_inner_loop, main_inner_continue,
+main_outer_continue  ENTRY, main_bb0, main_outer_loop, main_inner_loop, main_inner_continue, main_outer_continue,
+main_finish          ENTRY, main_bb0, main_outer_loop, main_inner_loop, main_inner_continue, main_outer_continue, main_finish,
+EXIT                 ENTRY, main_bb0, main_outer_loop, main_inner_loop, main_inner_continue, main_outer_continue, main_finish, EXIT,
+==== Results are correct!
+

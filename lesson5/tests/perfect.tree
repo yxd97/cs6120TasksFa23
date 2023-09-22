@@ -1,0 +1,13 @@
+==== Dominance Tree of main(input: int):
+(ENTRY: main_bb0)
+(main_bb0: main_for.cond.1)
+(main_for.cond.1: main_for.body, main_for.end)
+(main_for.body: main_if.body, main_for.incre)
+(main_if.body)
+(main_for.incre)
+(main_for.end: main_if.success, main_if.failure.end)
+(main_if.success)
+(main_if.failure.end: EXIT)
+(EXIT)
+==== Results are correct!
+

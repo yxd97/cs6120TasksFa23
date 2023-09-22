@@ -1,0 +1,18 @@
+==== Dominance Tree of main(n: int, p: int):
+(ENTRY: main_bb0)
+(main_bb0: main_for.cond.6)
+(main_for.cond.6: main_for.end.6, main_for.body.6)
+(main_for.end.6: EXIT)
+(EXIT)
+(main_for.body.6: main_then.11, main_else.11, main_endif.11)
+(main_then.11)
+(main_else.11)
+(main_endif.11)
+==== Results are correct!
+
+==== Dominance Tree of mod(n: int, p: int): int:
+(ENTRY: mod_bb0)
+(mod_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

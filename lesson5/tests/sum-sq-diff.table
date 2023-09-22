@@ -1,0 +1,30 @@
+==== Dominator Table of sumOfSquares(n: int): int:
+Block Name               Dominators
+-----------------------  -------------------------------------------------------------------------------
+ENTRY                    ENTRY,
+sumOfSquares_bb0         ENTRY, sumOfSquares_bb0,
+sumOfSquares_for.cond.1  ENTRY, sumOfSquares_bb0, sumOfSquares_for.cond.1,
+sumOfSquares_for.body.1  ENTRY, sumOfSquares_bb0, sumOfSquares_for.cond.1, sumOfSquares_for.body.1,
+sumOfSquares_for.end.1   ENTRY, sumOfSquares_bb0, sumOfSquares_for.cond.1, sumOfSquares_for.end.1,
+EXIT                     ENTRY, sumOfSquares_bb0, sumOfSquares_for.cond.1, sumOfSquares_for.end.1, EXIT,
+==== Results are correct!
+
+==== Dominator Table of squareOfSum(n: int): int:
+Block Name              Dominators
+----------------------  ----------------------------------------------------------------------------
+ENTRY                   ENTRY,
+squareOfSum_bb0         ENTRY, squareOfSum_bb0,
+squareOfSum_for.cond.1  ENTRY, squareOfSum_bb0, squareOfSum_for.cond.1,
+squareOfSum_for.body.1  ENTRY, squareOfSum_bb0, squareOfSum_for.cond.1, squareOfSum_for.body.1,
+squareOfSum_for.end.1   ENTRY, squareOfSum_bb0, squareOfSum_for.cond.1, squareOfSum_for.end.1,
+EXIT                    ENTRY, squareOfSum_bb0, squareOfSum_for.cond.1, squareOfSum_for.end.1, EXIT,
+==== Results are correct!
+
+==== Dominator Table of main(n: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+

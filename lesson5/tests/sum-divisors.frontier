@@ -1,0 +1,18 @@
+==== Dominance Frontier of main(n: int):
+ENTRY: 
+main_bb0: 
+main_neg: main_begin
+main_begin: 
+main_check: main_begin
+main_body: main_begin
+main_then: main_begin
+main_end: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of mod(dividend: int, divisor: int): int:
+ENTRY: 
+mod_bb0: 
+EXIT: 
+==== Results are correct!
+

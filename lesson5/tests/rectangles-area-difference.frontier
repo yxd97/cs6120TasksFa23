@@ -1,0 +1,14 @@
+==== Dominance Frontier of main(x1: int, y1: int, x2: int, y2: int):
+ENTRY: 
+main_bb0: 
+main_flip: main_end
+main_end: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of area(x: int, y: int): int:
+ENTRY: 
+area_bb0: 
+EXIT: 
+==== Results are correct!
+

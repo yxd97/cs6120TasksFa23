@@ -1,0 +1,24 @@
+==== Dominance Frontier of main(a: int, b: int, c: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of sqrt(x: int): int:
+ENTRY: 
+sqrt_bb0: 
+sqrt_for.cond.0: 
+sqrt_for.body.0: EXIT, sqrt_for.cond.0
+sqrt_then.7: EXIT
+sqrt_else.7: sqrt_for.cond.0
+sqrt_endif.7: sqrt_for.cond.0
+sqrt_for.end.0: EXIT
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of quadratic(a: int, b: int, c: int):
+ENTRY: 
+quadratic_bb0: 
+EXIT: 
+==== Results are correct!
+

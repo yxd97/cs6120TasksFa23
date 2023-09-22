@@ -1,0 +1,16 @@
+==== Dominator Table of main(op1: int, op2: int):
+Block Name        Dominators
+----------------  -----------------------------------------------------------------------------
+ENTRY             ENTRY,
+main_bb0          ENTRY, main_bb0,
+main_cmp.val      ENTRY, main_bb0, main_cmp.val,
+main_if.1         ENTRY, main_bb0, main_cmp.val, main_if.1,
+main_else.1       ENTRY, main_bb0, main_cmp.val, main_else.1,
+main_loop.bound   ENTRY, main_bb0, main_cmp.val, main_loop.bound,
+main_update.val   ENTRY, main_bb0, main_cmp.val, main_loop.bound, main_update.val,
+main_if.2         ENTRY, main_bb0, main_cmp.val, main_loop.bound, main_update.val, main_if.2,
+main_else.2       ENTRY, main_bb0, main_cmp.val, main_loop.bound, main_update.val, main_else.2,
+main_program.end  ENTRY, main_bb0, main_cmp.val, main_loop.bound, main_program.end,
+EXIT              ENTRY, main_bb0, main_cmp.val, main_loop.bound, main_program.end, EXIT,
+==== Results are correct!
+

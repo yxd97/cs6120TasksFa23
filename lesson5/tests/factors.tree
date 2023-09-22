@@ -1,0 +1,11 @@
+==== Dominance Tree of main(num: int):
+(ENTRY: main_bb0)
+(main_bb0: main_loopcheck)
+(main_loopcheck: main_loopend, main_loopbody)
+(main_loopend: EXIT)
+(EXIT)
+(main_loopbody: main_ifyes, main_ifno)
+(main_ifyes)
+(main_ifno)
+==== Results are correct!
+

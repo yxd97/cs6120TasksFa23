@@ -1,0 +1,19 @@
+==== Dominance Tree of main(x: int, y: int):
+(ENTRY: main_bb0)
+(main_bb0: main_then.1, main_else.1, main_endif.1)
+(main_then.1)
+(main_else.1)
+(main_endif.1: main_foreverloop)
+(main_foreverloop: main_else.2, main_then.2)
+(main_else.2)
+(main_then.2: main_loopend)
+(main_loopend: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of getMod(val: int, mod: int): int:
+(ENTRY: getMod_bb0)
+(getMod_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

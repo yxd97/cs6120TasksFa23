@@ -1,6 +1,6 @@
-Dominance Tree of main(a: int):
+==== Dominance Tree of main(a: int):
 (ENTRY: main_bb0)
 (main_bb0: EXIT)
 (EXIT)
+==== Results are correct!
 
-Results are correct!

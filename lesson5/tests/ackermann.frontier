@@ -1,0 +1,16 @@
+==== Dominance Frontier of ack(m: int, n: int): int:
+ENTRY: 
+ack_bb0: 
+ack_m_zero: EXIT
+ack_m_nonzero: EXIT
+ack_n_zero: EXIT
+ack_n_nonzero: EXIT
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of main(m: int, n: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+

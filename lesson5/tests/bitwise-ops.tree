@@ -1,0 +1,48 @@
+==== Dominance Tree of mod2(a: int): bool:
+(ENTRY: mod2_bb0)
+(mod2_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of loop_subroutine(a: int, b: int, c: bool): int:
+(ENTRY: loop_subroutine_bb0)
+(loop_subroutine_bb0: loop_subroutine_loop)
+(loop_subroutine_loop: loop_subroutine_end, loop_subroutine_here)
+(loop_subroutine_end: EXIT)
+(EXIT)
+(loop_subroutine_here: loop_subroutine_doOr, loop_subroutine_stay)
+(loop_subroutine_doOr)
+(loop_subroutine_stay: loop_subroutine_add, loop_subroutine_end_loop)
+(loop_subroutine_add)
+(loop_subroutine_end_loop)
+==== Results are correct!
+
+==== Dominance Tree of OR(a: int, b: int): int:
+(ENTRY: OR_bb0)
+(OR_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of AND(a: int, b: int): int:
+(ENTRY: AND_bb0)
+(AND_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of XOR(a: int, b: int): int:
+(ENTRY: XOR_bb0)
+(XOR_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of main(a: int, b: int, c: int):
+(ENTRY: main_bb0)
+(main_bb0: main_and_op, main_end, main_useless_lbl)
+(main_and_op)
+(main_end: EXIT)
+(EXIT)
+(main_useless_lbl: main_or_op, main_xor_op)
+(main_or_op)
+(main_xor_op)
+==== Results are correct!
+

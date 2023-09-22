@@ -1,0 +1,15 @@
+==== Dominance Tree of main(n: float):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of probability(n: float): float:
+(ENTRY: probability_bb0)
+(probability_bb0: probability_for.cond.1)
+(probability_for.cond.1: probability_for.body.1, probability_for.end.1)
+(probability_for.body.1)
+(probability_for.end.1: EXIT)
+(EXIT)
+==== Results are correct!
+

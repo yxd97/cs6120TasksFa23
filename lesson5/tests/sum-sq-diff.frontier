@@ -1,0 +1,24 @@
+==== Dominance Frontier of sumOfSquares(n: int): int:
+ENTRY: 
+sumOfSquares_bb0: 
+sumOfSquares_for.cond.1: 
+sumOfSquares_for.body.1: sumOfSquares_for.cond.1
+sumOfSquares_for.end.1: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of squareOfSum(n: int): int:
+ENTRY: 
+squareOfSum_bb0: 
+squareOfSum_for.cond.1: 
+squareOfSum_for.body.1: squareOfSum_for.cond.1
+squareOfSum_for.end.1: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of main(n: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+

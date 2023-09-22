@@ -1,0 +1,30 @@
+==== Dominator Table of main(a: int, b: int, c: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of sqrt(x: int): int:
+Block Name       Dominators
+---------------  -----------------------------------------------------------------------------
+ENTRY            ENTRY,
+sqrt_bb0         ENTRY, sqrt_bb0,
+sqrt_for.cond.0  ENTRY, sqrt_bb0, sqrt_for.cond.0,
+sqrt_for.body.0  ENTRY, sqrt_bb0, sqrt_for.cond.0, sqrt_for.body.0,
+sqrt_then.7      ENTRY, sqrt_bb0, sqrt_for.cond.0, sqrt_for.body.0, sqrt_then.7,
+sqrt_else.7      ENTRY, sqrt_bb0, sqrt_for.cond.0, sqrt_for.body.0, sqrt_else.7,
+sqrt_endif.7     ENTRY, sqrt_bb0, sqrt_for.cond.0, sqrt_for.body.0, sqrt_else.7, sqrt_endif.7,
+sqrt_for.end.0   ENTRY, sqrt_bb0, sqrt_for.cond.0, sqrt_for.end.0,
+EXIT             ENTRY, sqrt_bb0, sqrt_for.cond.0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of quadratic(a: int, b: int, c: int):
+Block Name     Dominators
+-------------  ---------------------------
+ENTRY          ENTRY,
+quadratic_bb0  ENTRY, quadratic_bb0,
+EXIT           ENTRY, quadratic_bb0, EXIT,
+==== Results are correct!
+

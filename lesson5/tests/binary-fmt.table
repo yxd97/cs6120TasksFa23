@@ -1,0 +1,25 @@
+==== Dominator Table of main(n: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of printBinary(n: int):
+Block Name       Dominators
+---------------  ----------------------------------------------
+ENTRY            ENTRY,
+printBinary_bb0  ENTRY, printBinary_bb0,
+printBinary_rec  ENTRY, printBinary_bb0, printBinary_rec,
+EXIT             ENTRY, printBinary_bb0, printBinary_rec, EXIT,
+==== Results are correct!
+
+==== Dominator Table of mod(a0: int, a1: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+mod_bb0       ENTRY, mod_bb0,
+EXIT          ENTRY, mod_bb0, EXIT,
+==== Results are correct!
+

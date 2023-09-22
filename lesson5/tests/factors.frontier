@@ -1,0 +1,11 @@
+==== Dominance Frontier of main(num: int):
+ENTRY: 
+main_bb0: 
+main_loopcheck: 
+main_loopbody: main_loopcheck
+main_ifyes: main_loopcheck
+main_ifno: main_loopcheck
+main_loopend: 
+EXIT: 
+==== Results are correct!
+

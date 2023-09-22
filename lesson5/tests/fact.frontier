@@ -1,0 +1,14 @@
+==== Dominance Frontier of main(a: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of fact(a: int): int:
+ENTRY: 
+fact_bb0: 
+fact_then.0: 
+fact_else.0: 
+EXIT: 
+==== Results are correct!
+

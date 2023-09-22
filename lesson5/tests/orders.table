@@ -1,0 +1,60 @@
+==== Dominator Table of abs(a: int): int:
+Block Name       Dominators
+---------------  ----------------------------------
+ENTRY            ENTRY,
+abs_bb0          ENTRY, abs_bb0,
+abs_mul_neg_one  ENTRY, abs_bb0, abs_mul_neg_one,
+abs_abs_res      ENTRY, abs_bb0, abs_abs_res,
+EXIT             ENTRY, abs_bb0, abs_abs_res, EXIT,
+==== Results are correct!
+
+==== Dominator Table of mod(a: int, b: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+mod_bb0       ENTRY, mod_bb0,
+EXIT          ENTRY, mod_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of gcd(a: int, b: int): int:
+Block Name        Dominators
+----------------  ----------------------------------------------
+ENTRY             ENTRY,
+gcd_while.cond    ENTRY, gcd_while.cond,
+gcd_while.body    ENTRY, gcd_while.cond, gcd_while.body,
+gcd_while.finish  ENTRY, gcd_while.cond, gcd_while.finish,
+EXIT              ENTRY, gcd_while.cond, gcd_while.finish, EXIT,
+==== Results are correct!
+
+==== Dominator Table of lcm(a: int, b: int): int:
+Block Name        Dominators
+----------------  ----------------------------------------------
+ENTRY             ENTRY,
+lcm_bb0           ENTRY, lcm_bb0,
+lcm_check_b       ENTRY, lcm_bb0, lcm_check_b,
+lcm_special_case  ENTRY, lcm_bb0, lcm_check_b, lcm_special_case,
+lcm_is_good       ENTRY, lcm_bb0, lcm_is_good,
+EXIT              ENTRY, lcm_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of orders(u: int, n: int, use_lcm: bool):
+Block Name             Dominators
+---------------------  ---------------------------------------------------------------
+ENTRY                  ENTRY,
+orders_for.cond        ENTRY, orders_for.cond,
+orders_for.body        ENTRY, orders_for.cond, orders_for.body,
+orders_lcm             ENTRY, orders_for.cond, orders_for.body, orders_lcm,
+orders_gcd             ENTRY, orders_for.cond, orders_for.body, orders_gcd,
+orders_for.body.print  ENTRY, orders_for.cond, orders_for.body, orders_for.body.print,
+orders_for.finish      ENTRY, orders_for.cond, orders_for.finish,
+EXIT                   ENTRY, orders_for.cond, orders_for.finish, EXIT,
+==== Results are correct!
+
+==== Dominator Table of main(n: int, use_lcm: bool):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+

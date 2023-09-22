@@ -1,0 +1,30 @@
+==== Dominator Table of main(x: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of is_decreasing(x: int): bool:
+Block Name             Dominators
+---------------------  --------------------------------------------------------------------------------------------
+ENTRY                  ENTRY,
+is_decreasing_bb0      ENTRY, is_decreasing_bb0,
+is_decreasing_label4   ENTRY, is_decreasing_bb0, is_decreasing_label4,
+is_decreasing_label5   ENTRY, is_decreasing_bb0, is_decreasing_label4, is_decreasing_label5,
+is_decreasing_label11  ENTRY, is_decreasing_bb0, is_decreasing_label4, is_decreasing_label5, is_decreasing_label11,
+is_decreasing_label12  ENTRY, is_decreasing_bb0, is_decreasing_label4, is_decreasing_label5, is_decreasing_label12,
+is_decreasing_label13  ENTRY, is_decreasing_bb0, is_decreasing_label4, is_decreasing_label5, is_decreasing_label13,
+is_decreasing_label6   ENTRY, is_decreasing_bb0, is_decreasing_label4, is_decreasing_label6,
+EXIT                   ENTRY, is_decreasing_bb0, is_decreasing_label4, is_decreasing_label6, EXIT,
+==== Results are correct!
+
+==== Dominator Table of last_digit(x: int): int:
+Block Name      Dominators
+--------------  ----------------------------
+ENTRY           ENTRY,
+last_digit_bb0  ENTRY, last_digit_bb0,
+EXIT            ENTRY, last_digit_bb0, EXIT,
+==== Results are correct!
+

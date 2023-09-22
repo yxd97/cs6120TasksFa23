@@ -1,0 +1,14 @@
+==== Dominance Tree of main(a: int):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of fact(a: int): int:
+(ENTRY: fact_bb0)
+(fact_bb0: fact_then.0, fact_else.0)
+(fact_then.0)
+(fact_else.0: EXIT)
+(EXIT)
+==== Results are correct!
+

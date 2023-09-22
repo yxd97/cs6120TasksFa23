@@ -1,0 +1,21 @@
+==== Dominance Frontier of main(n: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of sum_by_loop(n: int): int:
+ENTRY: 
+sum_by_loop_bb0: 
+sum_by_loop_for_start: 
+sum_by_loop_for: sum_by_loop_for_start
+sum_by_loop_end: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of sum_by_formula(n: int): int:
+ENTRY: 
+sum_by_formula_bb0: 
+EXIT: 
+==== Results are correct!
+

@@ -1,0 +1,29 @@
+==== Dominator Table of main(input: int):
+Block Name           Dominators
+-------------------  ---------------------------------------------------------------------------------
+ENTRY                ENTRY,
+main_bb0             ENTRY, main_bb0,
+main_begin           ENTRY, main_bb0, main_begin,
+main_check_result    ENTRY, main_bb0, main_begin, main_check_result,
+main_process_result  ENTRY, main_bb0, main_begin, main_check_result, main_process_result,
+main_check_done      ENTRY, main_bb0, main_begin, main_check_result, main_check_done,
+main_done            ENTRY, main_bb0, main_begin, main_check_result, main_check_done, main_done,
+EXIT                 ENTRY, main_bb0, main_begin, main_check_result, main_check_done, main_done, EXIT,
+==== Results are correct!
+
+==== Dominator Table of is_single_digit(input: int): bool:
+Block Name           Dominators
+-------------------  ---------------------------------
+ENTRY                ENTRY,
+is_single_digit_bb0  ENTRY, is_single_digit_bb0,
+EXIT                 ENTRY, is_single_digit_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of peel_last_digit(input: int): int:
+Block Name           Dominators
+-------------------  ---------------------------------
+ENTRY                ENTRY,
+peel_last_digit_bb0  ENTRY, peel_last_digit_bb0,
+EXIT                 ENTRY, peel_last_digit_bb0, EXIT,
+==== Results are correct!
+

@@ -1,0 +1,39 @@
+==== Dominance Frontier of main:
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of mod(a: int, b: int): int:
+ENTRY: 
+mod_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of gcd(a: int, b: int): int:
+ENTRY: 
+gcd_bb0: 
+gcd_then.0: gcd_endif.0
+gcd_else.0: gcd_endif.0
+gcd_endif.0: 
+gcd_then.7: gcd_endif.7
+gcd_else.7: gcd_endif.7
+gcd_then.12: gcd_endif.12
+gcd_else.12: gcd_endif.12
+gcd_endif.12: gcd_endif.7
+gcd_endif.7: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of relative_primes(a: int):
+ENTRY: 
+relative_primes_bb0: 
+relative_primes_for.cond.0: 
+relative_primes_for.body.0: relative_primes_for.cond.0
+relative_primes_then.7: relative_primes_endif.7
+relative_primes_else.7: relative_primes_endif.7
+relative_primes_endif.7: relative_primes_for.cond.0
+relative_primes_for.end.0: 
+EXIT: 
+==== Results are correct!
+

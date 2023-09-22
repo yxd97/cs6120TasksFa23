@@ -1,0 +1,21 @@
+==== Dominator Table of main(input: int):
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+main_bb0      ENTRY, main_bb0,
+EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of catalan(n: int): int:
+Block Name          Dominators
+------------------  --------------------------------------------------------------------
+ENTRY               ENTRY,
+catalan_bb0         ENTRY, catalan_bb0,
+catalan_if          ENTRY, catalan_bb0, catalan_if,
+catalan_else        ENTRY, catalan_bb0, catalan_else,
+catalan_while       ENTRY, catalan_bb0, catalan_else, catalan_while,
+catalan_while.body  ENTRY, catalan_bb0, catalan_else, catalan_while, catalan_while.body,
+catalan_while.end   ENTRY, catalan_bb0, catalan_else, catalan_while, catalan_while.end,
+EXIT                ENTRY, catalan_bb0, EXIT,
+==== Results are correct!
+

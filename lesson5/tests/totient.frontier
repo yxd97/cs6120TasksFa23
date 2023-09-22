@@ -1,0 +1,28 @@
+==== Dominance Frontier of main(n: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of totient(n: int): int:
+ENTRY: 
+totient_bb0: 
+totient_for.set.cond: 
+totient_for.set.body: totient_for.set.cond
+totient_if_lbl: totient_else_lbl
+totient_while.set.cond: totient_else_lbl
+totient_while.body: totient_while.set.cond
+totient_while.end: totient_else_lbl
+totient_else_lbl: totient_for.set.cond
+totient_for.set.end: 
+totient_final_if_label: totient_final_else_label
+totient_final_else_label: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of mod(a: int, b: int): int:
+ENTRY: 
+mod_bb0: 
+EXIT: 
+==== Results are correct!
+

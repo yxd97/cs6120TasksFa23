@@ -1,0 +1,33 @@
+==== Dominance Frontier of main(in: int):
+ENTRY: 
+main_bb0: 
+main_for.cond: 
+main_for.body: main_for.cond
+main_if.true: main_for.cond
+main_if.false: main_for.cond
+main_for.end: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of pow(base: int, exp: int): int:
+ENTRY: 
+pow_bb0: 
+pow_for.cond.pow: 
+pow_for.body.pow: pow_for.cond.pow
+pow_if.true.pow: pow_for.cond.pow
+pow_if.false.pow: pow_for.cond.pow
+pow_for.end.pow: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of palindrome(in: int, len: int): bool:
+ENTRY: 
+palindrome_bb0: 
+palindrome_if.true.palindrome: palindrome_if.end.palindrome
+palindrome_if.false.palindrome: palindrome_if.end.palindrome
+palindrome_if.true.mirror: palindrome_if.end.palindrome
+palindrome_if.false.mirror: palindrome_if.end.palindrome
+palindrome_if.end.palindrome: 
+EXIT: 
+==== Results are correct!
+

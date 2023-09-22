@@ -1,7 +1,12 @@
-Dominance Frontier of main(cond1: bool, cond2: bool):
-The dominance frontier of main_then1 is: main_endif1
-The dominance frontier of main_then2 is: main_endif2
-The dominance frontier of main_else2 is: main_endif2
-The dominance frontier of main_endif2 is: main_endif1
-The dominance frontier of main_else1 is: main_endif1
-Results are correct!
+==== Dominance Frontier of main(cond1: bool, cond2: bool):
+ENTRY: 
+main_bb0: 
+main_then1: main_endif1
+main_then2: main_endif2
+main_else2: main_endif2
+main_endif2: main_endif1
+main_else1: main_endif1
+main_endif1: 
+EXIT: 
+==== Results are correct!
+

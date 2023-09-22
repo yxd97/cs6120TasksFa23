@@ -1,0 +1,14 @@
+==== Dominance Tree of main(x1: int, y1: int, x2: int, y2: int):
+(ENTRY: main_bb0)
+(main_bb0: main_flip, main_end)
+(main_flip)
+(main_end: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of area(x: int, y: int): int:
+(ENTRY: area_bb0)
+(area_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

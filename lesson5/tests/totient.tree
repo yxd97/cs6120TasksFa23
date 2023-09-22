@@ -1,0 +1,28 @@
+==== Dominance Tree of main(n: int):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of totient(n: int): int:
+(ENTRY: totient_bb0)
+(totient_bb0: totient_for.set.cond)
+(totient_for.set.cond: totient_for.set.end, totient_for.set.body)
+(totient_for.set.end: totient_final_if_label, totient_final_else_label)
+(totient_final_if_label)
+(totient_final_else_label: EXIT)
+(EXIT)
+(totient_for.set.body: totient_else_lbl, totient_if_lbl)
+(totient_else_lbl)
+(totient_if_lbl: totient_while.set.cond)
+(totient_while.set.cond: totient_while.body, totient_while.end)
+(totient_while.body)
+(totient_while.end)
+==== Results are correct!
+
+==== Dominance Tree of mod(a: int, b: int): int:
+(ENTRY: mod_bb0)
+(mod_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

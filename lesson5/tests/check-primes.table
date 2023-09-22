@@ -1,0 +1,31 @@
+==== Dominator Table of main(n: int):
+Block Name       Dominators
+---------------  ----------------------------------------------------------------
+ENTRY            ENTRY,
+main_bb0         ENTRY, main_bb0,
+main_for.cond.1  ENTRY, main_bb0, main_for.cond.1,
+main_for.body.1  ENTRY, main_bb0, main_for.cond.1, main_for.body.1,
+main_then.7      ENTRY, main_bb0, main_for.cond.1, main_for.body.1, main_then.7,
+main_else.7      ENTRY, main_bb0, main_for.cond.1, main_for.body.1, main_else.7,
+main_endif.7     ENTRY, main_bb0, main_for.cond.1, main_for.body.1, main_endif.7,
+main_for.end.1   ENTRY, main_bb0, main_for.cond.1, main_for.end.1,
+EXIT             ENTRY, main_bb0, main_for.cond.1, main_for.end.1, EXIT,
+==== Results are correct!
+
+==== Dominator Table of checkPrime(x: int): bool:
+Block Name             Dominators
+---------------------  ----------------------------------------------------------------------------------------------------------------------------------------------------
+ENTRY                  ENTRY,
+checkPrime_bb0         ENTRY, checkPrime_bb0,
+checkPrime_then.0      ENTRY, checkPrime_bb0, checkPrime_then.0,
+checkPrime_else.0      ENTRY, checkPrime_bb0, checkPrime_else.0,
+checkPrime_endif.0     ENTRY, checkPrime_bb0, checkPrime_else.0, checkPrime_endif.0,
+checkPrime_for.cond.5  ENTRY, checkPrime_bb0, checkPrime_else.0, checkPrime_endif.0, checkPrime_for.cond.5,
+checkPrime_for.body.5  ENTRY, checkPrime_bb0, checkPrime_else.0, checkPrime_endif.0, checkPrime_for.cond.5, checkPrime_for.body.5,
+checkPrime_then.18     ENTRY, checkPrime_bb0, checkPrime_else.0, checkPrime_endif.0, checkPrime_for.cond.5, checkPrime_for.body.5, checkPrime_then.18,
+checkPrime_else.18     ENTRY, checkPrime_bb0, checkPrime_else.0, checkPrime_endif.0, checkPrime_for.cond.5, checkPrime_for.body.5, checkPrime_else.18,
+checkPrime_endif.18    ENTRY, checkPrime_bb0, checkPrime_else.0, checkPrime_endif.0, checkPrime_for.cond.5, checkPrime_for.body.5, checkPrime_else.18, checkPrime_endif.18,
+checkPrime_for.end.5   ENTRY, checkPrime_bb0, checkPrime_else.0, checkPrime_endif.0, checkPrime_for.cond.5, checkPrime_for.end.5,
+EXIT                   ENTRY, checkPrime_bb0, EXIT,
+==== Results are correct!
+

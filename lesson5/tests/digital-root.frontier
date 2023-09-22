@@ -1,0 +1,23 @@
+==== Dominance Frontier of main(input: int):
+ENTRY: 
+main_bb0: 
+main_begin: 
+main_check_result: main_begin
+main_process_result: main_check_result
+main_check_done: main_begin
+main_done: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of is_single_digit(input: int): bool:
+ENTRY: 
+is_single_digit_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of peel_last_digit(input: int): int:
+ENTRY: 
+peel_last_digit_bb0: 
+EXIT: 
+==== Results are correct!
+

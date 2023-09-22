@@ -1,6 +1,12 @@
-Dominance Frontier of main(x: int):
-The dominance frontier of main_while_body is: main_while_cond
-The dominance frontier of main_even is: main_endif
-The dominance frontier of main_odd is: main_endif
-The dominance frontier of main_endif is: main_while_cond
-Results are correct!
+==== Dominance Frontier of main(x: int):
+ENTRY: 
+main_bb0: 
+main_while_cond: 
+main_while_body: main_while_cond
+main_even: main_endif
+main_odd: main_endif
+main_endif: main_while_cond
+main_while_exit: 
+EXIT: 
+==== Results are correct!
+

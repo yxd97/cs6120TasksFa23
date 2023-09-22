@@ -1,0 +1,33 @@
+==== Dominance Tree of main(in: int):
+(ENTRY: main_bb0)
+(main_bb0: main_for.cond)
+(main_for.cond: main_for.end, main_for.body)
+(main_for.end: EXIT)
+(EXIT)
+(main_for.body: main_if.true, main_if.false)
+(main_if.true)
+(main_if.false)
+==== Results are correct!
+
+==== Dominance Tree of pow(base: int, exp: int): int:
+(ENTRY: pow_bb0)
+(pow_bb0: pow_for.cond.pow)
+(pow_for.cond.pow: pow_for.end.pow, pow_for.body.pow)
+(pow_for.end.pow: EXIT)
+(EXIT)
+(pow_for.body.pow: pow_if.true.pow, pow_if.false.pow)
+(pow_if.true.pow)
+(pow_if.false.pow)
+==== Results are correct!
+
+==== Dominance Tree of palindrome(in: int, len: int): bool:
+(ENTRY: palindrome_bb0)
+(palindrome_bb0: palindrome_if.true.palindrome, palindrome_if.end.palindrome, palindrome_if.false.palindrome)
+(palindrome_if.true.palindrome)
+(palindrome_if.end.palindrome: EXIT)
+(EXIT)
+(palindrome_if.false.palindrome: palindrome_if.true.mirror, palindrome_if.false.mirror)
+(palindrome_if.true.mirror)
+(palindrome_if.false.mirror)
+==== Results are correct!
+

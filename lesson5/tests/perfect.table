@@ -1,0 +1,15 @@
+==== Dominator Table of main(input: int):
+Block Name           Dominators
+-------------------  --------------------------------------------------------------------------
+ENTRY                ENTRY,
+main_bb0             ENTRY, main_bb0,
+main_for.cond.1      ENTRY, main_bb0, main_for.cond.1,
+main_for.body        ENTRY, main_bb0, main_for.cond.1, main_for.body,
+main_if.body         ENTRY, main_bb0, main_for.cond.1, main_for.body, main_if.body,
+main_for.incre       ENTRY, main_bb0, main_for.cond.1, main_for.body, main_for.incre,
+main_for.end         ENTRY, main_bb0, main_for.cond.1, main_for.end,
+main_if.success      ENTRY, main_bb0, main_for.cond.1, main_for.end, main_if.success,
+main_if.failure.end  ENTRY, main_bb0, main_for.cond.1, main_for.end, main_if.failure.end,
+EXIT                 ENTRY, main_bb0, main_for.cond.1, main_for.end, main_if.failure.end, EXIT,
+==== Results are correct!
+

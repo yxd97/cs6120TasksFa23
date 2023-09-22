@@ -1,0 +1,48 @@
+==== Dominance Tree of abs(a: int): int:
+(ENTRY: abs_bb0)
+(abs_bb0: abs_mul_neg_one, abs_abs_res)
+(abs_mul_neg_one)
+(abs_abs_res: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of mod(a: int, b: int): int:
+(ENTRY: mod_bb0)
+(mod_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of gcd(a: int, b: int): int:
+(ENTRY: gcd_while.cond)
+(gcd_while.cond: gcd_while.body, gcd_while.finish)
+(gcd_while.body)
+(gcd_while.finish: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of lcm(a: int, b: int): int:
+(ENTRY: lcm_bb0)
+(lcm_bb0: lcm_is_good, EXIT, lcm_check_b)
+(lcm_is_good)
+(EXIT)
+(lcm_check_b: lcm_special_case)
+(lcm_special_case)
+==== Results are correct!
+
+==== Dominance Tree of orders(u: int, n: int, use_lcm: bool):
+(ENTRY: orders_for.cond)
+(orders_for.cond: orders_for.finish, orders_for.body)
+(orders_for.finish: EXIT)
+(EXIT)
+(orders_for.body: orders_lcm, orders_gcd, orders_for.body.print)
+(orders_lcm)
+(orders_gcd)
+(orders_for.body.print)
+==== Results are correct!
+
+==== Dominance Tree of main(n: int, use_lcm: bool):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

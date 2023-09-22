@@ -1,0 +1,14 @@
+==== Dominance Frontier of main(op1: int, op2: int):
+ENTRY: 
+main_bb0: 
+main_cmp.val: 
+main_if.1: main_loop.bound
+main_else.1: main_loop.bound
+main_loop.bound: main_cmp.val
+main_update.val: main_cmp.val
+main_if.2: main_cmp.val
+main_else.2: main_cmp.val
+main_program.end: 
+EXIT: 
+==== Results are correct!
+

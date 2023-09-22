@@ -1,6 +1,6 @@
-Dominator Table of main(cond1: bool, cond2: bool):
+==== Dominator Table of main(cond1: bool, cond2: bool):
 Block Name    Dominators
-------------  ------------------------------------------------------------------------------------------------
+------------  -----------------------------------------
 ENTRY         ENTRY,
 main_bb0      ENTRY, main_bb0,
 main_then1    ENTRY, main_bb0, main_then1,
@@ -9,6 +9,6 @@ main_else2    ENTRY, main_bb0, main_then1, main_else2,
 main_endif2   ENTRY, main_bb0, main_then1, main_endif2,
 main_else1    ENTRY, main_bb0, main_else1,
 main_endif1   ENTRY, main_bb0, main_endif1,
-EXIT          ENTRY, main_bb0, main_then1, main_then2, main_else2, main_endif2, main_else1, main_endif1, EXIT,
+EXIT          ENTRY, main_bb0, EXIT, main_endif1,
+==== Results are correct!
 
-Results are correct!

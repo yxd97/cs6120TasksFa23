@@ -1,0 +1,19 @@
+==== Dominance Tree of main(n: int):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of printBinary(n: int):
+(ENTRY: printBinary_bb0)
+(printBinary_bb0: printBinary_rec)
+(printBinary_rec: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of mod(a0: int, a1: int): int:
+(ENTRY: mod_bb0)
+(mod_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+

@@ -1,4 +1,10 @@
-Dominance Frontier of main(cond: bool):
-The dominance frontier of main_left is: main_end
-The dominance frontier of main_right is: main_end
-Results are correct!
+==== Dominance Frontier of main(cond: bool):
+ENTRY: 
+main_bb0: 
+main_left: main_end
+main_right: main_end
+main_end: 
+main_ret: 
+EXIT: 
+==== Results are correct!
+

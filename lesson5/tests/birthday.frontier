@@ -1,0 +1,15 @@
+==== Dominance Frontier of main(n: float):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of probability(n: float): float:
+ENTRY: 
+probability_bb0: 
+probability_for.cond.1: 
+probability_for.body.1: probability_for.cond.1
+probability_for.end.1: 
+EXIT: 
+==== Results are correct!
+

@@ -1,0 +1,25 @@
+==== Dominance Frontier of main(a: int, b: int):
+ENTRY: 
+main_for.outer.init: 
+main_true: main_for.outer.cond
+main_false: main_for.outer.cond
+main_for.outer.cond: 
+main_for.outer.body: main_for.outer.cond
+main_for.inner.init: main_for.outer.cond
+main_for.inner.cond: main_for.outer.cond
+main_for.inner.body: main_for.inner.end, main_for.inner.cond
+main_if.inner.body: main_for.inner.end
+main_if.inner.end: main_for.inner.cond
+main_for.inner.end: main_for.outer.cond
+main_if.outer.body: main_if.outer.end
+main_if.outer.end: main_for.outer.cond
+main_for.outer.end: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of mod(a: int, b: int): int:
+ENTRY: 
+mod_bb0: 
+EXIT: 
+==== Results are correct!
+

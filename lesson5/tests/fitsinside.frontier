@@ -1,0 +1,12 @@
+==== Dominance Frontier of main(width1: int, height1: int, width2: int, height2: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of fitsInside(w1: int, h1: int, w2: int, h2: int): bool:
+ENTRY: 
+fitsInside_bb0: 
+EXIT: 
+==== Results are correct!
+

@@ -1,0 +1,15 @@
+==== Dominance Tree of main(input: int):
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of fac(x: int): int:
+(ENTRY: fac_bb0)
+(fac_bb0: fac_then.0, fac_else.0, fac_endif.0)
+(fac_then.0)
+(fac_else.0)
+(fac_endif.0: EXIT)
+(EXIT)
+==== Results are correct!
+

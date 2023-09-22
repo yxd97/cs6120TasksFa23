@@ -1,0 +1,15 @@
+==== Dominance Tree of main:
+(ENTRY: main_bb0)
+(main_bb0: EXIT)
+(EXIT)
+==== Results are correct!
+
+==== Dominance Tree of generateNthRow(x: int):
+(ENTRY: generateNthRow_bb0)
+(generateNthRow_bb0: generateNthRow_for.cond.3)
+(generateNthRow_for.cond.3: generateNthRow_for.body.3, generateNthRow_for.end.3)
+(generateNthRow_for.body.3)
+(generateNthRow_for.end.3: EXIT)
+(EXIT)
+==== Results are correct!
+

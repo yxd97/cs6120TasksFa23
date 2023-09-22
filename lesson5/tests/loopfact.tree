@@ -1,0 +1,9 @@
+==== Dominance Tree of main(input: int):
+(ENTRY: main_bb0)
+(main_bb0: main_for.cond.2)
+(main_for.cond.2: main_for.body.2, main_for.end.2)
+(main_for.body.2)
+(main_for.end.2: EXIT)
+(EXIT)
+==== Results are correct!
+

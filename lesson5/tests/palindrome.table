@@ -1,0 +1,39 @@
+==== Dominator Table of main(in: int):
+Block Name     Dominators
+-------------  -------------------------------------------------------------
+ENTRY          ENTRY,
+main_bb0       ENTRY, main_bb0,
+main_for.cond  ENTRY, main_bb0, main_for.cond,
+main_for.body  ENTRY, main_bb0, main_for.cond, main_for.body,
+main_if.true   ENTRY, main_bb0, main_for.cond, main_for.body, main_if.true,
+main_if.false  ENTRY, main_bb0, main_for.cond, main_for.body, main_if.false,
+main_for.end   ENTRY, main_bb0, main_for.cond, main_for.end,
+EXIT           ENTRY, main_bb0, main_for.cond, main_for.end, EXIT,
+==== Results are correct!
+
+==== Dominator Table of pow(base: int, exp: int): int:
+Block Name        Dominators
+----------------  ---------------------------------------------------------------------
+ENTRY             ENTRY,
+pow_bb0           ENTRY, pow_bb0,
+pow_for.cond.pow  ENTRY, pow_bb0, pow_for.cond.pow,
+pow_for.body.pow  ENTRY, pow_bb0, pow_for.cond.pow, pow_for.body.pow,
+pow_if.true.pow   ENTRY, pow_bb0, pow_for.cond.pow, pow_for.body.pow, pow_if.true.pow,
+pow_if.false.pow  ENTRY, pow_bb0, pow_for.cond.pow, pow_for.body.pow, pow_if.false.pow,
+pow_for.end.pow   ENTRY, pow_bb0, pow_for.cond.pow, pow_for.end.pow,
+EXIT              ENTRY, pow_bb0, pow_for.cond.pow, pow_for.end.pow, EXIT,
+==== Results are correct!
+
+==== Dominator Table of palindrome(in: int, len: int): bool:
+Block Name                      Dominators
+------------------------------  ----------------------------------------------------------------------------------
+ENTRY                           ENTRY,
+palindrome_bb0                  ENTRY, palindrome_bb0,
+palindrome_if.true.palindrome   ENTRY, palindrome_bb0, palindrome_if.true.palindrome,
+palindrome_if.false.palindrome  ENTRY, palindrome_bb0, palindrome_if.false.palindrome,
+palindrome_if.true.mirror       ENTRY, palindrome_bb0, palindrome_if.false.palindrome, palindrome_if.true.mirror,
+palindrome_if.false.mirror      ENTRY, palindrome_bb0, palindrome_if.false.palindrome, palindrome_if.false.mirror,
+palindrome_if.end.palindrome    ENTRY, palindrome_bb0, palindrome_if.end.palindrome,
+EXIT                            ENTRY, palindrome_bb0, palindrome_if.end.palindrome, EXIT,
+==== Results are correct!
+

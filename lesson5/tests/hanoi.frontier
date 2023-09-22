@@ -1,0 +1,14 @@
+==== Dominance Frontier of hanoi(disks: int, src: int, dst: int, spare: int):
+ENTRY: 
+hanoi_bb0: 
+hanoi_then: hanoi_else
+hanoi_else: 
+EXIT: 
+==== Results are correct!
+
+==== Dominance Frontier of main(disks: int):
+ENTRY: 
+main_bb0: 
+EXIT: 
+==== Results are correct!
+

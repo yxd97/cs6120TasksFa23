@@ -1,0 +1,13 @@
+==== Dominator Table of main(num: int):
+Block Name      Dominators
+--------------  -----------------------------------------------------------
+ENTRY           ENTRY,
+main_bb0        ENTRY, main_bb0,
+main_loopcheck  ENTRY, main_bb0, main_loopcheck,
+main_loopbody   ENTRY, main_bb0, main_loopcheck, main_loopbody,
+main_ifyes      ENTRY, main_bb0, main_loopcheck, main_loopbody, main_ifyes,
+main_ifno       ENTRY, main_bb0, main_loopcheck, main_loopbody, main_ifno,
+main_loopend    ENTRY, main_bb0, main_loopcheck, main_loopend,
+EXIT            ENTRY, main_bb0, main_loopcheck, main_loopend, EXIT,
+==== Results are correct!
+

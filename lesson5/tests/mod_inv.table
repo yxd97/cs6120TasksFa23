@@ -1,0 +1,22 @@
+==== Dominator Table of main(n: int, p: int):
+Block Name       Dominators
+---------------  -----------------------------------------------------------------
+ENTRY            ENTRY,
+main_bb0         ENTRY, main_bb0,
+main_for.cond.6  ENTRY, main_bb0, main_for.cond.6,
+main_for.body.6  ENTRY, main_bb0, main_for.cond.6, main_for.body.6,
+main_then.11     ENTRY, main_bb0, main_for.cond.6, main_for.body.6, main_then.11,
+main_else.11     ENTRY, main_bb0, main_for.cond.6, main_for.body.6, main_else.11,
+main_endif.11    ENTRY, main_bb0, main_for.cond.6, main_for.body.6, main_endif.11,
+main_for.end.6   ENTRY, main_bb0, main_for.cond.6, main_for.end.6,
+EXIT             ENTRY, main_bb0, main_for.cond.6, main_for.end.6, EXIT,
+==== Results are correct!
+
+==== Dominator Table of mod(n: int, p: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+mod_bb0       ENTRY, mod_bb0,
+EXIT          ENTRY, mod_bb0, EXIT,
+==== Results are correct!
+

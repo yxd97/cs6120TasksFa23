@@ -1,0 +1,60 @@
+==== Dominator Table of mod2(a: int): bool:
+Block Name    Dominators
+------------  ----------------------
+ENTRY         ENTRY,
+mod2_bb0      ENTRY, mod2_bb0,
+EXIT          ENTRY, mod2_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of loop_subroutine(a: int, b: int, c: bool): int:
+Block Name                Dominators
+------------------------  -----------------------------------------------------------------------------------------------------------------------
+ENTRY                     ENTRY,
+loop_subroutine_bb0       ENTRY, loop_subroutine_bb0,
+loop_subroutine_loop      ENTRY, loop_subroutine_bb0, loop_subroutine_loop,
+loop_subroutine_here      ENTRY, loop_subroutine_bb0, loop_subroutine_loop, loop_subroutine_here,
+loop_subroutine_doOr      ENTRY, loop_subroutine_bb0, loop_subroutine_loop, loop_subroutine_here, loop_subroutine_doOr,
+loop_subroutine_stay      ENTRY, loop_subroutine_bb0, loop_subroutine_loop, loop_subroutine_here, loop_subroutine_stay,
+loop_subroutine_add       ENTRY, loop_subroutine_bb0, loop_subroutine_loop, loop_subroutine_here, loop_subroutine_stay, loop_subroutine_add,
+loop_subroutine_end_loop  ENTRY, loop_subroutine_bb0, loop_subroutine_loop, loop_subroutine_here, loop_subroutine_stay, loop_subroutine_end_loop,
+loop_subroutine_end       ENTRY, loop_subroutine_bb0, loop_subroutine_loop, loop_subroutine_end,
+EXIT                      ENTRY, loop_subroutine_bb0, loop_subroutine_loop, loop_subroutine_end, EXIT,
+==== Results are correct!
+
+==== Dominator Table of OR(a: int, b: int): int:
+Block Name    Dominators
+------------  --------------------
+ENTRY         ENTRY,
+OR_bb0        ENTRY, OR_bb0,
+EXIT          ENTRY, OR_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of AND(a: int, b: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+AND_bb0       ENTRY, AND_bb0,
+EXIT          ENTRY, AND_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of XOR(a: int, b: int): int:
+Block Name    Dominators
+------------  ---------------------
+ENTRY         ENTRY,
+XOR_bb0       ENTRY, XOR_bb0,
+EXIT          ENTRY, XOR_bb0, EXIT,
+==== Results are correct!
+
+==== Dominator Table of main(a: int, b: int, c: int):
+Block Name        Dominators
+----------------  -----------------------------------------------
+ENTRY             ENTRY,
+main_bb0          ENTRY, main_bb0,
+main_useless_lbl  ENTRY, main_bb0, main_useless_lbl,
+main_and_op       ENTRY, main_bb0, main_and_op,
+main_or_op        ENTRY, main_bb0, main_useless_lbl, main_or_op,
+main_xor_op       ENTRY, main_bb0, main_useless_lbl, main_xor_op,
+main_end          ENTRY, main_bb0, main_end,
+EXIT              ENTRY, main_bb0, main_end, EXIT,
+==== Results are correct!
+

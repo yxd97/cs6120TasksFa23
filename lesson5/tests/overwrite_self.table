@@ -1,8 +1,8 @@
-Dominator Table of main:
+==== Dominator Table of main:
 Block Name    Dominators
 ------------  ----------------------
 ENTRY         ENTRY,
 main_bb0      ENTRY, main_bb0,
 EXIT          ENTRY, main_bb0, EXIT,
+==== Results are correct!
 
-Results are correct!
