@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 TASKS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(TASKS_ROOT)
-import bril_utils as bu
+import bril_syntax as bst
 import bril_dataflow as bdf
 from lesson5.check_dominance import check_dominance, find_paths, print_paths
 
@@ -53,12 +53,12 @@ def verify_dominator_table(dom_tab:DominatorTable, cfg:bdf.CtrlFlowGraph) -> boo
     return passing
 
 def main():
-    prog = bu.Program()
+    prog = bst.Program()
     prog.read_json_stdin()
     for func in prog.functions:
         print(f"==== Dominator Table of {func}:")
         cfg = bdf.CtrlFlowGraph()
-        cfg.build_from_blocks(bu.get_baisc_blks(func))
+        cfg.build_from_blocks(bst.get_baisc_blks(func))
         dom_table = find_dominators(cfg)
         print_dom_tab(dom_table, cfg)
         if verify_dominator_table(dom_table, cfg):

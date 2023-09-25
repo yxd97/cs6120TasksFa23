@@ -3,7 +3,7 @@ from typing import List, Dict
 
 TASKS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(TASKS_ROOT)
-import bril_utils as bu
+import bril_syntax as bst
 
 def floor_in_list(n:int, l:List[int]) -> int:
     '''
@@ -16,7 +16,7 @@ def floor_in_list(n:int, l:List[int]) -> int:
             return l[i]
     return l[-1]
 
-def rename_old_defs(blk:bu.BasicBlk) -> bu.BasicBlk:
+def rename_old_defs(blk:bst.BasicBlk) -> bst.BasicBlk:
     '''
         Rename all odl definitions of a variable with the
         block name and relative line number as the suffix. E.g.,
@@ -74,15 +74,15 @@ def rename_old_defs(blk:bu.BasicBlk) -> bu.BasicBlk:
 
 
 def main():
-    prog = bu.Program()
+    prog = bst.Program()
     prog.read_json_stdin()
     for func in prog.functions:
-        blks = bu.get_baisc_blks(func)
+        blks = bst.get_baisc_blks(func)
         opt_blks = []
         for blk in blks:
             opt_blk = rename_old_defs(blk)
             opt_blks.append(opt_blk)
-        func.instrs = bu.concat_basic_blks(opt_blks)
+        func.instrs = bst.concat_basic_blks(opt_blks)
         sys.stdout.writelines(func.to_lines())
 
 if __name__ == "__main__":

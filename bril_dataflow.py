@@ -1,9 +1,9 @@
 from typing import List, Union
 
-import bril_utils as bu
+import bril_syntax as bst
 
 class CFGVertex:
-    def __init__(self, blk:bu.BasicBlk, id:int) -> None:
+    def __init__(self, blk:bst.BasicBlk, id:int) -> None:
         self.id = id
         self.blk = blk
         self.pred_ids:List[int] = []
@@ -16,7 +16,7 @@ class CFGVertex:
         self.succ_ids.append(id)
 
     def __eq__(self, other) -> bool:
-        if isinstance(other, bu.BasicBlk):
+        if isinstance(other, bst.BasicBlk):
             return self.blk.name == other.name # used to index blk in vertex list
         if isinstance(other, CFGVertex):
             return self.blk.name == other.blk.name and self.id == other.id
@@ -47,13 +47,13 @@ class CtrlFlowGraph:
         self.vertices:List[CFGVertex] = []
         self.edges:List[CFGEdge] = []
 
-    def add_blk(self, blk:bu.BasicBlk):
+    def add_blk(self, blk:bst.BasicBlk):
         v = CFGVertex(blk, len(self.vertices))
         self.vertices.append(v)
 
     def add_edge(
         self,
-        src_blk:Union[bu.BasicBlk, int], dst_blk:Union[bu.BasicBlk, int],
+        src_blk:Union[bst.BasicBlk, int], dst_blk:Union[bst.BasicBlk, int],
         cond:str = None, val_if_taken:bool = None
     ) -> None:
         if isinstance(src_blk, int):
@@ -74,20 +74,20 @@ class CtrlFlowGraph:
         e = CFGEdge(src_id, dst_id, cond, val_if_taken, name=name)
         self.edges.append(e)
 
-    def build_from_blocks(self, blocks:List[bu.BasicBlk]) -> None:
+    def build_from_blocks(self, blocks:List[bst.BasicBlk]) -> None:
         # add entry block
-        self.add_blk(bu.BasicBlk(name='ENTRY'))
+        self.add_blk(bst.BasicBlk(name='ENTRY'))
         # add other blocks
         for blk in blocks:
             self.add_blk(blk)
         # add exit block
-        self.add_blk(bu.BasicBlk(name='EXIT'))
+        self.add_blk(bst.BasicBlk(name='EXIT'))
         exit_blk_vid = len(self.vertices) - 1
         # add edges
         self.add_edge(0, blocks[0]) # from entry to the first block
         for i, blk in enumerate(blocks):
             last_instr = blk.instrs[-1]
-            if isinstance(last_instr, bu.Label): # empty block, fall through
+            if isinstance(last_instr, bst.Label): # empty block, fall through
                 if i < len(blocks) - 1:
                     self.add_edge(blk, blocks[i + 1])
                 else:

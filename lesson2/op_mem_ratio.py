@@ -2,7 +2,7 @@ import sys, copy
 from typing import List
 
 sys.path.append('..')
-import bril_utils as bu
+import bril_syntax as bst
 
 class BasicBlk:
     def __init__(self, name = None) -> None:
@@ -18,13 +18,13 @@ def name_basic_blk(basic_blk, func_name, bblk_count):
         a label, use the label as its name; otherwise, name is as the
         0, 1, 2... -th basic block of this function.
     '''
-    if isinstance(basic_blk.instrs[0], bu.Label):
+    if isinstance(basic_blk.instrs[0], bst.Label):
         bblk_name = f'{func_name}.{basic_blk.instrs[0].label}'
     else:
         bblk_name = f'{func_name}.bb_{bblk_count}'
     basic_blk.name = bblk_name
 
-def get_baisc_blks(func:bu.Function) -> List[BasicBlk]:
+def get_baisc_blks(func:bst.Function) -> List[BasicBlk]:
     basic_blks:List[BasicBlk] = []
     bblk_count = 0
     curr_blk = BasicBlk()
@@ -36,7 +36,7 @@ def get_baisc_blks(func:bu.Function) -> List[BasicBlk]:
             bblk_count += 1
             basic_blks.append(copy.deepcopy(curr_blk))
         # add label if current block is empty, otherwise commit a block
-        elif isinstance(instr, bu.Label):
+        elif isinstance(instr, bst.Label):
             if curr_blk.is_empty():
                 curr_blk.instrs.append(instr)
             else:
@@ -74,7 +74,7 @@ MEM_ACCESS = [
 def count_operations(blk:BasicBlk) -> int:
     opcount = 0
     for instr in blk.instrs:
-        if isinstance(instr, bu.Instruction):
+        if isinstance(instr, bst.Instruction):
             if instr.op in (ARITH_OPS + CMP_OPS + LOGIC_OPS):
                 opcount += 1
     return opcount
@@ -82,7 +82,7 @@ def count_operations(blk:BasicBlk) -> int:
 def count_memory_access(blk:BasicBlk) -> int:
     accesses = 0
     for instr in blk.instrs:
-        if isinstance(instr, bu.Instruction):
+        if isinstance(instr, bst.Instruction):
             if instr.op in MEM_ACCESS:
                 accesses += 1
     return accesses
@@ -100,7 +100,7 @@ def main():
         sys.exit(0)
 
     file_path = sys.argv[1]
-    prog = bu.Program(file_path)
+    prog = bst.Program(file_path)
     for func in prog.functions:
         basic_blks = get_baisc_blks(func)
         for blk in basic_blks:

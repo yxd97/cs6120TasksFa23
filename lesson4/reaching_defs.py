@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 TASKS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(TASKS_ROOT)
-import bril_utils as bu
+import bril_syntax as bst
 import bril_dataflow as bdf
 
 @dataclass
@@ -35,7 +35,7 @@ class Use:
     def __repr__(self) -> str:
         return str(self)
 
-def find_defs_uses_of_func(func:bu.Function):
+def find_defs_uses_of_func(func:bst.Function):
     defs:Dict[str,List[Definition]] = {}
     def_count:Dict[str:int] = {}
     uses:Dict[str,List[Use]] = {}
@@ -45,10 +45,10 @@ def find_defs_uses_of_func(func:bu.Function):
         for arg in func.args:
             def_count[arg.name] = 1
             defs[f'{func.name}_ENTRY'].append(Definition(f'{arg.name}', def_count[arg.name]))
-    baisc_blks = bu.get_baisc_blks(func)
+    baisc_blks = bst.get_baisc_blks(func)
     for blk in baisc_blks:
         for i, instr in enumerate(blk.instrs):
-            if isinstance(instr, bu.Instruction):
+            if isinstance(instr, bst.Instruction):
                 if hasattr(instr, 'dest'):
                     if blk.name not in defs:
                         defs[blk.name] = []
@@ -66,9 +66,9 @@ def find_defs_uses_of_func(func:bu.Function):
                 uses[blk.name].append(Use(use_count, i + blk.start))
     return defs, uses
 
-def build_cfg(funcname:str, blks:List[bu.BasicBlk]) -> bdf.CtrlFlowGraph:
+def build_cfg(funcname:str, blks:List[bst.BasicBlk]) -> bdf.CtrlFlowGraph:
     cfg = bdf.CtrlFlowGraph()
-    entry_blk = bu.BasicBlk(name = f'{funcname}_ENTRY')
+    entry_blk = bst.BasicBlk(name = f'{funcname}_ENTRY')
     # add blocks to cfg
     cfg.add_blk(entry_blk)
     for blk in blks:
@@ -78,12 +78,12 @@ def build_cfg(funcname:str, blks:List[bu.BasicBlk]) -> bdf.CtrlFlowGraph:
     cfg.add_edge(entry_blk, blks[0])
     for i, blk in enumerate(blks):
         last_instr = blk.instrs[-1]
-        if isinstance(last_instr, bu.Label):
+        if isinstance(last_instr, bst.Label):
             continue # skip empty blk
         if last_instr.op == 'jmp':
             target = last_instr.labels[0]
             for tblk in blks:
-                if isinstance(tblk.instrs[0], bu.Label):
+                if isinstance(tblk.instrs[0], bst.Label):
                     if tblk.instrs[0].label == target:
                         cfg.add_edge(blk, tblk)
                         break
@@ -93,7 +93,7 @@ def build_cfg(funcname:str, blks:List[bu.BasicBlk]) -> bdf.CtrlFlowGraph:
             found_tt = False
             found_tf = False
             for tblk in blks:
-                if isinstance(tblk.instrs[0], bu.Label):
+                if isinstance(tblk.instrs[0], bst.Label):
                     if not found_tt and tblk.instrs[0].label == target_true:
                         cfg.add_edge(
                             blk, tblk,
@@ -113,9 +113,9 @@ def build_cfg(funcname:str, blks:List[bu.BasicBlk]) -> bdf.CtrlFlowGraph:
 
     return cfg
 
-def reaching_defs(func:bu.Function):
+def reaching_defs(func:bst.Function):
     defs, _ = find_defs_uses_of_func(func)
-    blks = bu.get_baisc_blks(func)
+    blks = bst.get_baisc_blks(func)
     cfg = build_cfg(func.name, blks)
 
     # cfg.print()
@@ -133,7 +133,7 @@ def reaching_defs(func:bu.Function):
                     result.append(copy.deepcopy(idef))
         return result
 
-    def transfer_func(input:List[Definition], blk:bu.BasicBlk) -> List[Definition]:
+    def transfer_func(input:List[Definition], blk:bst.BasicBlk) -> List[Definition]:
         local_defs = defs.get(blk.name)
         if local_defs is None:
             return copy.deepcopy(input)
@@ -195,7 +195,7 @@ def reaching_defs(func:bu.Function):
         def_idx = 0
         for i, instr in enumerate(blk.instrs):
             # print(f"{i + 1 + blk.start} | {instr}", end='')
-            if isinstance(instr, bu.Instruction):
+            if isinstance(instr, bst.Instruction):
                 # print(f"   remains: {remaining_defs}", end='')
                 # if instr is a use, all remaining defs reaches here
                 if hasattr(instr, 'args'):
@@ -226,13 +226,13 @@ def reaching_defs(func:bu.Function):
     return reached_defs
 
 def print_func_def_use_reach(
-    func:bu.Function,
+    func:bst.Function,
     defs:Dict[str,List[Definition]], uses:Dict[str,List[Use]],
     reached_defs, *,
     show_line_no = False,
     use_instr_idx = False
 ):
-    blks = bu.get_baisc_blks(func)
+    blks = bst.get_baisc_blks(func)
     lines = func.to_lines()
 
     #===========================================================================
@@ -319,10 +319,10 @@ def print_func_def_use_reach(
 
 
 def main():
-    prog = bu.Program()
+    prog = bst.Program()
     prog.read_json_stdin()
     for func in prog.functions:
-        # for blk in bu.get_baisc_blks(func):
+        # for blk in bst.get_baisc_blks(func):
         #     print(f"{blk.name}: [{blk.start}, {blk.end})")
         defs, uses = find_defs_uses_of_func(func)
         reached_defs = reaching_defs(func)

@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 TASKS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(TASKS_ROOT)
-import bril_utils as bu
+import bril_syntax as bst
 import bril_dataflow as bdf
 from lesson5.check_dominance import check_dominance
 from lesson5.build_dominator_table import DominatorTable, find_dominators
@@ -104,12 +104,12 @@ def verify_dominance_tree(tree:DominanceTree, table:DominatorTable, cfg:bdf.Ctrl
     return passing
 
 def main():
-    prog = bu.Program()
+    prog = bst.Program()
     prog.read_json_stdin()
     for func in prog.functions:
         print(f"==== Dominance Tree of {func}:")
         cfg = bdf.CtrlFlowGraph()
-        cfg.build_from_blocks(bu.get_baisc_blks(func))
+        cfg.build_from_blocks(bst.get_baisc_blks(func))
         dom_table = find_dominators(cfg)
         dom_tree = construct_dominance_tree(dom_table)
         print_dom_tree(dom_tree, cfg)

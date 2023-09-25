@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 TASKS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(TASKS_ROOT)
-import bril_utils as bu
+import bril_syntax as bst
 import bril_dataflow as bdf
 
 @dataclass
@@ -16,7 +16,7 @@ class Fork:
 
 def find_paths(
     cfg:bdf.CtrlFlowGraph,
-    src_blk:Union[bu.BasicBlk, int], dst_blk:Union[bu.BasicBlk, int],
+    src_blk:Union[bst.BasicBlk, int], dst_blk:Union[bst.BasicBlk, int],
 ) -> List[List[int]]:
     if isinstance(src_blk, int):
         src_id = src_blk

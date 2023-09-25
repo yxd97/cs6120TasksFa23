@@ -6,7 +6,7 @@ import unit_passes.rename_old_defs as rod
 
 TASKS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(TASKS_ROOT)
-import bril_utils as bu
+import bril_syntax as bst
 
 COMMUTATIVE_INSTRS = ['add', 'mul']
 
@@ -49,7 +49,7 @@ class LVNTables:
         self.num2var:List[Tuple[Value, str, int]] = []
         self.var2num:Dict[str, int] = {}
 
-    def add_instruction(self, instr:bu.Instruction, line_no:int):
+    def add_instruction(self, instr:bst.Instruction, line_no:int):
         if not hasattr(instr, 'dest'):
             # skip if the instruction does not produce new values
             return
@@ -98,11 +98,11 @@ class LVNTables:
                 self.var2num[instr.dest] = len(self.num2var)
                 self.num2var.append((val, instr.dest, line_no))
 
-def rewrite_basic_block(lvn_tables:LVNTables, input_blk:bu.BasicBlk) -> bu.BasicBlk:
-    res_blk = bu.BasicBlk(name = input_blk.name)
+def rewrite_basic_block(lvn_tables:LVNTables, input_blk:bst.BasicBlk) -> bst.BasicBlk:
+    res_blk = bst.BasicBlk(name = input_blk.name)
     for line_no, instr in enumerate(input_blk.instrs):
         new_instr = copy.deepcopy(instr)
-        if isinstance(instr, bu.Instruction):
+        if isinstance(instr, bst.Instruction):
             if hasattr(instr, 'args'):
                 for i in range(len(instr.args)):
                     if instr.args[i] in lvn_tables.var2num:
@@ -114,14 +114,14 @@ def rewrite_basic_block(lvn_tables:LVNTables, input_blk:bu.BasicBlk) -> bu.Basic
         res_blk.instrs.append(new_instr)
     return res_blk
 
-def reuse_common_subexpr(func:bu.Function) -> List[Union[bu.Label, bu.Instruction]]:
-    blks = bu.get_baisc_blks(func)
+def reuse_common_subexpr(func:bst.Function) -> List[Union[bst.Label, bst.Instruction]]:
+    blks = bst.get_baisc_blks(func)
     opt_blks = []
     for blk in blks:
         opt_blk = rod.rename_old_defs(blk)
         lvn_tables = LVNTables()
         for line_no, instr in enumerate(opt_blk.instrs):
-            if isinstance(instr, bu.Instruction):
+            if isinstance(instr, bst.Instruction):
                 lvn_tables.add_instruction(instr, line_no)
         opt_blks.append(rewrite_basic_block(lvn_tables, opt_blk))
 
@@ -135,15 +135,15 @@ def reuse_common_subexpr(func:bu.Function) -> List[Union[bu.Label, bu.Instructio
         # for var, number in lvn_tables.var2num.items():
         #     print(var, '|', number)
         # print()
-    return bu.concat_basic_blks(opt_blks)
+    return bst.concat_basic_blks(opt_blks)
 
-def lvn_opt_flow(func:bu.Function) -> bu.Function:
+def lvn_opt_flow(func:bst.Function) -> bst.Function:
     opt_func = dce.delete_unused(func)
     opt_func.instrs = reuse_common_subexpr(opt_func)
     return dce.delete_unused(opt_func)
 
 def main():
-    prog = bu.Program()
+    prog = bst.Program()
     prog.read_json_stdin()
     for func in prog.functions:
         opt_func = lvn_opt_flow(func)

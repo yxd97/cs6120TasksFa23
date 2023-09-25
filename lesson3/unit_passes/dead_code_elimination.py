@@ -2,24 +2,24 @@ import sys, copy, os
 
 TASKS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(TASKS_ROOT)
-import bril_utils as bu
+import bril_syntax as bst
 
 SIDE_EFFECT_INSTR = ['call']
-def delete_unused(func:bu.Function) -> bu.Function:
+def delete_unused(func:bst.Function) -> bst.Function:
     res_func = copy.deepcopy(func)
     while True:
         deletable_instrs = []
         all_uses = set()
         # build a set of all uses
         for instr in res_func.instrs:
-            if isinstance(instr, bu.Instruction):
+            if isinstance(instr, bst.Instruction):
                 if hasattr(instr, 'args'):
                     for arg in instr.args:
                         all_uses.add(arg)
         # check if the dest of every instruction is used
         # record its index if not
         for i, instr in enumerate(res_func.instrs):
-            if isinstance(instr, bu.Instruction):
+            if isinstance(instr, bst.Instruction):
                 if instr.op in SIDE_EFFECT_INSTR:
                     continue
                 if not hasattr(instr, 'dest'):
@@ -35,7 +35,7 @@ def delete_unused(func:bu.Function) -> bu.Function:
             res_func.instrs.pop(idx)
 
 def main():
-    prog = bu.Program()
+    prog = bst.Program()
     prog.read_json_stdin()
     for func in prog.functions:
         opt_func = delete_unused(func)
