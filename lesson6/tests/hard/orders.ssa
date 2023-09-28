@@ -1,0 +1,108 @@
+@abs(a: int): int {
+.abs_bb0:
+  a.1: int = id a;
+  zero.1: int = const 0;
+  is_neg.1: bool = lt a.1 zero.1;
+  br is_neg.1 .mul_neg_one .abs_res;
+.mul_neg_one:
+  neg_one.1: int = const -1;
+  a.2: int = mul a.1 neg_one.1;
+.abs_res:
+  neg_one.2 = phi neg_one.1 .mul_neg_one;
+  a.3 = phi a.1 .abs_bb0 a.2 .mul_neg_one;
+  ret a.3;
+}
+
+@mod(a: int, b: int): int {
+.mod_bb0:
+  b.1: int = id b;
+  a.1: int = id a;
+  q.1: int = div a.1 b.1;
+  aq.1: int = mul b.1 q.1;
+  mod.1: int = sub a.1 aq.1;
+  ret mod.1;
+}
+
+@gcd(a: int, b: int): int {
+.while.cond:
+  b.1 = phi b.3 .while.body;
+  a.1 = phi a.3 .while.body;
+  b.2: int = id b.1;
+  a.2: int = id a.1;
+  mod.1: int = call @mod a.2 b.2;
+  zero.1: int = const 0;
+  is_term.1: bool = eq mod.1 zero.1;
+  br is_term.1 .while.finish .while.body;
+.while.body:
+  a.3: int = id b.2;
+  b.3: int = id mod.1;
+  jmp .while.cond;
+.while.finish:
+  ret b.2;
+}
+
+@lcm(a: int, b: int): int {
+.lcm_bb0:
+  b.1: int = id b;
+  a.1: int = id a;
+  zero.1: int = const 0;
+  a_is_zero.1: bool = eq a.1 zero.1;
+  br a_is_zero.1 .check_b .is_good;
+.check_b:
+  b_is_zero.2: bool = eq b.1 zero.1;
+  br b_is_zero.2 .special_case .is_good;
+.special_case:
+  ret zero.1;
+.is_good:
+  b_is_zero.1 = phi b_is_zero.2 .check_b;
+  ab.1: int = mul a.1 b.1;
+  ab.2: int = call @abs ab.1;
+  gcdab.1: int = call @gcd a.1 b.1;
+  lcm.1: int = div ab.2 gcdab.1;
+  ret lcm.1;
+}
+
+@orders(u: int, n: int, use_lcm: bool) {
+.for.cond:
+  lcm.1 = phi lcm.3 .for.body.print;
+  gcdun.1 = phi gcdun.3 .for.body.print;
+  u.1 = phi u.3 .for.body.print;
+  one.1 = phi one.2 .for.body.print;
+  ordu.1 = phi ordu.4 .for.body.print;
+  use_lcm.1: bool = id use_lcm;
+  n.1: int = id n;
+  u.2: int = id u.1;
+  is_term.1: bool = eq u.2 n.1;
+  br is_term.1 .for.finish .for.body;
+.for.body:
+  br use_lcm.1 .lcm .gcd;
+.lcm:
+  lcm.2: int = call @lcm u.2 n.1;
+  ordu.2: int = div lcm.2 u.2;
+  jmp .for.body.print;
+.gcd:
+  gcdun.2: int = call @gcd u.2 n.1;
+  ordu.3: int = div n.1 gcdun.2;
+.for.body.print:
+  lcm.3 = phi lcm.2 .lcm;
+  gcdun.3 = phi gcdun.2 .gcd;
+  ordu.4 = phi ordu.2 .lcm ordu.3 .gcd;
+  print u.2 ordu.4;
+  one.2: int = const 1;
+  u.3: int = add u.2 one.2;
+  jmp .for.cond;
+.for.finish:
+  ret;
+}
+
+@main(n: int, use_lcm: bool) {
+.main_bb0:
+  use_lcm.1: bool = id use_lcm;
+  n.1: int = id n;
+  zero.1: int = const 0;
+  u.1: int = const 1;
+  n.2: int = call @abs n.1;
+  print zero.1 u.1;
+  call @orders u.1 n.2 use_lcm.1;
+}
+

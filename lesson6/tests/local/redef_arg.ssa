@@ -1,0 +1,8 @@
+@main(a: int) {
+.main_bb0:
+  a.1: int = id a;
+  t.1: int = id a.1;
+  a.2: int = const 2;
+  print a.2 t.1;
+}
+

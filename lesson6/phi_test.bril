@@ -1,0 +1,56 @@
+@mod2(a: int): bool{ # if residue is 1 return true, else return false.
+  two: int = const 2;
+
+  tmp: int = div a two;
+  tmp2: int = mul tmp two;
+  tmp3: int = sub a tmp2;
+
+  one: int = const 1;
+  ans: bool = eq one tmp3;
+  ret ans;
+}
+
+@main(a: int, b: int, c: bool): int{
+  i: int = const 0;
+  n: int = const 63;
+  one: int = const 1;
+  two: int = const 2;
+  ans: int = const 0;
+  to_add: int = const 1;
+.loop:
+  note:int = const 101;
+  print note;
+  cond: bool = le i n;
+  br cond .here .end;
+.here:
+  note:int = const 102;
+  print note;
+  mod2a: bool = call @mod2 a;
+  mod2b: bool = call @mod2 b;
+  cond_add: bool = and mod2a mod2b;
+  br c .doOr .stay;
+.doOr:
+  note:int = const 103;
+  print note;
+  cond_add: bool = or mod2a mod2b;
+.stay:
+  note:int = const 104;
+  print note;
+  br cond_add .add .end_loop;
+.add:
+  note:int = const 105;
+  print note;
+  ans: int = add ans to_add;
+.end_loop:
+  note:int = const 106;
+  print note;
+  a: int = div a two;
+  b: int = div b two;
+  to_add: int = mul to_add two;
+  i: int = add i one;
+  jmp .loop;
+.end:
+  note:int = const 107;
+  print note;
+  print ans;
+}

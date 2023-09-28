@@ -1,0 +1,39 @@
+@main(input: int) {
+.main_bb0:
+  input.1: int = id input;
+  n.1: int = id input.1;
+  v0.1: int = const 0;
+  v1.1: int = const 10;
+  result.1: int = id v0.1;
+  v2.1: bool = const true;
+  notdone.1: bool = id v2.1;
+.for.cond.3:
+  comp1.1 = phi comp1.2 .if.body comp1.2 .for.incre;
+  remainder.1 = phi remainder.2 .if.body remainder.2 .for.incre;
+  floor.1 = phi floor.2 .if.body floor.2 .for.incre;
+  v5.1 = phi v5.2 .if.body v5.2 .for.incre;
+  result.2 = phi result.1 .main_bb0 result.4 .if.body result.4 .for.incre;
+  a.1 = phi a.2 .if.body a.2 .for.incre;
+  notdone.2 = phi notdone.1 .main_bb0 notdone.3 .if.body notdone.2 .for.incre;
+  n.2 = phi n.1 .main_bb0 n.3 .if.body n.3 .for.incre;
+  v4.1: bool = id notdone.2;
+  br v4.1 .for.body.3 .for.end.3;
+.for.body.3:
+  v5.2: int = id n.2;
+  a.2: int = div v5.2 v1.1;
+  floor.2: int = mul a.2 v1.1;
+  remainder.2: int = sub v5.2 floor.2;
+  result.3: int = mul result.2 v1.1;
+  result.4: int = add result.3 remainder.2;
+  n.3: int = id a.2;
+  comp1.2: bool = eq n.3 v0.1;
+  br comp1.2 .if.body .for.incre;
+.if.body:
+  notdone.3: bool = const false;
+  jmp .for.cond.3;
+.for.incre:
+  jmp .for.cond.3;
+.for.end.3:
+  print result.2;
+}
+

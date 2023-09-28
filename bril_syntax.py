@@ -46,20 +46,24 @@ class Instruction:
         self.op:str = inst_dict['op']
         if 'dest' in inst_dict:
             self.dest:str = inst_dict['dest']
-            self.type:Type = Type(inst_dict['type'])
+            if 'type' in inst_dict:
+                self.type:Type = Type(inst_dict['type'])
         if 'args' in inst_dict:
-            self.args = inst_dict['args']
+            self.args:List[str] = inst_dict['args']
         if 'funcs' in inst_dict:
             self.funcs = inst_dict['funcs']
         if 'labels' in inst_dict:
-            self.labels = inst_dict['labels']
+            self.labels:List[str] = inst_dict['labels']
         if 'value' in inst_dict:
             self.value = inst_dict['value']
 
     def __str__(self):
         s = ''
         if 'dest' in self.__dict__:
-            s += f'{self.dest}: {str(self.type)} = '
+            s += f'{self.dest}'
+            if 'type' in self.__dict__:
+                s += f': {str(self.type)}'
+            s += " = "
         s += f'{self.op}'
         if self.op == 'const':
             # bool consts in bril are in lower case
@@ -72,8 +76,12 @@ class Instruction:
             return s + f' .{self.labels[0]};'
         if self.op == 'br':
             return s + f' {self.args[0]} .{self.labels[0]} .{self.labels[1]};'
+        if self.op == 'phi':
+            for var, lbl in zip(self.args, self.labels):
+                s += f' {var} .{lbl}'
+            return s + ';'
         if self.op == 'call':
-            s += f' @{self.funcs[0]} '
+            s += f' @{self.funcs[0]}'
         if hasattr(self, 'args'):
             s += ' '
             for i, arg in enumerate(self.args):
@@ -174,8 +182,21 @@ class BasicBlk:
     def has_label(self):
         return isinstance(self.instrs[0], Label)
 
+    def get_label(self):
+        if self.has_label():
+            return self.instrs[0].label
+        raise AttributeError(f"Block {self.name} does not have a label!")
+
     def __str__(self):
         return f'{self.name} ({self.start}:{self.end})'
+
+    def __repr__(self) -> str:
+        return str(self)
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, BasicBlk):
+            return False
+        return self.name == other.name
 
 def __name_basic_blk(basic_blk, func_name, bblk_count):
     '''
@@ -227,6 +248,12 @@ def get_baisc_blks(func:Function) -> List[BasicBlk]:
                 curr_blk = BasicBlk()
                 curr_blk.start = i + 1
     return basic_blks
+
+def line_no_to_blk(blocks:List[BasicBlk], line_no:int) -> BasicBlk:
+    for blk in blocks:
+        if line_no in range(blk.start, blk.end):
+            return blk
+    raise ValueError(f"Line {line_no} does not fall in any of the blocks!")
 
 def concat_basic_blks(basic_blks:List[BasicBlk]) -> List[Union[Label, Instruction]]:
     '''

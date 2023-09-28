@@ -1,0 +1,35 @@
+@main(x: int) {
+.main_bb0:
+  x.1: int = id x;
+  one.1: int = const 1;
+  two.1: int = const 2;
+  three.1: int = const 3;
+  count.1: int = const 0;
+.while_cond:
+  x.2 = phi x.1 .main_bb0 x.6 .endif;
+  count.2 = phi count.1 .main_bb0 count.3 .endif;
+  half_x.1 = phi half_x.2 .endif;
+  even.1 = phi even.2 .endif;
+  two_halves_x.1 = phi two_halves_x.2 .endif;
+  cond.1: bool = eq x.2 one.1;
+  cond.2: bool = not cond.1;
+  br cond.2 .while_body .while_exit;
+.while_body:
+  half_x.2: int = div x.2 two.1;
+  two_halves_x.2: int = mul half_x.2 two.1;
+  even.2: bool = eq x.2 two_halves_x.2;
+  br even.2 .even .odd;
+.even:
+  x.3: int = div x.2 two.1;
+  jmp .endif;
+.odd:
+  x.4: int = mul x.2 three.1;
+  x.5: int = add x.4 one.1;
+.endif:
+  x.6 = phi x.3 .even x.5 .odd;
+  print x.6;
+  count.3: int = add count.2 one.1;
+  jmp .while_cond;
+.while_exit:
+}
+

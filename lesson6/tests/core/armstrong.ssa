@@ -1,0 +1,74 @@
+@main(input: int) {
+.main_bb0:
+  input.1: int = id input;
+  zero.1: int = const 0;
+  ten.1: int = const 10;
+  sum.1: int = const 0;
+  digits.1: int = call @getDigits input.1;
+  tmp.1: int = id input.1;
+.loop:
+  tmp.2 = phi tmp.1 .main_bb0 tmp.3 .body;
+  sum.2 = phi sum.1 .main_bb0 sum.3 .body;
+  pow.1 = phi pow.2 .body;
+  digit.1 = phi digit.2 .body;
+  b.1: bool = gt tmp.2 zero.1;
+  br b.1 .body .done;
+.body:
+  digit.2: int = call @mod tmp.2 ten.1;
+  pow.2: int = call @power digit.2 digits.1;
+  sum.3: int = add sum.2 pow.2;
+  tmp.3: int = div tmp.2 ten.1;
+  jmp .loop;
+.done:
+  res.1: bool = eq input.1 sum.2;
+  print res.1;
+}
+
+@getDigits(n: int): int {
+.getDigits_bb0:
+  n.1: int = id n;
+  ten.1: int = const 10;
+  zero.1: int = const 0;
+  one.1: int = const 1;
+  div.1: int = div n.1 ten.1;
+  cond.1: bool = eq div.1 zero.1;
+  br cond.1 .then .else;
+.then:
+  ret one.1;
+.else:
+  rec.1: int = call @getDigits div.1;
+  res.1: int = add rec.1 one.1;
+  ret res.1;
+}
+
+@mod(a: int, b: int): int {
+.mod_bb0:
+  b.1: int = id b;
+  a.1: int = id a;
+  q.1: int = div a.1 b.1;
+  aq.1: int = mul b.1 q.1;
+  mod.1: int = sub a.1 aq.1;
+  ret mod.1;
+}
+
+@power(base: int, exp: int): int {
+.power_bb0:
+  exp.1: int = id exp;
+  base.1: int = id base;
+  ten.1: int = const 10;
+  zero.1: int = const 0;
+  one.1: int = const 1;
+  res.1: int = const 1;
+.loop:
+  exp.2 = phi exp.1 .power_bb0 exp.3 .body;
+  res.2 = phi res.1 .power_bb0 res.3 .body;
+  b.1: bool = eq exp.2 zero.1;
+  br b.1 .done .body;
+.body:
+  res.3: int = mul res.2 base.1;
+  exp.3: int = sub exp.2 one.1;
+  jmp .loop;
+.done:
+  ret res.2;
+}
+

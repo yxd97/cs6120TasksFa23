@@ -1,0 +1,75 @@
+@mod2(a: int): bool {
+.mod2_bb0:
+  a.1: int = id a;
+  a.2: int = id a.1;
+  two.1: int = const 2;
+  tmp.1: int = div a.2 two.1;
+  tmp2.1: int = mul tmp.1 two.1;
+  tmp3.1: int = sub a.2 tmp2.1;
+  one.1: int = const 1;
+  ans.1: bool = eq one.1 tmp3.1;
+  ret ans.1;
+}
+
+@main(a: int, b: int, c: bool): int {
+.main_bb0:
+  c.1: bool = id c;
+  b.1: int = id b;
+  a.1: int = id a;
+  c.2: bool = id c.1;
+  b.2: int = id b.1;
+  a.2: int = id a.1;
+  i.1: int = const 0;
+  n.1: int = const 63;
+  one.1: int = const 1;
+  two.1: int = const 2;
+  ans.1: int = const 0;
+  to_add.1: int = const 1;
+.loop:
+  i.2 = phi i.3 .end_loop i.1 .main_bb0;
+  a.3 = phi a.4 .end_loop a.2 .main_bb0;
+  b.3 = phi b.4 .end_loop b.2 .main_bb0;
+  note.1 = phi note.10 .end_loop;
+  ans.2 = phi ans.4 .end_loop ans.1 .main_bb0;
+  to_add.2 = phi to_add.3 .end_loop to_add.1 .main_bb0;
+  note.2: int = const 101;
+  print note.2;
+  cond.1: bool = le i.2 n.1;
+  br cond.1 .here .end;
+.here:
+  note.4: int = const 102;
+  print note.4;
+  mod2a.2: bool = call @mod2 a.3;
+  mod2b.2: bool = call @mod2 b.3;
+  cond_add.2: bool = and mod2a.2 mod2b.2;
+  br c.2 .doOr .stay;
+.doOr:
+  note.5: int = const 103;
+  print note.5;
+  cond_add.3: bool = or mod2a.2 mod2b.2;
+.stay:
+  note.6 = phi note.5 .doOr note.4 .here;
+  cond_add.4 = phi cond_add.3 .doOr cond_add.2 .here;
+  note.7: int = const 104;
+  print note.7;
+  br cond_add.4 .add .end_loop;
+.add:
+  note.8: int = const 105;
+  print note.8;
+  ans.3: int = add ans.2 to_add.2;
+.end_loop:
+  note.9 = phi note.8 .add note.7 .stay;
+  ans.4 = phi ans.3 .add;
+  note.10: int = const 106;
+  print note.10;
+  a.4: int = div a.3 two.1;
+  b.4: int = div b.3 two.1;
+  to_add.3: int = mul to_add.2 two.1;
+  i.3: int = add i.2 one.1;
+  jmp .loop;
+.end:
+  note.3: int = const 107;
+  print note.3;
+  print ans.2;
+}
+

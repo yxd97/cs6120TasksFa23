@@ -1,0 +1,73 @@
+@dot_product(vectorA: ptr<int>, vectorB: ptr<int>, size: int): int {
+.dot_product_bb0:
+  size.1: int = id size;
+  vectorB.1: ptr<int> = id vectorB;
+  vectorA.1: ptr<int> = id vectorA;
+  one.1: int = const 1;
+  index.1: int = const 0;
+  answer.1: int = const 0;
+.loop:
+  ptrB.1 = phi ptrB.2 .loop;
+  index.2 = phi index.1 .dot_product_bb0 index.3 .loop;
+  cond.1 = phi cond.2 .loop;
+  tmp.1 = phi tmp.2 .loop;
+  ptrA.1 = phi ptrA.2 .loop;
+  valA.1 = phi valA.2 .loop;
+  valB.1 = phi valB.2 .loop;
+  answer.2 = phi answer.1 .dot_product_bb0 answer.3 .loop;
+  ptrA.2: ptr<int> = ptradd vectorA.1 index.2;
+  ptrB.2: ptr<int> = ptradd vectorB.1 index.2;
+  valA.2: int = load ptrA.2;
+  valB.2: int = load ptrB.2;
+  tmp.2: int = mul valA.2 valB.2;
+  answer.3: int = add answer.2 tmp.2;
+  index.3: int = add index.2 one.1;
+  cond.2: bool = lt index.3 size.1;
+  br cond.2 .loop .done;
+.done:
+  ret answer.3;
+}
+
+@main {
+.main_bb0:
+  a.1: int = const 25;
+  b.1: int = const 50;
+  c.1: int = const 100;
+  d.1: int = const 150;
+  e.1: int = const 250;
+  f.1: int = const 2;
+  g.1: int = const 10;
+  h.1: int = const 20;
+  i.1: int = const 30;
+  j.1: int = const 40;
+  one.1: int = const 1;
+  zero.1: int = const 0;
+  size.1: int = const 5;
+  vectorA.1: ptr<int> = alloc size.1;
+  indexPtr.1: ptr<int> = ptradd vectorA.1 zero.1;
+  store indexPtr.1 a.1;
+  indexPtr.2: ptr<int> = ptradd indexPtr.1 one.1;
+  store indexPtr.2 b.1;
+  indexPtr.3: ptr<int> = ptradd indexPtr.2 one.1;
+  store indexPtr.3 c.1;
+  indexPtr.4: ptr<int> = ptradd indexPtr.3 one.1;
+  store indexPtr.4 d.1;
+  indexPtr.5: ptr<int> = ptradd indexPtr.4 one.1;
+  store indexPtr.5 e.1;
+  vectorB.1: ptr<int> = alloc size.1;
+  indexPtr.6: ptr<int> = ptradd vectorB.1 zero.1;
+  store indexPtr.6 f.1;
+  indexPtr.7: ptr<int> = ptradd indexPtr.6 one.1;
+  store indexPtr.7 g.1;
+  indexPtr.8: ptr<int> = ptradd indexPtr.7 one.1;
+  store indexPtr.8 h.1;
+  indexPtr.9: ptr<int> = ptradd indexPtr.8 one.1;
+  store indexPtr.9 i.1;
+  indexPtr.10: ptr<int> = ptradd indexPtr.9 one.1;
+  store indexPtr.10 j.1;
+  val.1: int = call @dot_product vectorA.1 vectorB.1 size.1;
+  print val.1;
+  free vectorA.1;
+  free vectorB.1;
+}
+

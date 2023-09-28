@@ -1,0 +1,25 @@
+# ARGS: true false
+@main(cond1:bool, cond2:bool) {
+  size: int = const 5;
+  value: int = const 1;
+  br cond1 .then1 .else1;
+.then1:
+  ptr: ptr<int> = alloc size;
+  br cond2 .then2 .else2;
+.then2:
+  free ptr;
+  ptr: ptr<int> = alloc size;
+  jmp .endif2;
+.else2:
+  store ptr value;
+.endif2:
+  jmp .endif1;
+.else1:
+  ptr: ptr<int> = alloc size;
+  store ptr value;
+  x: int = load ptr;
+.endif1:
+  free ptr;
+  good: int = const 0;
+  print good;
+}

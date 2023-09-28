@@ -47,6 +47,12 @@ class CtrlFlowGraph:
         self.vertices:List[CFGVertex] = []
         self.edges:List[CFGEdge] = []
 
+    def index(self, blk:bst.BasicBlk):
+        for i, v in enumerate(self.vertices):
+            if blk == v.blk:
+                return i
+        raise ValueError(f"{blk} not found in CFG!")
+
     def add_blk(self, blk:bst.BasicBlk):
         v = CFGVertex(blk, len(self.vertices))
         self.vertices.append(v)

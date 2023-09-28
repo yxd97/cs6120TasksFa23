@@ -1,0 +1,88 @@
+@main(a: int, b: int) {
+.for.outer.init:
+  b.1: int = id b;
+  a.1: int = id a;
+  t0.1: int = const 2;
+  t1.1: bool = lt a.1 t0.1;
+  br t1.1 .true .false;
+.true:
+  t2.1: int = const 2;
+  jmp .for.outer.cond;
+.false:
+  t2.2: int = id a.1;
+.for.outer.cond:
+  t14.1 = phi t14.3 .if.outer.end;
+  t12.1 = phi t12.4 .if.outer.end;
+  t9.1 = phi t9.2 .if.outer.end;
+  t8.1 = phi t8.2 .if.outer.end;
+  t16.1 = phi t16.2 .if.outer.end;
+  t17.1 = phi t17.2 .if.outer.end;
+  t15.1 = phi t15.2 .if.outer.end;
+  t5.1 = phi t5.4 .if.outer.end;
+  t4.1 = phi t4.2 .if.outer.end;
+  t7.1 = phi t7.2 .if.outer.end;
+  t13.1 = phi t13.3 .if.outer.end;
+  t11.1 = phi t11.4 .if.outer.end;
+  t2.3 = phi t2.1 .true t2.2 .false t2.4 .if.outer.end;
+  t6.1 = phi t6.5 .if.outer.end;
+  t10.1 = phi t10.4 .if.outer.end;
+  t3.1: bool = le t2.3 b.1;
+  br t3.1 .for.outer.body .for.outer.end;
+.for.outer.body:
+  t4.2: int = const 1;
+  t5.2: bool = eq t4.2 t4.2;
+.for.inner.init:
+  t6.2: int = const 2;
+  t7.2: int = const 2;
+.for.inner.cond:
+  t12.2 = phi t12.3 .if.inner.end;
+  t15.2 = phi t15.3 .if.inner.end;
+  t11.2 = phi t11.3 .if.inner.end;
+  t6.3 = phi t6.2 .for.inner.init t6.4 .if.inner.end;
+  t10.2 = phi t10.3 .if.inner.end;
+  t8.2: int = div t2.3 t7.2;
+  t9.2: bool = le t6.3 t8.2;
+  br t9.2 .for.inner.body .for.inner.end;
+.for.inner.body:
+  t10.3: int = call @mod t2.3 t6.3;
+  t11.3: int = const 0;
+  t12.3: bool = eq t10.3 t11.3;
+  br t12.3 .if.inner.body .if.inner.end;
+.if.inner.body:
+  t13.2: int = const 1;
+  t14.2: int = const 2;
+  t5.3: bool = eq t13.2 t14.2;
+  jmp .for.inner.end;
+.if.inner.end:
+  t15.3: int = const 1;
+  t6.4: int = add t15.3 t6.3;
+  jmp .for.inner.cond;
+.for.inner.end:
+  t14.3 = phi t14.2 .if.inner.body;
+  t12.4 = phi t12.3 .if.inner.body;
+  t5.4 = phi t5.2 .for.inner.cond t5.3 .if.inner.body;
+  t13.3 = phi t13.2 .if.inner.body;
+  t11.4 = phi t11.3 .if.inner.body;
+  t10.4 = phi t10.3 .if.inner.body;
+  t16.2: int = const 1;
+  t6.5: int = add t6.3 t16.2;
+  br t5.4 .if.outer.body .if.outer.end;
+.if.outer.body:
+  print t2.3;
+.if.outer.end:
+  t17.2: int = const 1;
+  t2.4: int = add t2.3 t17.2;
+  jmp .for.outer.cond;
+.for.outer.end:
+}
+
+@mod(a: int, b: int): int {
+.mod_bb0:
+  b.1: int = id b;
+  a.1: int = id a;
+  t1.1: int = div a.1 b.1;
+  t2.1: int = mul b.1 t1.1;
+  t3.1: int = sub a.1 t2.1;
+  ret t3.1;
+}
+

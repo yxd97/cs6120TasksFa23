@@ -1,0 +1,69 @@
+@main {
+.main_bb0:
+  v0.1: int = const 5;
+  x.1: int = id v0.1;
+  v1.1: int = id x.1;
+  call @generateNthRow v1.1;
+  v2.1: int = const 0;
+}
+
+@generateNthRow(x: int) {
+.generateNthRow_bb0:
+  x.1: int = id x;
+  v0.1: int = const 1;
+  prev.1: int = id v0.1;
+  v1.1: int = id prev.1;
+  print v1.1;
+  v2.1: int = const 0;
+  v4.1: int = const 0;
+  i.1: int = id v4.1;
+.for.cond.3:
+  v11.1 = phi v11.2 .for.body.3;
+  v17.1 = phi v17.2 .for.body.3;
+  v20.1 = phi v20.2 .for.body.3;
+  v16.1 = phi v16.2 .for.body.3;
+  curr.1 = phi curr.2 .for.body.3;
+  prev.2 = phi prev.1 .generateNthRow_bb0 prev.3 .for.body.3;
+  v13.1 = phi v13.2 .for.body.3;
+  v10.1 = phi v10.2 .for.body.3;
+  v9.1 = phi v9.2 .for.body.3;
+  v14.1 = phi v14.2 .for.body.3;
+  v22.1 = phi v22.2 .for.body.3;
+  v18.1 = phi v18.2 .for.body.3;
+  v21.1 = phi v21.2 .for.body.3;
+  temp.1 = phi temp.3 .for.body.3;
+  i.2 = phi i.1 .generateNthRow_bb0 i.3 .for.body.3;
+  v15.1 = phi v15.2 .for.body.3;
+  v8.1 = phi v8.2 .for.body.3;
+  v12.1 = phi v12.2 .for.body.3;
+  v19.1 = phi v19.2 .for.body.3;
+  v5.1: int = id i.2;
+  v6.1: int = id x.1;
+  v7.1: bool = lt v5.1 v6.1;
+  br v7.1 .for.body.3 .for.end.3;
+.for.body.3:
+  v8.2: int = id x.1;
+  v9.2: int = id i.2;
+  v10.2: int = sub v8.2 v9.2;
+  temp.2: int = id v10.2;
+  v11.2: int = id temp.2;
+  v12.2: int = const 1;
+  v13.2: int = add v11.2 v12.2;
+  temp.3: int = id v13.2;
+  v14.2: int = id prev.2;
+  v15.2: int = id temp.3;
+  v16.2: int = mul v14.2 v15.2;
+  curr.2: int = id v16.2;
+  v17.2: int = id curr.2;
+  print v17.2;
+  v18.2: int = const 0;
+  v19.2: int = id curr.2;
+  prev.3: int = id v19.2;
+  v20.2: int = id i.2;
+  v21.2: int = const 1;
+  v22.2: int = add v20.2 v21.2;
+  i.3: int = id v22.2;
+  jmp .for.cond.3;
+.for.end.3:
+}
+

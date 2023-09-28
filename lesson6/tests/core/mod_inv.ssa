@@ -1,0 +1,100 @@
+@main(n: int, p: int) {
+.main_bb0:
+  p.1: int = id p;
+  n.1: int = id n;
+  v0.1: int = const 2;
+  two.1: int = id v0.1;
+  v1.1: int = id p.1;
+  v2.1: int = id two.1;
+  v3.1: int = sub v1.1 v2.1;
+  m.1: int = id v3.1;
+  v4.1: int = const 1;
+  ans.1: int = id v4.1;
+  v5.1: int = id n.1;
+  a.1: int = id v5.1;
+  v7.1: int = const 1;
+  i.1: int = id v7.1;
+.for.cond.6:
+  m.2 = phi m.1 .main_bb0 m.3 .endif.11;
+  v30.1 = phi v30.2 .endif.11;
+  v25.1 = phi v25.2 .endif.11;
+  v21.1 = phi v21.3 .endif.11;
+  v15.1 = phi v15.2 .endif.11;
+  v14.1 = phi v14.2 .endif.11;
+  v28.1 = phi v28.2 .endif.11;
+  v19.1 = phi v19.3 .endif.11;
+  v16.1 = phi v16.2 .endif.11;
+  v31.1 = phi v31.2 .endif.11;
+  v18.1 = phi v18.2 .endif.11;
+  v13.1 = phi v13.2 .endif.11;
+  v29.1 = phi v29.2 .endif.11;
+  v22.1 = phi v22.3 .endif.11;
+  v12.1 = phi v12.2 .endif.11;
+  v17.1 = phi v17.2 .endif.11;
+  v26.1 = phi v26.2 .endif.11;
+  v23.1 = phi v23.3 .endif.11;
+  v20.1 = phi v20.3 .endif.11;
+  ans.2 = phi ans.1 .main_bb0 ans.4 .endif.11;
+  v24.1 = phi v24.2 .endif.11;
+  a.2 = phi a.1 .main_bb0 a.3 .endif.11;
+  v27.1 = phi v27.2 .endif.11;
+  v8.1: int = id m.2;
+  v9.1: int = const 0;
+  v10.1: bool = gt v8.1 v9.1;
+  br v10.1 .for.body.6 .for.end.6;
+.for.body.6:
+  v12.2: int = id m.2;
+  v13.2: int = id m.2;
+  v14.2: int = id two.1;
+  v15.2: int = div v13.2 v14.2;
+  v16.2: int = id two.1;
+  v17.2: int = mul v15.2 v16.2;
+  v18.2: bool = eq v12.2 v17.2;
+  br v18.2 .then.11 .else.11;
+.then.11:
+  jmp .endif.11;
+.else.11:
+  v19.2: int = id ans.2;
+  v20.2: int = id a.2;
+  v21.2: int = mul v19.2 v20.2;
+  v22.2: int = id p.1;
+  v23.2: int = call @mod v21.2 v22.2;
+  ans.3: int = id v23.2;
+.endif.11:
+  v21.3 = phi v21.2 .else.11;
+  v19.3 = phi v19.2 .else.11;
+  v22.3 = phi v22.2 .else.11;
+  v23.3 = phi v23.2 .else.11;
+  v20.3 = phi v20.2 .else.11;
+  ans.4 = phi ans.2 .then.11 ans.3 .else.11;
+  v24.2: int = id a.2;
+  v25.2: int = id a.2;
+  v26.2: int = mul v24.2 v25.2;
+  v27.2: int = id p.1;
+  v28.2: int = call @mod v26.2 v27.2;
+  a.3: int = id v28.2;
+  v29.2: int = id m.2;
+  v30.2: int = id two.1;
+  v31.2: int = div v29.2 v30.2;
+  m.3: int = id v31.2;
+  jmp .for.cond.6;
+.for.end.6:
+  v32.1: int = id ans.2;
+  print v32.1;
+  v33.1: int = const 0;
+}
+
+@mod(n: int, p: int): int {
+.mod_bb0:
+  p.1: int = id p;
+  n.1: int = id n;
+  v0.1: int = id n.1;
+  v1.1: int = id n.1;
+  v2.1: int = id p.1;
+  v3.1: int = div v1.1 v2.1;
+  v4.1: int = id p.1;
+  v5.1: int = mul v3.1 v4.1;
+  v6.1: int = sub v0.1 v5.1;
+  ret v6.1;
+}
+

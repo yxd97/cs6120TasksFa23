@@ -1,0 +1,26 @@
+@main(width1: int, height1: int, width2: int, height2: int) {
+.main_bb0:
+  height2.1: int = id height2;
+  width2.1: int = id width2;
+  height1.1: int = id height1;
+  width1.1: int = id width1;
+  output.1: bool = call @fitsInside width1.1 height1.1 width2.1 height2.1;
+  print output.1;
+}
+
+@fitsInside(w1: int, h1: int, w2: int, h2: int): bool {
+.fitsInside_bb0:
+  h2.1: int = id h2;
+  w2.1: int = id w2;
+  h1.1: int = id h1;
+  w1.1: int = id w1;
+  width_check.1: bool = le w1.1 w2.1;
+  height_check.1: bool = le h1.1 h2.1;
+  first_check.1: bool = and width_check.1 height_check.1;
+  widthheight_check.1: bool = le w1.1 h2.1;
+  heightwidth_check.1: bool = le h1.1 w2.1;
+  second_check.1: bool = and widthheight_check.1 heightwidth_check.1;
+  ret_val.1: bool = or first_check.1 second_check.1;
+  ret ret_val.1;
+}
+

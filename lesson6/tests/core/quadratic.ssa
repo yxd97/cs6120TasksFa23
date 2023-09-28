@@ -1,0 +1,96 @@
+@main(a: int, b: int, c: int) {
+.main_bb0:
+  c.1: int = id c;
+  b.1: int = id b;
+  a.1: int = id a;
+  call @quadratic a.1 b.1 c.1;
+}
+
+@sqrt(x: int): int {
+.sqrt_bb0:
+  x.1: int = id x;
+  v1.1: int = const 1;
+  i.1: int = id v1.1;
+.for.cond.0:
+  v9.1 = phi v9.2 .endif.7;
+  v8.1 = phi v8.2 .endif.7;
+  v11.1 = phi v11.2 .endif.7;
+  v14.1 = phi v14.2 .endif.7;
+  v12.1 = phi v12.2 .endif.7;
+  v16.1 = phi v16.2 .endif.7;
+  v15.1 = phi v15.2 .endif.7;
+  v10.1 = phi v10.2 .endif.7;
+  i.2 = phi i.1 .sqrt_bb0 i.3 .endif.7;
+  v2.1: int = id i.2;
+  v3.1: int = id x.1;
+  v4.1: int = const 1;
+  v5.1: int = sub v3.1 v4.1;
+  v6.1: bool = lt v2.1 v5.1;
+  br v6.1 .for.body.0 .for.end.0;
+.for.body.0:
+  v8.2: int = id i.2;
+  v9.2: int = id i.2;
+  v10.2: int = mul v8.2 v9.2;
+  v11.2: int = id x.1;
+  v12.2: bool = ge v10.2 v11.2;
+  br v12.2 .then.7 .else.7;
+.then.7:
+  v13.1: int = id i.2;
+  ret v13.1;
+.else.7:
+.endif.7:
+  v14.2: int = id i.2;
+  v15.2: int = const 1;
+  v16.2: int = add v14.2 v15.2;
+  i.3: int = id v16.2;
+  jmp .for.cond.0;
+.for.end.0:
+  v17.1: int = const 0;
+  ret v17.1;
+}
+
+@quadratic(a: int, b: int, c: int) {
+.quadratic_bb0:
+  c.1: int = id c;
+  b.1: int = id b;
+  a.1: int = id a;
+  v0.1: int = id b.1;
+  v1.1: int = id b.1;
+  v2.1: int = mul v0.1 v1.1;
+  v3.1: int = const 4;
+  v4.1: int = id a.1;
+  v5.1: int = mul v3.1 v4.1;
+  v6.1: int = id c.1;
+  v7.1: int = mul v5.1 v6.1;
+  v8.1: int = sub v2.1 v7.1;
+  s.1: int = id v8.1;
+  v9.1: int = const 2;
+  v10.1: int = id a.1;
+  v11.1: int = mul v9.1 v10.1;
+  d.1: int = id v11.1;
+  v12.1: int = const 0;
+  v13.1: int = id b.1;
+  v14.1: int = sub v12.1 v13.1;
+  v15.1: int = id s.1;
+  v16.1: int = call @sqrt v15.1;
+  v17.1: int = add v14.1 v16.1;
+  r1.1: int = id v17.1;
+  v18.1: int = const 0;
+  v19.1: int = id b.1;
+  v20.1: int = sub v18.1 v19.1;
+  v21.1: int = id s.1;
+  v22.1: int = call @sqrt v21.1;
+  v23.1: int = sub v20.1 v22.1;
+  r2.1: int = id v23.1;
+  v24.1: int = id r1.1;
+  v25.1: int = id d.1;
+  v26.1: int = div v24.1 v25.1;
+  print v26.1;
+  v27.1: int = const 0;
+  v28.1: int = id r2.1;
+  v29.1: int = id d.1;
+  v30.1: int = div v28.1 v29.1;
+  print v30.1;
+  v31.1: int = const 0;
+}
+

@@ -1,0 +1,13 @@
+@main {
+.main_bb0:
+  a.1: int = const 1;
+  print a.1;
+  a.2: int = const 2;
+  a.3: int = const 3;
+  print a.3;
+  a.4: int = const 4;
+  a.5: int = const 5;
+  print a.5;
+  print a.5;
+}
+

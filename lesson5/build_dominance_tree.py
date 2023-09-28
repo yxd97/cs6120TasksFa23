@@ -13,11 +13,28 @@ from lesson5.build_dominator_table import DominatorTable, find_dominators
 class DominanceTreeNode:
     def __init__(self, cfg_vid:int) -> None:
         self.cfg_vid = cfg_vid
+        self.parent_id = -1
         self.children_ids:List[int] = []
 
+    def add_parent(self, parent_vid:int):
+        if self.parent_id == -1:
+            self.parent_id = parent_vid
+        else:
+            raise ValueError(f"Node with cfg vertex id {self.cfg_vid} "
+                             f"already has a parent with id {self.parent_id}!")
+
     def add_child(self, cfg_vid:int):
-        if id not in self.children_ids:
+        if cfg_vid not in self.children_ids:
             self.children_ids.append(cfg_vid)
+
+    def __str__(self):
+        s = f'{self.parent_id} <- {self.cfg_vid} ->'
+        for c in self.children_ids:
+            s += f' {c}'
+        return s
+
+    def __repr__(self) -> str:
+        return str(self)
 
 DominanceTree = List[DominanceTreeNode]
 
@@ -68,6 +85,7 @@ def construct_dominance_tree(dom_tab:DominatorTable) -> DominanceTree:
             ]
             if all(found_in_candidate):
                 dom_tree_dict[parent_candidate.cfg_vid].add_child(entry.cfg_vid)
+                dom_tree_dict[entry.cfg_vid].add_parent(parent_candidate.cfg_vid)
                 break
     # retrive the actual tree in bfs order
     def bfs_tree(cfg_vid):

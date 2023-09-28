@@ -1,0 +1,145 @@
+@main(input: int) {
+.main_bb0:
+  input.1: int = id input;
+  v1.1: int = const 1;
+  index.1: int = id v1.1;
+.for.cond.0:
+  v24.1 = phi v24.2 .endif.21;
+  v26.1 = phi v26.2 .endif.21;
+  v41.1 = phi v41.2 .endif.21;
+  v11.1 = phi v11.2 .endif.21;
+  v5.1 = phi v5.2 .endif.21;
+  v36.1 = phi v36.2 .endif.21;
+  v6.1 = phi v6.2 .endif.21;
+  div5.1 = phi div5.2 .endif.21;
+  v43.1 = phi v43.2 .endif.21;
+  v37.1 = phi v37.2 .endif.21;
+  div3.1 = phi div3.2 .endif.21;
+  isFizz.1 = phi isFizz.2 .endif.21;
+  isBuzz.1 = phi isBuzz.2 .endif.21;
+  v27.1 = phi v27.2 .endif.21;
+  v32.1 = phi v32.2 .endif.21;
+  v22.1 = phi v22.2 .endif.21;
+  v19.1 = phi v19.2 .endif.21;
+  v39.1 = phi v39.2 .endif.21;
+  v25.1 = phi v25.2 .endif.21;
+  v40.1 = phi v40.2 .endif.21;
+  v18.1 = phi v18.2 .endif.21;
+  v31.1 = phi v31.2 .endif.21;
+  v35.1 = phi v35.2 .endif.21;
+  v30.1 = phi v30.2 .endif.21;
+  v7.1 = phi v7.2 .endif.21;
+  v29.1 = phi v29.2 .endif.21;
+  v14.1 = phi v14.2 .endif.21;
+  v42.1 = phi v42.2 .endif.21;
+  v12.1 = phi v12.2 .endif.21;
+  v17.1 = phi v17.2 .endif.21;
+  v8.1 = phi v8.2 .endif.21;
+  v10.1 = phi v10.2 .endif.21;
+  index.2 = phi index.1 .main_bb0 index.3 .endif.21;
+  v16.1 = phi v16.2 .endif.21;
+  v34.1 = phi v34.2 .endif.21;
+  v15.1 = phi v15.2 .endif.21;
+  v28.1 = phi v28.2 .endif.21;
+  v13.1 = phi v13.2 .endif.21;
+  v9.1 = phi v9.2 .endif.21;
+  v38.1 = phi v38.2 .endif.21;
+  v20.1 = phi v20.2 .endif.21;
+  v2.1: int = id index.2;
+  v4.1: bool = lt v2.1 input.1;
+  br v4.1 .for.body.0 .for.end.0;
+.for.body.0:
+  v5.2: int = id index.2;
+  v6.2: int = const 3;
+  v7.2: int = div v5.2 v6.2;
+  div3.2: int = id v7.2;
+  v8.2: int = id div3.2;
+  v9.2: int = const 3;
+  v10.2: int = mul v8.2 v9.2;
+  v11.2: int = id index.2;
+  v12.2: bool = eq v10.2 v11.2;
+  isFizz.2: bool = id v12.2;
+  v13.2: int = id index.2;
+  v14.2: int = const 5;
+  v15.2: int = div v13.2 v14.2;
+  div5.2: int = id v15.2;
+  v16.2: int = id div5.2;
+  v17.2: int = const 5;
+  v18.2: int = mul v16.2 v17.2;
+  v19.2: int = id index.2;
+  v20.2: bool = eq v18.2 v19.2;
+  isBuzz.2: bool = id v20.2;
+  v22.2: bool = id isFizz.2;
+  br v22.2 .then.21 .else.21;
+.then.21:
+  v24.3: bool = id isBuzz.2;
+  br v24.3 .then.23 .else.23;
+.then.23:
+  v25.3: int = const 0;
+  v26.3: int = const 1;
+  v27.3: int = sub v25.3 v26.3;
+  print v27.3;
+  v28.3: int = const 0;
+  jmp .endif.23;
+.else.23:
+  v29.3: int = const 0;
+  v30.3: int = const 2;
+  v31.3: int = sub v29.3 v30.3;
+  print v31.3;
+  v32.3: int = const 0;
+.endif.23:
+  v26.4 = phi v26.3 .then.23;
+  v27.4 = phi v27.3 .then.23;
+  v32.4 = phi v32.3 .else.23;
+  v25.4 = phi v25.3 .then.23;
+  v31.4 = phi v31.3 .else.23;
+  v30.4 = phi v30.3 .else.23;
+  v29.4 = phi v29.3 .else.23;
+  v28.4 = phi v28.3 .then.23;
+  jmp .endif.21;
+.else.21:
+  v34.3: bool = id isBuzz.2;
+  br v34.3 .then.33 .else.33;
+.then.33:
+  v35.3: int = const 0;
+  v36.3: int = const 3;
+  v37.3: int = sub v35.3 v36.3;
+  print v37.3;
+  v38.3: int = const 0;
+  jmp .endif.33;
+.else.33:
+  v39.3: int = id index.2;
+  print v39.3;
+  v40.3: int = const 0;
+.endif.33:
+  v36.4 = phi v36.3 .then.33;
+  v37.4 = phi v37.3 .then.33;
+  v39.4 = phi v39.3 .else.33;
+  v40.4 = phi v40.3 .else.33;
+  v35.4 = phi v35.3 .then.33;
+  v38.4 = phi v38.3 .then.33;
+.endif.21:
+  v24.2 = phi v24.3 .endif.23;
+  v26.2 = phi v26.4 .endif.23;
+  v36.2 = phi v36.4 .endif.33;
+  v37.2 = phi v37.4 .endif.33;
+  v27.2 = phi v27.4 .endif.23;
+  v32.2 = phi v32.4 .endif.23;
+  v39.2 = phi v39.4 .endif.33;
+  v25.2 = phi v25.4 .endif.23;
+  v40.2 = phi v40.4 .endif.33;
+  v31.2 = phi v31.4 .endif.23;
+  v35.2 = phi v35.4 .endif.33;
+  v30.2 = phi v30.4 .endif.23;
+  v29.2 = phi v29.4 .endif.23;
+  v34.2 = phi v34.3 .endif.33;
+  v28.2 = phi v28.4 .endif.23;
+  v38.2 = phi v38.4 .endif.33;
+  v41.2: int = id index.2;
+  v42.2: int = const 1;
+  v43.2: int = add v41.2 v42.2;
+  index.3: int = id v43.2;
+  jmp .for.cond.0;
+.for.end.0:
+}
+

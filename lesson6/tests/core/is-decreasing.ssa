@@ -1,0 +1,62 @@
+@main(x: int) {
+.main_bb0:
+  x.1: int = id x;
+  tmp0.1: bool = call @is_decreasing x.1;
+  tmp.1: bool = id tmp0.1;
+  print tmp.1;
+}
+
+@is_decreasing(x: int): bool {
+.is_decreasing_bb0:
+  x.1: int = id x;
+  tmp.1: int = id x.1;
+  tmp1.1: int = const 1;
+  tmp2.1: int = const -1;
+  tmp3.1: int = mul tmp1.1 tmp2.1;
+  prev.1: int = id tmp3.1;
+.label4:
+  tmp10.1 = phi tmp10.2 .label13;
+  digit.1 = phi digit.2 .label13;
+  tmp9.1 = phi tmp9.2 .label13;
+  prev.2 = phi prev.1 .is_decreasing_bb0 prev.3 .label13;
+  tmp15.1 = phi tmp15.2 .label13;
+  tmp14.1 = phi tmp14.3 .label13;
+  tmp.2 = phi tmp.1 .is_decreasing_bb0 tmp.3 .label13;
+  tmp16.1 = phi tmp16.2 .label13;
+  tmp7.1: int = const 0;
+  tmp8.1: bool = gt tmp.2 tmp7.1;
+  br tmp8.1 .label5 .label6;
+.label5:
+  tmp9.2: int = call @last_digit tmp.2;
+  digit.2: int = id tmp9.2;
+  tmp10.2: bool = lt digit.2 prev.2;
+  br tmp10.2 .label11 .label12;
+.label11:
+  tmp14.2: bool = const false;
+  ret tmp14.2;
+  jmp .label13;
+.label12:
+  jmp .label13;
+.label13:
+  tmp14.3 = phi tmp14.2 .label11;
+  prev.3: int = id digit.2;
+  tmp15.2: int = const 10;
+  tmp16.2: int = div tmp.2 tmp15.2;
+  tmp.3: int = id tmp16.2;
+  jmp .label4;
+.label6:
+  tmp17.1: bool = const true;
+  ret tmp17.1;
+}
+
+@last_digit(x: int): int {
+.last_digit_bb0:
+  x.1: int = id x;
+  tmp18.1: int = const 10;
+  tmp19.1: int = div x.1 tmp18.1;
+  tmp20.1: int = const 10;
+  tmp21.1: int = mul tmp19.1 tmp20.1;
+  tmp22.1: int = sub x.1 tmp21.1;
+  ret tmp22.1;
+}
+

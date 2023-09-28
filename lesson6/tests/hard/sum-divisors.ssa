@@ -1,0 +1,51 @@
+@main(n: int) {
+.main_bb0:
+  n.1: int = id n;
+  i.1: int = const 0;
+  res.1: int = const 0;
+  one.1: int = const 1;
+  non.1: int = const -1;
+  zer.1: int = const 0;
+  nlz.1: bool = lt n.1 zer.1;
+  br nlz.1 .neg .begin;
+.neg:
+  n.2: int = mul n.1 non.1;
+.begin:
+  deqi.1 = phi deqi.2 .body deqi.2 .then;
+  res.2 = phi res.1 .main_bb0 res.1 .neg res.2 .check res.3 .body res.4 .then;
+  d.1 = phi d.2 .body d.2 .then;
+  eqz.1 = phi eqz.2 .check eqz.2 .body eqz.2 .then;
+  m.1 = phi m.2 .check m.2 .body m.2 .then;
+  n.3 = phi n.1 .main_bb0 n.2 .neg n.3 .check n.3 .body n.3 .then;
+  i.2: int = add i.1 one.1;
+  isq.1: int = mul i.2 i.2;
+  sqgt.1: bool = gt isq.1 n.3;
+  br sqgt.1 .end .check;
+.check:
+  m.2: int = call @mod n.3 i.2;
+  eqz.2: bool = eq m.2 zer.1;
+  br eqz.2 .body .begin;
+.body:
+  print i.2;
+  res.3: int = add res.2 i.2;
+  d.2: int = div n.3 i.2;
+  deqi.2: bool = eq d.2 i.2;
+  br deqi.2 .begin .then;
+.then:
+  print d.2;
+  res.4: int = add res.3 d.2;
+  jmp .begin;
+.end:
+  print res.2;
+}
+
+@mod(dividend: int, divisor: int): int {
+.mod_bb0:
+  divisor.1: int = id divisor;
+  dividend.1: int = id dividend;
+  quot.1: int = div dividend.1 divisor.1;
+  prod.1: int = mul divisor.1 quot.1;
+  diff.1: int = sub dividend.1 prod.1;
+  ret diff.1;
+}
+
