@@ -19,8 +19,6 @@ def from_ssa(func:bst.Function):
     cfg = bdf.CtrlFlowGraph()
     cfg.build_from_blocks(blocks)
 
-    # sys.stdout.writelines(func.to_lines())
-
     # add id instructions to predecessors of phi nodes
     for blk in blocks:
         for instr in blk.instrs:
@@ -65,8 +63,6 @@ def from_ssa(func:bst.Function):
     # refrech data structures
     func.instrs = bst.concat_basic_blks(blocks_wo_phi)
 
-    # sys.stdout.writelines(func.to_lines())
-
     blocks = bst.get_baisc_blks(func)
     cfg = bdf.CtrlFlowGraph()
     cfg.build_from_blocks(blocks)
@@ -75,47 +71,31 @@ def from_ssa(func:bst.Function):
     # get definitions
     defines, _ = find_defs_uses_of_func(func)
 
-    def varlog(var, *args, **kwargs):
-        # if var == 'v16.3':
-        #     print(*args, **kwargs)
-        pass
-
-
     # some `id`s will access undefined variables due to loops
     # scenarios to keep them
     # 1. there is a definition in one of its dominators
     # 2. there is a definition in all the predecessors of one of its dominators
     # 3. it is a function argument
-    for k, v in defines.items():
-        varlog('v16.3', " + " , k, [d.var for d in v])
-    varlog('v16.3')
     instrs_wo_ill_id:List[Union[bst.Instruction, bst.Label]] = []
     for i, instr in enumerate(func.instrs):
         if isinstance(instr, bst.Instruction) and instr.op == 'id':
             blk = bst.line_no_to_blk(blocks, i)
-            varlog(instr.args[0], f'checking', instr, 'in', blk)
             cfg_vid = cfg.index(blk)
             # check dominators
             keep = False
             dominator_ids = dom_table[cfg_vid]
             for dom_id in dominator_ids:
-                for k, v in defines.items():
-                    varlog(instr.args[0], " = " , k, [d.var for d in v])
                 dom_blk_name = cfg.vertices[dom_id].blk.name
-                varlog(instr.args[0], '>looking into', dom_blk_name, 'for definitions...')
                 defined_by_dom = False
                 all_pred_defines = False
                 # see if defined by this dominator
                 if dom_blk_name in defines:
                     defined_vars = [d.var for d in defines[dom_blk_name]]
-                    varlog(instr.args[0], " => ", defined_vars)
                     if instr.args[0] in defined_vars:
-                        varlog(instr.args[0], "-FOUND!")
                         defined_by_dom = True
                 if defined_by_dom:
                     break
                 # if not, see if defined by all the predcessors of this dominator
-                varlog(instr.args[0], "-nope")
                 all_pred_defines = True
                 pred_ids = cfg.vertices[dom_id].pred_ids
                 if len(pred_ids) == 0:
@@ -123,23 +103,17 @@ def from_ssa(func:bst.Function):
                 else:
                     for pred_id in pred_ids:
                         pred_blk_name = cfg.vertices[pred_id].blk.name
-                        varlog(instr.args[0], ' > looking into', pred_blk_name, 'for definitions...')
                         if pred_blk_name in defines:
                             defined_vars = [d.var for d in defines[pred_blk_name]]
                             if instr.args[0] not in defined_vars:
                                 all_pred_defines = False
-                                varlog(instr.args[0], " - NOPE!")
                                 break
-                            else:
-                                varlog(instr.args[0], " - found")
                         else:
                             all_pred_defines = False
-                            varlog(instr.args[0], " - NOPE!")
                             break
                 if all_pred_defines:
                     break
             keep = defined_by_dom or all_pred_defines
-            varlog(instr.args[0], defined_by_dom, all_pred_defines)
 
             # check function arguments
             is_func_arg = hasattr(func, 'args') \
@@ -151,7 +125,6 @@ def from_ssa(func:bst.Function):
                 defines[blk.name] = list(
                     filter(lambda d: d.var != instr.dest, defines[blk.name])
                 )
-                varlog(instr.args[0],'deleted!')
                 continue
 
         instrs_wo_ill_id.append(copy.deepcopy(instr))
@@ -163,10 +136,9 @@ def main():
     prog = bst.Program()
     prog.read_json_stdin()
     for func_ssa in prog.functions:
-        # if func_ssa.name == 'gcd':
-            func = from_ssa(func_ssa)
-            sys.stdout.writelines(func.to_lines())
-            print()
+        func = from_ssa(func_ssa)
+        sys.stdout.writelines(func.to_lines())
+        print()
 
 if __name__ == "__main__":
     main()

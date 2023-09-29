@@ -94,16 +94,6 @@ def to_ssa(func:bst.Function):
     # get some critical data structures
     blocks, variables, defs, cfg, dom_table, imm_dom_dict = __analyze_func(func)
 
-    # for b in blocks:
-    #     print(b)
-
-    # print(defs['x'])
-
-    # for k, v in imm_dom_dict.items():
-    #     print(k, v)
-
-    # cfg.print()
-
     # insert phi nodes
     for var in variables:
         # loop until there is no change in defs and all phi nodes
@@ -120,30 +110,11 @@ def to_ssa(func:bst.Function):
                     if blk.name == 'EXIT':
                         continue
                     if not __has_phi(blk, var):
-                        # figure out what labels to add
-                        # start from its predecessor, if the pred is itself, add the label
-                        # or, look up in the dominance tree
-                        # if there is a definition, add the label of the predecessor
                         pred_ids = cfg.vertices[cfg.index(blk)].pred_ids
                         labels:List[str] = []
                         for p in pred_ids:
                             if cfg.vertices[p].blk.has_label():
                                 labels.append(cfg.vertices[p].blk.get_label())
-                        # for pred_id in pred_ids:
-                        #     if pred_id == cfg.index(blk):
-                        #         labels.append(blk.get_label())
-                        #     else:
-                        #         found_def = False
-                        #         node = imm_dom_dict[pred_id]
-                        #         while not found_def:
-                        #             if cfg.vertices[node.cfg_vid].blk in defs[var]:
-                        #                 found_def = True
-                        #                 break
-                        #             if node.parent_id == -1:
-                        #                 break
-                        #             node = imm_dom_dict[node.parent_id]
-                        #         if found_def:
-                        #             labels.append(cfg.vertices[pred_id].blk.get_label())
                         __create_phi(blk, var, labels)
                         changed_phi = True
                         if blk not in defs[var]:
@@ -152,9 +123,6 @@ def to_ssa(func:bst.Function):
                 break
 
     blk_level_trace()
-
-    # func.instrs = bst.concat_basic_blks(blocks)
-    # sys.stdout.writelines(func.to_lines())
 
     # rename variables
 
@@ -219,13 +187,13 @@ def to_ssa(func:bst.Function):
 
     # call rename on the entry
     rename(blocks[0])
+
     func.instrs = bst.concat_basic_blks(blocks)
     return func
 
 
 def main():
     prog = bst.Program()
-    # prog.load_json(os.path.join(TASKS_ROOT, "lesson6" ,"phi_test.json"))
     prog.read_json_stdin()
     for func in prog.functions:
         func_ssa = to_ssa(func)
