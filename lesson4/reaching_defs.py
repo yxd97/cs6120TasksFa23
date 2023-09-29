@@ -36,6 +36,9 @@ class Use:
         return str(self)
 
 def find_defs_uses_of_func(func:bst.Function):
+    '''
+        returns map from block name to list of [Definition, Use] Objects
+    '''
     defs:Dict[str,List[Definition]] = {}
     def_count:Dict[str:int] = {}
     uses:Dict[str,List[Use]] = {}
@@ -113,7 +116,10 @@ def build_cfg(funcname:str, blks:List[bst.BasicBlk]) -> bdf.CtrlFlowGraph:
 
     return cfg
 
-def reaching_defs(func:bst.Function):
+def reaching_defs(func:bst.Function) -> Dict[int,List[Definition]]:
+    '''
+        returns a mapping from instruction number to Definition objects
+    '''
     defs, _ = find_defs_uses_of_func(func)
     blks = bst.get_baisc_blks(func)
     cfg = build_cfg(func.name, blks)
@@ -189,7 +195,7 @@ def reaching_defs(func:bst.Function):
     #     print(f'{k}: {v}')
     # print()
 
-    reached_defs:Dict[int:List[Definition]] = {}
+    reached_defs:Dict[int,List[Definition]] = {}
     for blk in blks:
         remaining_defs:List[Definition] = in_defs[blk.name]
         def_idx = 0

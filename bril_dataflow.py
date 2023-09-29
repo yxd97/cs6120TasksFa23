@@ -82,7 +82,7 @@ class CtrlFlowGraph:
 
     def build_from_blocks(self, blocks:List[bst.BasicBlk]) -> None:
         # add entry block
-        self.add_blk(bst.BasicBlk(name='ENTRY'))
+        # self.add_blk(bst.BasicBlk(name='ENTRY'))
         # add other blocks
         for blk in blocks:
             self.add_blk(blk)
@@ -90,7 +90,7 @@ class CtrlFlowGraph:
         self.add_blk(bst.BasicBlk(name='EXIT'))
         exit_blk_vid = len(self.vertices) - 1
         # add edges
-        self.add_edge(0, blocks[0]) # from entry to the first block
+        # self.add_edge(0, blocks[0]) # from entry to the first block
         for i, blk in enumerate(blocks):
             last_instr = blk.instrs[-1]
             if isinstance(last_instr, bst.Label): # empty block, fall through

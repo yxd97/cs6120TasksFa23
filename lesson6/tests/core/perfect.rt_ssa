@@ -1,0 +1,48 @@
+@main(input: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  n.1: int = id input;
+  v0.1: int = const 0;
+  v1.1: int = const 1;
+  v2.1: int = const 2;
+  sum.1: int = id v1.1;
+  i.1: int = id v2.1;
+  result.1: int = id v1.1;
+  i.2 = id i.1;
+  sum.2 = id sum.1;
+.for.cond.1:
+  ii.1: int = mul i.2 i.2;
+  comp.1: bool = gt ii.1 n.1;
+  br comp.1 .for.end .for.body;
+.for.body:
+  qut.2: int = div n.1 i.2;
+  mpt.2: int = mul qut.2 i.2;
+  dif.2: int = sub n.1 mpt.2;
+  comp1.2: bool = eq dif.2 v0.1;
+  sum.5 = id sum.2;
+  br comp1.2 .if.body .for.incre;
+.if.body:
+  sum.3: int = add sum.2 i.2;
+  sum.4: int = add sum.3 qut.2;
+  sum.5 = id sum.4;
+.for.incre:
+  i.3: int = add i.2 v1.1;
+  dif.1 = id dif.2;
+  qut.1 = id qut.2;
+  i.2 = id i.3;
+  comp1.1 = id comp1.2;
+  sum.2 = id sum.5;
+  mpt.1 = id mpt.2;
+  jmp .for.cond.1;
+.for.end:
+  comp2.1: bool = eq sum.2 n.1;
+  result.3 = id result.1;
+  br comp2.1 .if.success .if.failure.end;
+.if.success:
+  result.2: int = id v0.1;
+  result.3 = id result.2;
+.if.failure.end:
+  print result.3;
+}
+

@@ -1,0 +1,86 @@
+@main(a: int, b: int) {
+.ENTRY:
+.ENTRY:
+.for.outer.init:
+  t0.1: int = const 2;
+  t1.1: bool = lt a t0.1;
+  br t1.1 .true .false;
+.true:
+  t2.1: int = const 2;
+  t2.3 = id t2.1;
+  jmp .for.outer.cond;
+.false:
+  t2.2: int = id a;
+  t2.3 = id t2.2;
+.for.outer.cond:
+  t3.1: bool = le t2.3 b;
+  br t3.1 .for.outer.body .for.outer.end;
+.for.outer.body:
+  t4.2: int = const 1;
+  t5.2: bool = eq t4.2 t4.2;
+.for.inner.init:
+  t6.2: int = const 2;
+  t7.2: int = const 2;
+  t6.3 = id t6.2;
+.for.inner.cond:
+  t8.2: int = div t2.3 t7.2;
+  t9.2: bool = le t6.3 t8.2;
+  t5.4 = id t5.2;
+  br t9.2 .for.inner.body .for.inner.end;
+.for.inner.body:
+  t10.3: int = call @mod t2.3 t6.3;
+  t11.3: int = const 0;
+  t12.3: bool = eq t10.3 t11.3;
+  br t12.3 .if.inner.body .if.inner.end;
+.if.inner.body:
+  t13.2: int = const 1;
+  t14.2: int = const 2;
+  t5.3: bool = eq t13.2 t14.2;
+  t13.3 = id t13.2;
+  t14.3 = id t14.2;
+  t11.4 = id t11.3;
+  t12.4 = id t12.3;
+  t10.4 = id t10.3;
+  t5.4 = id t5.3;
+  jmp .for.inner.end;
+.if.inner.end:
+  t15.3: int = const 1;
+  t6.4: int = add t15.3 t6.3;
+  t6.3 = id t6.4;
+  t11.2 = id t11.3;
+  t12.2 = id t12.3;
+  t10.2 = id t10.3;
+  t15.2 = id t15.3;
+  jmp .for.inner.cond;
+.for.inner.end:
+  t16.2: int = const 1;
+  t6.5: int = add t6.3 t16.2;
+  br t5.4 .if.outer.body .if.outer.end;
+.if.outer.body:
+  print t2.3;
+.if.outer.end:
+  t17.2: int = const 1;
+  t2.4: int = add t2.3 t17.2;
+  t6.1 = id t6.5;
+  t16.1 = id t16.2;
+  t7.1 = id t7.2;
+  t9.1 = id t9.2;
+  t8.1 = id t8.2;
+  t4.1 = id t4.2;
+  t2.3 = id t2.4;
+  t17.1 = id t17.2;
+  t5.1 = id t5.4;
+  jmp .for.outer.cond;
+.for.outer.end:
+}
+
+@mod(a: int, b: int): int {
+.ENTRY:
+.ENTRY:
+.mod_bb0:
+  t1.1: int = div a b;
+  t2.1: int = mul b t1.1;
+  t3.1: int = sub a t2.1;
+  ret t3.1;
+}
+

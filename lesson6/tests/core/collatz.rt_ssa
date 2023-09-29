@@ -1,0 +1,40 @@
+@main(x: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  one.1: int = const 1;
+  two.1: int = const 2;
+  three.1: int = const 3;
+  x.1 = id x;
+  jmp .print;
+.cond:
+  eq_one.2: bool = eq x.1 one.1;
+  br eq_one.2 .end .loop;
+.loop:
+  half.2: int = div x.1 two.1;
+  doublehalf.2: int = mul half.2 two.1;
+  even.2: bool = eq x.1 doublehalf.2;
+  br even.2 .even .odd;
+.even:
+  x.2: int = div x.1 two.1;
+  eq_one.1 = id eq_one.2;
+  x.1 = id x.2;
+  doublehalf.1 = id doublehalf.2;
+  half.1 = id half.2;
+  even.1 = id even.2;
+  jmp .print;
+.odd:
+  x.3: int = mul x.1 three.1;
+  x.4: int = add x.3 one.1;
+  eq_one.1 = id eq_one.2;
+  x.1 = id x.4;
+  doublehalf.1 = id doublehalf.2;
+  half.1 = id half.2;
+  even.1 = id even.2;
+.print:
+  print x.1;
+  jmp .cond;
+.end:
+  ret;
+}
+

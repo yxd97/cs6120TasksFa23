@@ -1,0 +1,121 @@
+@mod2(a: int): bool {
+.ENTRY:
+.ENTRY:
+.mod2_bb0:
+  two.1: int = const 2;
+  tmp.1: int = div a two.1;
+  tmp2.1: int = mul tmp.1 two.1;
+  tmp3.1: int = sub a tmp2.1;
+  one.1: int = const 1;
+  ans.1: bool = eq one.1 tmp3.1;
+  ret ans.1;
+}
+
+@loop_subroutine(a: int, b: int, c: bool): int {
+.ENTRY:
+.ENTRY:
+.loop_subroutine_bb0:
+  i.1: int = const 0;
+  n.1: int = const 63;
+  one.1: int = const 1;
+  two.1: int = const 2;
+  ans.1: int = const 0;
+  to_add.1: int = const 1;
+  b.1 = id b;
+  to_add.2 = id to_add.1;
+  ans.2 = id ans.1;
+  i.2 = id i.1;
+  a.1 = id a;
+.loop:
+  cond.1: bool = le i.2 n.1;
+  br cond.1 .here .end;
+.here:
+  mod2a.2: bool = call @mod2 a.1;
+  mod2b.2: bool = call @mod2 b.1;
+  cond_add.2: bool = and mod2a.2 mod2b.2;
+  cond_add.4 = id cond_add.2;
+  br c .doOr .stay;
+.doOr:
+  cond_add.3: bool = or mod2a.2 mod2b.2;
+  cond_add.4 = id cond_add.3;
+.stay:
+  ans.4 = id ans.2;
+  br cond_add.4 .add .end_loop;
+.add:
+  ans.3: int = add ans.2 to_add.2;
+  ans.4 = id ans.3;
+.end_loop:
+  a.2: int = div a.1 two.1;
+  b.2: int = div b.1 two.1;
+  to_add.3: int = mul to_add.2 two.1;
+  i.3: int = add i.2 one.1;
+  b.1 = id b.2;
+  to_add.2 = id to_add.3;
+  ans.2 = id ans.4;
+  mod2a.1 = id mod2a.2;
+  cond_add.1 = id cond_add.4;
+  mod2b.1 = id mod2b.2;
+  i.2 = id i.3;
+  a.1 = id a.2;
+  jmp .loop;
+.end:
+  ret ans.2;
+}
+
+@OR(a: int, b: int): int {
+.ENTRY:
+.ENTRY:
+.OR_bb0:
+  oper.1: bool = const true;
+  v1.1: int = call @loop_subroutine a b oper.1;
+  ret v1.1;
+}
+
+@AND(a: int, b: int): int {
+.ENTRY:
+.ENTRY:
+.AND_bb0:
+  oper.1: bool = const false;
+  v1.1: int = call @loop_subroutine a b oper.1;
+  ret v1.1;
+}
+
+@XOR(a: int, b: int): int {
+.ENTRY:
+.ENTRY:
+.XOR_bb0:
+  and_val.1: int = call @AND a b;
+  or_val.1: int = call @OR a b;
+  ans.1: int = sub or_val.1 and_val.1;
+  ret ans.1;
+}
+
+@main(a: int, b: int, c: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  one.1: int = const 1;
+  zero.1: int = const 0;
+  sel.1: int = sub c one.1;
+  ans.1: int = id zero.1;
+  less.1: bool = lt sel.1 zero.1;
+  equal.1: bool = eq sel.1 zero.1;
+  greater.1: bool = gt sel.1 zero.1;
+  br less.1 .and_op .useless_lbl;
+.useless_lbl:
+  br equal.1 .or_op .xor_op;
+.and_op:
+  ans.2: int = call @AND a b;
+  ans.3 = id ans.2;
+  jmp .end;
+.or_op:
+  ans.4: int = call @OR a b;
+  ans.3 = id ans.4;
+  jmp .end;
+.xor_op:
+  ans.5: int = call @XOR a b;
+  ans.3 = id ans.5;
+.end:
+  print ans.3;
+}
+

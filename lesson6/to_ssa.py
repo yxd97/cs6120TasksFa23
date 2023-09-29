@@ -46,21 +46,6 @@ def __create_phi(target_blk:bst.BasicBlk, var:str, labels:List[bst.Label]):
     )
 
 def __analyze_func(func:bst.Function):
-    # add copies of function arguments so that they are defined in the first block
-    insert_point = 0 if isinstance(func.instrs[0], bst.Instruction) else 1
-    if hasattr(func, 'args'):
-        for farg in func.args:
-            func.instrs.insert(
-                insert_point,
-                bst.Instruction(
-                    {
-                        'op':'id',
-                        'dest':farg.name,
-                        'type':farg.type,
-                        'args':[farg.name]
-                    }
-                )
-            )
 
     blocks = bst.get_baisc_blks(func)
 
@@ -97,12 +82,25 @@ def __analyze_func(func:bst.Function):
             if var in [d.var for d in dlist]:
                 defs[var].extend(filter(lambda b : b.name == blk_name, blocks))
 
+    # add function arguments to the mapping
+    if hasattr(func, 'args'):
+        for farg in func.args:
+            defs[farg.name].append(blocks[0])
+
     return blocks, variables, defs, cfg, dom_table, imm_dom_dict
 
 def to_ssa(func:bst.Function):
     blk_level_trace(f"===== Processing function {func}")
     # get some critical data structures
     blocks, variables, defs, cfg, dom_table, imm_dom_dict = __analyze_func(func)
+
+    # for b in blocks:
+    #     print(b)
+
+    # print(defs['x'])
+
+    # for k, v in imm_dom_dict.items():
+    #     print(k, v)
 
     # cfg.print()
 
@@ -126,23 +124,26 @@ def to_ssa(func:bst.Function):
                         # start from its predecessor, if the pred is itself, add the label
                         # or, look up in the dominance tree
                         # if there is a definition, add the label of the predecessor
-                        labels:List[str] = []
                         pred_ids = cfg.vertices[cfg.index(blk)].pred_ids
-                        for pred_id in pred_ids:
-                            if pred_id == cfg.index(blk):
-                                labels.append(blk.get_label())
-                                continue
-                            found_def = False
-                            node = imm_dom_dict[pred_id]
-                            while not found_def:
-                                if cfg.vertices[node.cfg_vid].blk in defs[var]:
-                                    found_def = True
-                                    break
-                                if node.parent_id == -1:
-                                    break
-                                node = imm_dom_dict[node.parent_id]
-                            if found_def:
-                                labels.append(cfg.vertices[pred_id].blk.get_label())
+                        labels:List[str] = []
+                        for p in pred_ids:
+                            if cfg.vertices[p].blk.has_label():
+                                labels.append(cfg.vertices[p].blk.get_label())
+                        # for pred_id in pred_ids:
+                        #     if pred_id == cfg.index(blk):
+                        #         labels.append(blk.get_label())
+                        #     else:
+                        #         found_def = False
+                        #         node = imm_dom_dict[pred_id]
+                        #         while not found_def:
+                        #             if cfg.vertices[node.cfg_vid].blk in defs[var]:
+                        #                 found_def = True
+                        #                 break
+                        #             if node.parent_id == -1:
+                        #                 break
+                        #             node = imm_dom_dict[node.parent_id]
+                        #         if found_def:
+                        #             labels.append(cfg.vertices[pred_id].blk.get_label())
                         __create_phi(blk, var, labels)
                         changed_phi = True
                         if blk not in defs[var]:
@@ -159,6 +160,9 @@ def to_ssa(func:bst.Function):
 
     # initialize stack
     stack:Dict[str, List[str]] = {var:[] for var in variables}
+    if hasattr(func, 'args'):
+        for farg in func.args:
+            stack[farg.name].append(farg.name)
     count:Dict[str, int] = {var:1 for var in variables}
 
     # recursive renaming function
@@ -170,10 +174,11 @@ def to_ssa(func:bst.Function):
                 instr_level_trace('**', instr)
                 if hasattr(instr, 'args') and instr.op != 'phi':
                     for i in range(len(instr.args)):
-                        if len(stack[instr.args[i]]) == 0: # this is a function argument
-                            continue
-                        instr_level_trace(f'    renaming arg {instr.args[i]} to {stack[instr.args[i]][-1]}')
-                        instr.args[i] = stack[instr.args[i]][-1]
+                        new_name = f'{instr.args[i]}.NOT_DEFINED'
+                        if len(stack[instr.args[i]]) > 0:
+                            new_name = stack[instr.args[i]][-1]
+                        instr_level_trace(f'    renaming arg {instr.args[i]} to {new_name}')
+                        instr.args[i] = new_name
                 if hasattr(instr, 'dest'):
                     instr_level_trace(f'    renaming def {instr.dest} to {instr.dest}.{count[instr.dest]}')
                     old_name = instr.dest
@@ -195,8 +200,11 @@ def to_ssa(func:bst.Function):
                     instr_level_trace(f"    update subsequent PHI-Node "
                                         f"in block {cfg.vertices[succ].blk.name}: `{instr}' ")
                     old_name = __get_var_old_name(instr.dest)
-                    instr_level_trace(f'    renaming arg {instr.args[arg_idx]} to {stack[old_name][-1]}')
-                    instr.args[arg_idx] = stack[old_name][-1]
+                    new_name = f'{old_name}.NOT_DEFINED'
+                    if len(stack[old_name]) > 0:
+                        new_name = stack[old_name][-1]
+                    instr_level_trace(f'    renaming arg {instr.args[arg_idx]} to {new_name}')
+                    instr.args[arg_idx] = new_name
         instr_level_trace(f"cfg_vid = {cfg_vid}, "
                           f"immediate dominating blocks:", imm_dom_dict[cfg_vid].children_ids)
         instr_level_trace("-- Recursively renaming blocks "
@@ -212,7 +220,7 @@ def to_ssa(func:bst.Function):
     # call rename on the entry
     rename(blocks[0])
     func.instrs = bst.concat_basic_blks(blocks)
-    sys.stdout.writelines(func.to_lines())
+    return func
 
 
 def main():
@@ -220,7 +228,8 @@ def main():
     # prog.load_json(os.path.join(TASKS_ROOT, "lesson6" ,"phi_test.json"))
     prog.read_json_stdin()
     for func in prog.functions:
-        to_ssa(func)
+        func_ssa = to_ssa(func)
+        sys.stdout.writelines(func_ssa.to_lines())
         print()
 
 if __name__ == "__main__":

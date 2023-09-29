@@ -1,31 +1,31 @@
 @main(x: int) {
+.ENTRY:
 .main_bb0:
-  x.1: int = id x;
   one.1: int = const 1;
   two.1: int = const 2;
   three.1: int = const 3;
   jmp .print;
 .cond:
-  eq_one.2: bool = eq x.2 one.1;
+  eq_one.2: bool = eq x.1 one.1;
   br eq_one.2 .end .loop;
 .loop:
-  half.2: int = div x.2 two.1;
+  half.2: int = div x.1 two.1;
   doublehalf.2: int = mul half.2 two.1;
-  even.2: bool = eq x.2 doublehalf.2;
+  even.2: bool = eq x.1 doublehalf.2;
   br even.2 .even .odd;
 .even:
-  x.3: int = div x.2 two.1;
+  x.2: int = div x.1 two.1;
   jmp .print;
 .odd:
-  x.4: int = mul x.2 three.1;
-  x.5: int = add x.4 one.1;
+  x.3: int = mul x.1 three.1;
+  x.4: int = add x.3 one.1;
 .print:
-  even.1 = phi even.2 .even even.2 .odd;
-  x.2 = phi x.1 .main_bb0 x.3 .even x.5 .odd;
-  eq_one.1 = phi eq_one.2 .even eq_one.2 .odd;
-  half.1 = phi half.2 .even half.2 .odd;
-  doublehalf.1 = phi doublehalf.2 .even doublehalf.2 .odd;
-  print x.2;
+  doublehalf.1 = phi doublehalf.NOT_DEFINED .main_bb0 doublehalf.2 .even doublehalf.2 .odd;
+  even.1 = phi even.NOT_DEFINED .main_bb0 even.2 .even even.2 .odd;
+  eq_one.1 = phi eq_one.NOT_DEFINED .main_bb0 eq_one.2 .even eq_one.2 .odd;
+  x.1 = phi x .main_bb0 x.2 .even x.4 .odd;
+  half.1 = phi half.NOT_DEFINED .main_bb0 half.2 .even half.2 .odd;
+  print x.1;
   jmp .cond;
 .end:
   ret;

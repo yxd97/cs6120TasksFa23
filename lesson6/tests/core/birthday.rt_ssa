@@ -1,0 +1,72 @@
+@main(n: float) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  v0.1: float = id n;
+  c.1: float = call @probability v0.1;
+  c.2: float = id c.1;
+  v1.1: float = id c.2;
+  print v1.1;
+  v2.1: int = const 0;
+}
+
+@probability(n: float): float {
+.ENTRY:
+.ENTRY:
+.probability_bb0:
+  v0.1: float = const 1;
+  prob.1: float = id v0.1;
+  v2.1: float = const 1;
+  i.1: float = id v2.1;
+  prob.2 = id prob.1;
+  i.2 = id i.1;
+.for.cond.1:
+  v3.1: float = id i.2;
+  v4.1: float = id n;
+  v5.1: bool = flt v3.1 v4.1;
+  br v5.1 .for.body.1 .for.end.1;
+.for.body.1:
+  v6.2: float = const 365;
+  v7.2: float = id i.2;
+  v8.2: float = fsub v6.2 v7.2;
+  log.2: float = id v8.2;
+  v9.2: float = id log.2;
+  v10.2: float = const 365;
+  v11.2: float = fdiv v9.2 v10.2;
+  logUpdated.2: float = id v11.2;
+  v12.2: float = id prob.2;
+  v13.2: float = id logUpdated.2;
+  v14.2: float = fmul v12.2 v13.2;
+  prob.3: float = id v14.2;
+  v15.2: float = id i.2;
+  v16.2: float = const 1;
+  v17.2: float = fadd v15.2 v16.2;
+  i.3: float = id v17.2;
+  prob.2 = id prob.3;
+  v11.1 = id v11.2;
+  v10.1 = id v10.2;
+  v9.1 = id v9.2;
+  v14.1 = id v14.2;
+  v7.1 = id v7.2;
+  v12.1 = id v12.2;
+  v15.1 = id v15.2;
+  v16.1 = id v16.2;
+  v17.1 = id v17.2;
+  v8.1 = id v8.2;
+  logUpdated.1 = id logUpdated.2;
+  v6.1 = id v6.2;
+  v13.1 = id v13.2;
+  log.1 = id log.2;
+  i.2 = id i.3;
+  jmp .for.cond.1;
+.for.end.1:
+  v18.1: float = const 1;
+  v19.1: float = id prob.2;
+  v20.1: float = const 100;
+  v21.1: float = fmul v19.1 v20.1;
+  v22.1: float = const 100;
+  v23.1: float = fdiv v21.1 v22.1;
+  v24.1: float = fsub v18.1 v23.1;
+  ret v24.1;
+}
+

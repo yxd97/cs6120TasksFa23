@@ -1,4 +1,5 @@
 @main {
+.ENTRY:
 .main_bb0:
   a.1: int = const 1;
   b.1: int = const 2;

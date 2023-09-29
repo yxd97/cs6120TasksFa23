@@ -1,0 +1,66 @@
+@main(x: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  tmp0.1: bool = call @is_decreasing x;
+  tmp.1: bool = id tmp0.1;
+  print tmp.1;
+}
+
+@is_decreasing(x: int): bool {
+.ENTRY:
+.ENTRY:
+.is_decreasing_bb0:
+  tmp.1: int = id x;
+  tmp1.1: int = const 1;
+  tmp2.1: int = const -1;
+  tmp3.1: int = mul tmp1.1 tmp2.1;
+  prev.1: int = id tmp3.1;
+  prev.2 = id prev.1;
+  tmp.2 = id tmp.1;
+.label4:
+  tmp7.1: int = const 0;
+  tmp8.1: bool = gt tmp.2 tmp7.1;
+  br tmp8.1 .label5 .label6;
+.label5:
+  tmp9.2: int = call @last_digit tmp.2;
+  digit.2: int = id tmp9.2;
+  tmp10.2: bool = lt digit.2 prev.2;
+  br tmp10.2 .label11 .label12;
+.label11:
+  tmp14.2: bool = const false;
+  ret tmp14.2;
+  tmp14.3 = id tmp14.2;
+  jmp .label13;
+.label12:
+  jmp .label13;
+.label13:
+  prev.3: int = id digit.2;
+  tmp15.2: int = const 10;
+  tmp16.2: int = div tmp.2 tmp15.2;
+  tmp.3: int = id tmp16.2;
+  tmp10.1 = id tmp10.2;
+  digit.1 = id digit.2;
+  tmp15.1 = id tmp15.2;
+  prev.2 = id prev.3;
+  tmp9.1 = id tmp9.2;
+  tmp.2 = id tmp.3;
+  tmp16.1 = id tmp16.2;
+  jmp .label4;
+.label6:
+  tmp17.1: bool = const true;
+  ret tmp17.1;
+}
+
+@last_digit(x: int): int {
+.ENTRY:
+.ENTRY:
+.last_digit_bb0:
+  tmp18.1: int = const 10;
+  tmp19.1: int = div x tmp18.1;
+  tmp20.1: int = const 10;
+  tmp21.1: int = mul tmp19.1 tmp20.1;
+  tmp22.1: int = sub x tmp21.1;
+  ret tmp22.1;
+}
+

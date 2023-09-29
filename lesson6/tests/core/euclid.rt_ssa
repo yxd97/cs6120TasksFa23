@@ -1,0 +1,87 @@
+@main {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  v0.1: int = const 23789216;
+  x.1: int = id v0.1;
+  v1.1: int = const 1748698766;
+  y.1: int = id v1.1;
+  v2.1: int = id x.1;
+  v3.1: int = id y.1;
+  f.1: int = call @gcd v2.1 v3.1;
+  f.2: int = id f.1;
+  v4.1: int = id f.2;
+  print v4.1;
+  v5.1: int = const 0;
+}
+
+@mod(r: int, s: int): int {
+.ENTRY:
+.ENTRY:
+.mod_bb0:
+  v0.1: int = id r;
+  v1.1: int = id r;
+  v2.1: int = id s;
+  v3.1: int = div v1.1 v2.1;
+  v4.1: int = id s;
+  v5.1: int = mul v3.1 v4.1;
+  v6.1: int = sub v0.1 v5.1;
+  result.1: int = id v6.1;
+  v7.1: int = id result.1;
+  ret v7.1;
+}
+
+@gcd(a: int, b: int): int {
+.ENTRY:
+.ENTRY:
+.gcd_bb0:
+  v0.1: int = const 0;
+  zero.1: int = id v0.1;
+  v1.1: int = id b;
+  v2.1: int = id zero.1;
+  v3.1: bool = eq v1.1 v2.1;
+  cond_temp.1: bool = id v3.1;
+  v4.1: bool = not cond_temp.1;
+  cond.1: bool = id v4.1;
+  cond_temp.2 = id cond_temp.1;
+  cond.2 = id cond.1;
+  b.1 = id b;
+  a.1 = id a;
+.for.cond.5:
+  v6.1: bool = id cond.2;
+  br v6.1 .for.body.5 .for.end.5;
+.for.body.5:
+  v7.2: int = id b.1;
+  temp.2: int = id v7.2;
+  v8.2: int = id a.1;
+  v9.2: int = id b.1;
+  v10.2: int = call @mod v8.2 v9.2;
+  b.2: int = id v10.2;
+  v11.2: int = id temp.2;
+  a.2: int = id v11.2;
+  v12.2: int = id b.2;
+  v13.2: int = id zero.1;
+  v14.2: bool = eq v12.2 v13.2;
+  cond_temp.3: bool = id v14.2;
+  v15.2: bool = not cond_temp.3;
+  cond.3: bool = id v15.2;
+  cond_temp.2 = id cond_temp.3;
+  v14.1 = id v14.2;
+  cond.2 = id cond.3;
+  v11.1 = id v11.2;
+  v12.1 = id v12.2;
+  v15.1 = id v15.2;
+  v9.1 = id v9.2;
+  b.1 = id b.2;
+  a.1 = id a.2;
+  v10.1 = id v10.2;
+  v8.1 = id v8.2;
+  temp.1 = id temp.2;
+  v7.1 = id v7.2;
+  v13.1 = id v13.2;
+  jmp .for.cond.5;
+.for.end.5:
+  v16.1: int = id a.1;
+  ret v16.1;
+}
+

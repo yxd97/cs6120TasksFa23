@@ -1,4 +1,5 @@
 @main {
+.ENTRY:
 .main_bb0:
   v0.1: int = const 20;
   a.1: int = id v0.1;
@@ -8,11 +9,10 @@
 }
 
 @mod(a: int, b: int): int {
+.ENTRY:
 .mod_bb0:
-  b.1: int = id b;
-  a.1: int = id a;
-  v0.1: int = id a.1;
-  v1.1: int = id b.1;
+  v0.1: int = id a;
+  v1.1: int = id b;
   v2.1: int = div v0.1 v1.1;
   v3.1: int = mul v2.1 v1.1;
   v4.1: int = sub v0.1 v3.1;
@@ -20,60 +20,59 @@
 }
 
 @gcd(a: int, b: int): int {
+.ENTRY:
 .gcd_bb0:
-  b.1: int = id b;
-  a.1: int = id a;
-  v1.1: int = id b.1;
-  v2.1: int = id a.1;
+  v1.1: int = id b;
+  v2.1: int = id a;
   v3.1: bool = gt v1.1 v2.1;
   br v3.1 .then.0 .else.0;
 .then.0:
-  v4.1: int = id a.1;
+  v4.1: int = id a;
   tmp.1: int = id v4.1;
-  v5.1: int = id b.1;
-  a.2: int = id v5.1;
+  v5.1: int = id b;
+  a.1: int = id v5.1;
   v6.1: int = id tmp.1;
-  b.2: int = id v6.1;
+  b.1: int = id v6.1;
   jmp .endif.0;
 .else.0:
 .endif.0:
-  v5.2 = phi v5.1 .then.0;
-  a.3 = phi a.2 .then.0 a.1 .else.0;
-  v6.2 = phi v6.1 .then.0;
-  tmp.2 = phi tmp.1 .then.0;
-  b.3 = phi b.2 .then.0 b.1 .else.0;
-  v4.2 = phi v4.1 .then.0;
-  v8.1: int = id a.3;
+  v5.2 = phi v5.1 .then.0 v5.NOT_DEFINED .else.0;
+  b.2 = phi b.1 .then.0 b .else.0;
+  v4.2 = phi v4.1 .then.0 v4.NOT_DEFINED .else.0;
+  a.2 = phi a.1 .then.0 a .else.0;
+  tmp.2 = phi tmp.1 .then.0 tmp.NOT_DEFINED .else.0;
+  v6.2 = phi v6.1 .then.0 v6.NOT_DEFINED .else.0;
+  v8.1: int = id a.2;
   v9.1: int = const 0;
   v10.1: bool = eq v8.1 v9.1;
   br v10.1 .then.7 .else.7;
 .then.7:
-  v11.1: int = id b.3;
+  v11.1: int = id b.2;
   ret v11.1;
   jmp .endif.7;
 .else.7:
-  v13.2: int = id b.3;
+  v13.2: int = id b.2;
   v14.2: int = const 0;
   v15.2: bool = eq v13.2 v14.2;
   br v15.2 .then.12 .else.12;
 .then.12:
-  v16.2: int = id a.3;
+  v16.2: int = id a.2;
   ret v16.2;
   jmp .endif.12;
 .else.12:
 .endif.12:
-  v16.3 = phi v16.2 .then.12;
+  v16.3 = phi v16.2 .then.12 v16.NOT_DEFINED .else.12;
 .endif.7:
-  v13.1 = phi v13.2 .endif.12;
-  v15.1 = phi v15.2 .endif.12;
-  v14.1 = phi v14.2 .endif.12;
-  v11.2 = phi v11.1 .then.7;
-  v16.1 = phi v16.3 .endif.12;
-  v17.1: int = id a.3;
-  v18.1: int = id b.3;
+  v16.1 = phi v16.NOT_DEFINED .then.7 v16.3 .endif.12;
+  v14.1 = phi v14.NOT_DEFINED .then.7 v14.2 .endif.12;
+  v11.2 = phi v11.1 .then.7 v11.NOT_DEFINED .endif.12;
+  v13.1 = phi v13.NOT_DEFINED .then.7 v13.2 .endif.12;
+  v15.1 = phi v15.NOT_DEFINED .then.7 v15.2 .endif.12;
+  v17.1: int = id a.2;
+  v18.1: int = id b.2;
   remainder.1: int = call @mod v17.1 v18.1;
   remainder.2: int = id remainder.1;
-  v19.1: int = id b.3;
+  v19.1: int = id b.2;
   v20.1: int = id remainder.2;
   g.1: int = call @gcd v19.1 v20.1;
   g.2: int = id g.1;
@@ -82,29 +81,29 @@
 }
 
 @relative_primes(a: int) {
+.ENTRY:
 .relative_primes_bb0:
-  a.1: int = id a;
-  v1.1: int = id a.1;
+  v1.1: int = id a;
   b.1: int = id v1.1;
 .for.cond.0:
-  v5.1 = phi v5.2 .endif.7;
-  v12.1 = phi v12.3 .endif.7;
-  v6.1 = phi v6.2 .endif.7;
-  v9.1 = phi v9.2 .endif.7;
-  v15.1 = phi v15.2 .endif.7;
-  v14.1 = phi v14.2 .endif.7;
+  v5.1 = phi v5.NOT_DEFINED .relative_primes_bb0 v5.2 .endif.7;
+  v13.1 = phi v13.NOT_DEFINED .relative_primes_bb0 v13.2 .endif.7;
+  v11.1 = phi v11.NOT_DEFINED .relative_primes_bb0 v11.3 .endif.7;
+  v12.1 = phi v12.NOT_DEFINED .relative_primes_bb0 v12.3 .endif.7;
+  g.1 = phi g.NOT_DEFINED .relative_primes_bb0 g.3 .endif.7;
+  v10.1 = phi v10.NOT_DEFINED .relative_primes_bb0 v10.2 .endif.7;
+  v8.1 = phi v8.NOT_DEFINED .relative_primes_bb0 v8.2 .endif.7;
   b.2 = phi b.1 .relative_primes_bb0 b.3 .endif.7;
-  v11.1 = phi v11.3 .endif.7;
-  v10.1 = phi v10.2 .endif.7;
-  v8.1 = phi v8.2 .endif.7;
-  v13.1 = phi v13.2 .endif.7;
-  g.1 = phi g.3 .endif.7;
+  v14.1 = phi v14.NOT_DEFINED .relative_primes_bb0 v14.2 .endif.7;
+  v6.1 = phi v6.NOT_DEFINED .relative_primes_bb0 v6.2 .endif.7;
+  v15.1 = phi v15.NOT_DEFINED .relative_primes_bb0 v15.2 .endif.7;
+  v9.1 = phi v9.NOT_DEFINED .relative_primes_bb0 v9.2 .endif.7;
   v2.1: int = id b.2;
   v3.1: int = const 1;
   v4.1: bool = ge v2.1 v3.1;
   br v4.1 .for.body.0 .for.end.0;
 .for.body.0:
-  v5.2: int = id a.1;
+  v5.2: int = id a;
   v6.2: int = id b.2;
   g.2: int = call @gcd v5.2 v6.2;
   g.3: int = id g.2;
@@ -119,8 +118,8 @@
   jmp .endif.7;
 .else.7:
 .endif.7:
-  v12.3 = phi v12.2 .then.7;
-  v11.3 = phi v11.2 .then.7;
+  v11.3 = phi v11.2 .then.7 v11.1 .else.7;
+  v12.3 = phi v12.2 .then.7 v12.1 .else.7;
   v13.2: int = id b.2;
   v14.2: int = const 1;
   v15.2: int = sub v13.2 v14.2;

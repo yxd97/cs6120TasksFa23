@@ -1,0 +1,39 @@
+@main(x: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  one.1: int = const 1;
+  two.1: int = const 2;
+  three.1: int = const 3;
+  count.1: int = const 0;
+  x.1 = id x;
+  count.2 = id count.1;
+.while_cond:
+  cond.1: bool = eq x.1 one.1;
+  cond.2: bool = not cond.1;
+  br cond.2 .while_body .while_exit;
+.while_body:
+  half_x.2: int = div x.1 two.1;
+  two_halves_x.2: int = mul half_x.2 two.1;
+  even.2: bool = eq x.1 two_halves_x.2;
+  br even.2 .even .odd;
+.even:
+  x.2: int = div x.1 two.1;
+  x.5 = id x.2;
+  jmp .endif;
+.odd:
+  x.3: int = mul x.1 three.1;
+  x.4: int = add x.3 one.1;
+  x.5 = id x.4;
+.endif:
+  print x.5;
+  count.3: int = add count.2 one.1;
+  even.1 = id even.2;
+  half_x.1 = id half_x.2;
+  x.1 = id x.5;
+  two_halves_x.1 = id two_halves_x.2;
+  count.2 = id count.3;
+  jmp .while_cond;
+.while_exit:
+}
+

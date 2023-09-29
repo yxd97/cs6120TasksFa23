@@ -1,0 +1,12 @@
+@main {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  size.1: int = const 5;
+  ptr1.1: ptr<int> = alloc size.1;
+  ptr2.1: ptr<int> = alloc size.1;
+  free ptr1.1;
+  free ptr2.1;
+  print size.1;
+}
+

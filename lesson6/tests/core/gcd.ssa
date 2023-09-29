@@ -1,15 +1,14 @@
 @main(op1: int, op2: int) {
+.ENTRY:
 .main_bb0:
-  op2.1: int = id op2;
-  op1.1: int = id op1;
   vc0.1: int = const 0;
-  v0.1: int = id op1.1;
-  v1.1: int = id op2.1;
+  v0.1: int = id op1;
+  v1.1: int = id op2;
 .cmp.val:
   v0.2 = phi v0.1 .main_bb0 v0.2 .if.2 v0.3 .else.2;
-  v3.1 = phi v3.4 .if.2 v3.4 .else.2;
   v1.2 = phi v1.1 .main_bb0 v1.3 .if.2 v1.2 .else.2;
-  v4.1 = phi v4.2 .if.2 v4.2 .else.2;
+  v4.1 = phi v4.NOT_DEFINED .main_bb0 v4.2 .if.2 v4.2 .else.2;
+  v3.1 = phi v3.NOT_DEFINED .main_bb0 v3.4 .if.2 v3.4 .else.2;
   v2.1: bool = lt v0.2 v1.2;
   br v2.1 .if.1 .else.1;
 .if.1:

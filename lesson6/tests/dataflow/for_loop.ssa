@@ -1,12 +1,13 @@
 @main {
+.ENTRY:
 .main_bb0:
   i.1: int = const 0;
   one.1: int = const 1;
   bound.1: int = const 10;
   acc.1: int = const 0;
 .for_cond:
-  i.2 = phi i.1 .main_bb0 i.3 .for_body;
   acc.2 = phi acc.1 .main_bb0 acc.3 .for_body;
+  i.2 = phi i.1 .main_bb0 i.3 .for_body;
   cond.1: bool = lt i.2 bound.1;
   br cond.1 .for_body .for_exit;
 .for_body:

@@ -1,11 +1,8 @@
 @main(x1: int, y1: int, x2: int, y2: int) {
+.ENTRY:
 .main_bb0:
-  y2.1: int = id y2;
-  x2.1: int = id x2;
-  y1.1: int = id y1;
-  x1.1: int = id x1;
-  a1.1: int = call @area x1.1 y1.1;
-  a2.1: int = call @area x2.1 y2.1;
+  a1.1: int = call @area x1 y1;
+  a2.1: int = call @area x2 y2;
   res.1: int = sub a1.1 a2.1;
   a1_bigger.1: bool = gt a1.1 a2.1;
   br a1_bigger.1 .end .flip;
@@ -14,15 +11,14 @@
   res.2: int = mul res.1 neg1.1;
 .end:
   res.3 = phi res.1 .main_bb0 res.2 .flip;
-  neg1.2 = phi neg1.1 .flip;
+  neg1.2 = phi neg1.NOT_DEFINED .main_bb0 neg1.1 .flip;
   print res.3;
 }
 
 @area(x: int, y: int): int {
+.ENTRY:
 .area_bb0:
-  y.1: int = id y;
-  x.1: int = id x;
-  area.1: int = mul x.1 y.1;
+  area.1: int = mul x y;
   print area.1;
   ret area.1;
 }

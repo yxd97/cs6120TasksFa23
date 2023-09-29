@@ -1,8 +1,8 @@
 @main(n: int) {
+.ENTRY:
 .main_bb0:
-  n.1: int = id n;
-  first.1: int = call @sum_by_loop n.1;
-  second.1: int = call @sum_by_formula n.1;
+  first.1: int = call @sum_by_loop n;
+  second.1: int = call @sum_by_formula n;
   isSame.1: bool = eq first.1 second.1;
   print first.1;
   print second.1;
@@ -10,15 +10,15 @@
 }
 
 @sum_by_loop(n: int): int {
+.ENTRY:
 .sum_by_loop_bb0:
-  n.1: int = id n;
   one.1: int = const 1;
   sum.1: int = const 0;
   i.1: int = const 1;
 .for_start:
-  i.2 = phi i.1 .sum_by_loop_bb0 i.3 .for;
   sum.2 = phi sum.1 .sum_by_loop_bb0 sum.3 .for;
-  con.1: bool = le i.2 n.1;
+  i.2 = phi i.1 .sum_by_loop_bb0 i.3 .for;
+  con.1: bool = le i.2 n;
   br con.1 .for .end;
 .for:
   sum.3: int = add sum.2 i.2;
@@ -29,12 +29,12 @@
 }
 
 @sum_by_formula(n: int): int {
+.ENTRY:
 .sum_by_formula_bb0:
-  n.1: int = id n;
   one.1: int = const 1;
   two.1: int = const 2;
-  n_1.1: int = add one.1 n.1;
-  multi.1: int = mul n_1.1 n.1;
+  n_1.1: int = add one.1 n;
+  multi.1: int = mul n_1.1 n;
   sum.1: int = div multi.1 two.1;
   ret sum.1;
 }

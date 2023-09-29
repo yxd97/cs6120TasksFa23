@@ -1,0 +1,45 @@
+@main(x: int, y: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  greater.1: int = id y;
+  v4.1: bool = gt x y;
+  br v4.1 .then.1 .else.1;
+.then.1:
+  greater.2: int = id x;
+  greater.3 = id greater.2;
+  jmp .endif.1;
+.else.1:
+  greater.3 = id greater.1;
+.endif.1:
+  greater.4 = id greater.3;
+.foreverloop:
+  modX.1: int = call @getMod greater.4 x;
+  modY.1: int = call @getMod greater.4 y;
+  zero.1: int = const 0;
+  xZero.1: bool = eq modX.1 zero.1;
+  yZero.1: bool = eq modY.1 zero.1;
+  bothZero.1: bool = and xZero.1 yZero.1;
+  br bothZero.1 .then.2 .else.2;
+.then.2:
+  print greater.4;
+  jmp .loopend;
+.else.2:
+  one.2: int = const 1;
+  greater.5: int = add greater.4 one.2;
+  greater.4 = id greater.5;
+  one.1 = id one.2;
+  jmp .foreverloop;
+.loopend:
+}
+
+@getMod(val: int, mod: int): int {
+.ENTRY:
+.ENTRY:
+.getMod_bb0:
+  divisor.1: int = div val mod;
+  multiple.1: int = mul divisor.1 mod;
+  rem.1: int = sub val multiple.1;
+  ret rem.1;
+}
+

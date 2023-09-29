@@ -1,76 +1,75 @@
 @main(n: int) {
+.ENTRY:
 .main_bb0:
-  n.1: int = id n;
-  print n.1;
-  tot.1: int = call @totient n.1;
+  print n;
+  tot.1: int = call @totient n;
   print tot.1;
 }
 
 @totient(n: int): int {
+.ENTRY:
 .totient_bb0:
-  n.1: int = id n;
-  result.1: int = id n.1;
+  result.1: int = id n;
   p.1: int = const 2;
   one.1: int = const 1;
   zero.1: int = const 0;
 .for.set.cond:
-  p.2 = phi p.1 .totient_bb0 p.3 .else_lbl;
   result.2 = phi result.1 .totient_bb0 result.5 .else_lbl;
-  n.2 = phi n.1 .totient_bb0 n.3 .else_lbl;
-  if_cond.1 = phi if_cond.2 .else_lbl;
-  npmod.1 = phi npmod.3 .else_lbl;
-  npdiv.1 = phi npdiv.2 .else_lbl;
-  while_cond.1 = phi while_cond.2 .else_lbl;
-  resdiv.1 = phi resdiv.4 .else_lbl;
+  npdiv.1 = phi npdiv.NOT_DEFINED .totient_bb0 npdiv.2 .else_lbl;
+  resdiv.1 = phi resdiv.NOT_DEFINED .totient_bb0 resdiv.4 .else_lbl;
+  while_cond.1 = phi while_cond.NOT_DEFINED .totient_bb0 while_cond.2 .else_lbl;
+  n.1 = phi n .totient_bb0 n.2 .else_lbl;
+  npmod.1 = phi npmod.NOT_DEFINED .totient_bb0 npmod.3 .else_lbl;
+  if_cond.1 = phi if_cond.NOT_DEFINED .totient_bb0 if_cond.2 .else_lbl;
+  p.2 = phi p.1 .totient_bb0 p.3 .else_lbl;
   pp.1: int = mul p.2 p.2;
-  cond.1: bool = le pp.1 n.2;
+  cond.1: bool = le pp.1 n.1;
   br cond.1 .for.set.body .for.set.end;
 .for.set.body:
-  npmod.2: int = call @mod n.2 p.2;
+  npmod.2: int = call @mod n.1 p.2;
   if_cond.2: bool = eq npmod.2 zero.1;
   br if_cond.2 .if_lbl .else_lbl;
 .if_lbl:
 .while.set.cond:
-  n.4 = phi n.2 .if_lbl n.5 .while.body;
-  npdiv.3 = phi npdiv.4 .while.body;
-  npmod.4: int = call @mod n.4 p.2;
+  npdiv.3 = phi npdiv.1 .if_lbl npdiv.4 .while.body;
+  n.3 = phi n.1 .if_lbl n.4 .while.body;
+  npmod.4: int = call @mod n.3 p.2;
   while_cond.3: bool = eq npmod.4 zero.1;
   br while_cond.3 .while.body .while.end;
 .while.body:
-  npdiv.4: int = div n.4 p.2;
-  n.5: int = id npdiv.4;
+  npdiv.4: int = div n.3 p.2;
+  n.4: int = id npdiv.4;
   jmp .while.set.cond;
 .while.end:
   resdiv.5: int = div result.2 p.2;
   result.6: int = sub result.2 resdiv.5;
 .else_lbl:
   result.5 = phi result.2 .for.set.body result.6 .while.end;
-  n.3 = phi n.2 .for.set.body n.4 .while.end;
+  npdiv.2 = phi npdiv.1 .for.set.body npdiv.3 .while.end;
+  resdiv.4 = phi resdiv.1 .for.set.body resdiv.5 .while.end;
+  while_cond.2 = phi while_cond.1 .for.set.body while_cond.3 .while.end;
+  n.2 = phi n.1 .for.set.body n.3 .while.end;
   npmod.3 = phi npmod.2 .for.set.body npmod.4 .while.end;
-  npdiv.2 = phi npdiv.3 .while.end;
-  while_cond.2 = phi while_cond.3 .while.end;
-  resdiv.4 = phi resdiv.5 .while.end;
   p.3: int = add p.2 one.1;
   jmp .for.set.cond;
 .for.set.end:
-  final_if_cond.1: bool = gt n.2 one.1;
+  final_if_cond.1: bool = gt n.1 one.1;
   br final_if_cond.1 .final_if_label .final_else_label;
 .final_if_label:
-  resdiv.2: int = div result.2 n.2;
+  resdiv.2: int = div result.2 n.1;
   result.3: int = sub result.2 resdiv.2;
 .final_else_label:
   result.4 = phi result.2 .for.set.end result.3 .final_if_label;
-  resdiv.3 = phi resdiv.2 .final_if_label;
+  resdiv.3 = phi resdiv.1 .for.set.end resdiv.2 .final_if_label;
   ret result.4;
 }
 
 @mod(a: int, b: int): int {
+.ENTRY:
 .mod_bb0:
-  b.1: int = id b;
-  a.1: int = id a;
-  ad.1: int = div a.1 b.1;
-  mad.1: int = mul b.1 ad.1;
-  ans.1: int = sub a.1 mad.1;
+  ad.1: int = div a b;
+  mad.1: int = mul b ad.1;
+  ans.1: int = sub a mad.1;
   ret ans.1;
 }
 

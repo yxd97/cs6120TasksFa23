@@ -1,0 +1,11 @@
+@main {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  a.1: int = const 1;
+  b.1: int = const 2;
+  print a.1;
+  a.2: int = add a.1 b.1;
+  print a.2;
+}
+

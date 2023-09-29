@@ -1,0 +1,40 @@
+@main(num: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  zer.1: int = const 0;
+  one.1: int = const 1;
+  fac.1: int = const 2;
+  num.1 = id num;
+  fac.2 = id fac.1;
+.loopcheck:
+  ispos.1: bool = lt one.1 num.1;
+  br ispos.1 .loopbody .loopend;
+.loopbody:
+  quo.2: int = div num.1 fac.2;
+  tmp.2: int = mul quo.2 fac.2;
+  mod.2: int = sub num.1 tmp.2;
+  iszero.2: bool = eq mod.2 zer.1;
+  br iszero.2 .ifyes .ifno;
+.ifyes:
+  print fac.2;
+  num.2: int = div num.1 fac.2;
+  iszero.1 = id iszero.2;
+  num.1 = id num.2;
+  tmp.1 = id tmp.2;
+  mod.1 = id mod.2;
+  quo.1 = id quo.2;
+  fac.2 = id fac.2;
+  jmp .loopcheck;
+.ifno:
+  fac.3: int = add fac.2 one.1;
+  iszero.1 = id iszero.2;
+  num.1 = id num.1;
+  tmp.1 = id tmp.2;
+  mod.1 = id mod.2;
+  quo.1 = id quo.2;
+  fac.2 = id fac.3;
+  jmp .loopcheck;
+.loopend:
+}
+

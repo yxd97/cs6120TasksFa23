@@ -1,0 +1,51 @@
+@main(input: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  n.1: int = id input;
+  v0.1: int = const 0;
+  v1.1: int = const 10;
+  result.1: int = id v0.1;
+  v2.1: bool = const true;
+  notdone.1: bool = id v2.1;
+  n.2 = id n.1;
+  result.2 = id result.1;
+  notdone.2 = id notdone.1;
+.for.cond.3:
+  v4.1: bool = id notdone.2;
+  br v4.1 .for.body.3 .for.end.3;
+.for.body.3:
+  v5.2: int = id n.2;
+  a.2: int = div v5.2 v1.1;
+  floor.2: int = mul a.2 v1.1;
+  remainder.2: int = sub v5.2 floor.2;
+  result.3: int = mul result.2 v1.1;
+  result.4: int = add result.3 remainder.2;
+  n.3: int = id a.2;
+  comp1.2: bool = eq n.3 v0.1;
+  br comp1.2 .if.body .for.incre;
+.if.body:
+  notdone.3: bool = const false;
+  n.2 = id n.3;
+  comp1.1 = id comp1.2;
+  a.1 = id a.2;
+  result.2 = id result.4;
+  floor.1 = id floor.2;
+  remainder.1 = id remainder.2;
+  notdone.2 = id notdone.3;
+  v5.1 = id v5.2;
+  jmp .for.cond.3;
+.for.incre:
+  n.2 = id n.3;
+  comp1.1 = id comp1.2;
+  a.1 = id a.2;
+  result.2 = id result.4;
+  floor.1 = id floor.2;
+  remainder.1 = id remainder.2;
+  notdone.2 = id notdone.2;
+  v5.1 = id v5.2;
+  jmp .for.cond.3;
+.for.end.3:
+  print result.2;
+}
+

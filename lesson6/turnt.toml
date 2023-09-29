@@ -12,3 +12,9 @@ output.check_ssa = "-"
 [envs.run_ssa]
 command = "bril2json < {filename} | python3 to_ssa.py | bril2json | brili {args}"
 
+[envs.rt_ssa]
+command = "bril2json < {filename} | python3 to_ssa.py | bril2json | python3 from_ssa.py"
+output.rt_ssa = "-"
+
+[envs.run_rt_ssa]
+command = "bril2json < {filename} | python3 to_ssa.py | bril2json | python3 from_ssa.py | bril2json | brili {args}"

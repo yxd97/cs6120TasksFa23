@@ -1,7 +1,7 @@
 @main(n: float) {
+.ENTRY:
 .main_bb0:
-  n.1: float = id n;
-  v0.1: float = id n.1;
+  v0.1: float = id n;
   c.1: float = call @probability v0.1;
   c.2: float = id c.1;
   v1.1: float = id c.2;
@@ -10,31 +10,31 @@
 }
 
 @probability(n: float): float {
+.ENTRY:
 .probability_bb0:
-  n.1: float = id n;
   v0.1: float = const 1;
   prob.1: float = id v0.1;
   v2.1: float = const 1;
   i.1: float = id v2.1;
 .for.cond.1:
-  prob.2 = phi prob.1 .probability_bb0 prob.3 .for.body.1;
-  v12.1 = phi v12.2 .for.body.1;
-  v15.1 = phi v15.2 .for.body.1;
-  v16.1 = phi v16.2 .for.body.1;
-  v7.1 = phi v7.2 .for.body.1;
-  v6.1 = phi v6.2 .for.body.1;
-  v14.1 = phi v14.2 .for.body.1;
-  v17.1 = phi v17.2 .for.body.1;
-  log.1 = phi log.2 .for.body.1;
-  v11.1 = phi v11.2 .for.body.1;
+  v6.1 = phi v6.NOT_DEFINED .probability_bb0 v6.2 .for.body.1;
+  v10.1 = phi v10.NOT_DEFINED .probability_bb0 v10.2 .for.body.1;
+  v13.1 = phi v13.NOT_DEFINED .probability_bb0 v13.2 .for.body.1;
+  log.1 = phi log.NOT_DEFINED .probability_bb0 log.2 .for.body.1;
+  logUpdated.1 = phi logUpdated.NOT_DEFINED .probability_bb0 logUpdated.2 .for.body.1;
+  v7.1 = phi v7.NOT_DEFINED .probability_bb0 v7.2 .for.body.1;
+  v17.1 = phi v17.NOT_DEFINED .probability_bb0 v17.2 .for.body.1;
+  v12.1 = phi v12.NOT_DEFINED .probability_bb0 v12.2 .for.body.1;
+  v11.1 = phi v11.NOT_DEFINED .probability_bb0 v11.2 .for.body.1;
+  v15.1 = phi v15.NOT_DEFINED .probability_bb0 v15.2 .for.body.1;
+  v14.1 = phi v14.NOT_DEFINED .probability_bb0 v14.2 .for.body.1;
+  v8.1 = phi v8.NOT_DEFINED .probability_bb0 v8.2 .for.body.1;
   i.2 = phi i.1 .probability_bb0 i.3 .for.body.1;
-  v8.1 = phi v8.2 .for.body.1;
-  logUpdated.1 = phi logUpdated.2 .for.body.1;
-  v9.1 = phi v9.2 .for.body.1;
-  v10.1 = phi v10.2 .for.body.1;
-  v13.1 = phi v13.2 .for.body.1;
+  v16.1 = phi v16.NOT_DEFINED .probability_bb0 v16.2 .for.body.1;
+  v9.1 = phi v9.NOT_DEFINED .probability_bb0 v9.2 .for.body.1;
+  prob.2 = phi prob.1 .probability_bb0 prob.3 .for.body.1;
   v3.1: float = id i.2;
-  v4.1: float = id n.1;
+  v4.1: float = id n;
   v5.1: bool = flt v3.1 v4.1;
   br v5.1 .for.body.1 .for.end.1;
 .for.body.1:

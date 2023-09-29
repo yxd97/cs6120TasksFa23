@@ -1,4 +1,5 @@
 @main {
+.ENTRY:
 .main_bb0:
   size.1: int = const 5;
   ptr1.1: ptr<int> = alloc size.1;

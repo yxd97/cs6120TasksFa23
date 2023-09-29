@@ -1,18 +1,17 @@
 @pow(x: int, n: int): int {
+.ENTRY:
 .pow_bb0:
-  n.1: int = id n;
-  x.1: int = id x;
-  v1.1: int = id n.1;
+  v1.1: int = id n;
   v2.1: int = const 1;
   v3.1: bool = eq v1.1 v2.1;
   br v3.1 .then.0 .else.0;
 .then.0:
-  v4.1: int = id x.1;
+  v4.1: int = id x;
   ret v4.1;
   jmp .endif.0;
 .else.0:
-  v5.1: int = id x.1;
-  v6.1: int = id n.1;
+  v5.1: int = id x;
+  v6.1: int = id n;
   v7.1: int = const 2;
   v8.1: int = div v6.1 v7.1;
   half.1: int = call @pow v5.1 v8.1;
@@ -21,7 +20,7 @@
   v10.1: int = id half.2;
   v11.1: int = mul v9.1 v10.1;
   half2.1: int = id v11.1;
-  v13.1: int = id n.1;
+  v13.1: int = id n;
   v14.1: int = const 2;
   v15.1: int = call @mod v13.1 v14.1;
   v16.1: int = const 1;
@@ -29,7 +28,7 @@
   br v17.1 .then.12 .else.12;
 .then.12:
   v18.1: int = id half2.1;
-  v19.1: int = id x.1;
+  v19.1: int = id x;
   v20.1: int = mul v18.1 v19.1;
   ans.1: int = id v20.1;
   jmp .endif.12;
@@ -37,70 +36,64 @@
   v21.1: int = id half2.1;
   ans.2: int = id v21.1;
 .endif.12:
-  v21.2 = phi v21.1 .else.12;
-  v18.2 = phi v18.1 .then.12;
-  v19.2 = phi v19.1 .then.12;
+  v18.2 = phi v18.1 .then.12 v18.NOT_DEFINED .else.12;
+  v19.2 = phi v19.1 .then.12 v19.NOT_DEFINED .else.12;
+  v21.2 = phi v21.NOT_DEFINED .then.12 v21.1 .else.12;
+  v20.2 = phi v20.1 .then.12 v20.NOT_DEFINED .else.12;
   ans.3 = phi ans.1 .then.12 ans.2 .else.12;
-  v20.2 = phi v20.1 .then.12;
   v22.1: int = id ans.3;
   ret v22.1;
 .endif.0:
 }
 
 @mod(a: int, b: int): int {
+.ENTRY:
 .mod_bb0:
-  b.1: int = id b;
-  a.1: int = id a;
-  v0.1: int = id a.1;
-  v1.1: int = id a.1;
-  v2.1: int = id b.1;
+  v0.1: int = id a;
+  v1.1: int = id a;
+  v2.1: int = id b;
   v3.1: int = div v1.1 v2.1;
-  v4.1: int = id b.1;
+  v4.1: int = id b;
   v5.1: int = mul v3.1 v4.1;
   v6.1: int = sub v0.1 v5.1;
   ret v6.1;
 }
 
 @LEFTSHIFT(x: int, step: int): int {
+.ENTRY:
 .LEFTSHIFT_bb0:
-  step.1: int = id step;
-  x.1: int = id x;
   v0.1: int = const 2;
-  v1.1: int = id step.1;
+  v1.1: int = id step;
   p.1: int = call @pow v0.1 v1.1;
   p.2: int = id p.1;
-  v2.1: int = id x.1;
+  v2.1: int = id x;
   v3.1: int = id p.2;
   v4.1: int = mul v2.1 v3.1;
   ret v4.1;
 }
 
 @RIGHTSHIFT(x: int, step: int): int {
+.ENTRY:
 .RIGHTSHIFT_bb0:
-  step.1: int = id step;
-  x.1: int = id x;
   v0.1: int = const 2;
-  v1.1: int = id step.1;
+  v1.1: int = id step;
   p.1: int = call @pow v0.1 v1.1;
   p.2: int = id p.1;
-  v2.1: int = id x.1;
+  v2.1: int = id x;
   v3.1: int = id p.2;
   v4.1: int = div v2.1 v3.1;
   ret v4.1;
 }
 
 @main(a: int, b: int, c: int, d: int) {
+.ENTRY:
 .main_bb0:
-  d.1: int = id d;
-  c.1: int = id c;
-  b.1: int = id b;
-  a.1: int = id a;
-  v2.1: int = id a.1;
-  v3.1: int = id b.1;
+  v2.1: int = id a;
+  v3.1: int = id b;
   ans1.1: int = call @LEFTSHIFT v2.1 v3.1;
   print ans1.1;
-  v4.1: int = id c.1;
-  v5.1: int = id d.1;
+  v4.1: int = id c;
+  v5.1: int = id d;
   ans2.1: int = call @RIGHTSHIFT v4.1 v5.1;
   print ans2.1;
 }

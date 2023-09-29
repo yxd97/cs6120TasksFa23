@@ -1,0 +1,117 @@
+@main(input: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  v1.1: int = const 1;
+  index.1: int = id v1.1;
+  index.2 = id index.1;
+.for.cond.0:
+  v2.1: int = id index.2;
+  v4.1: bool = lt v2.1 input;
+  br v4.1 .for.body.0 .for.end.0;
+.for.body.0:
+  v5.2: int = id index.2;
+  v6.2: int = const 3;
+  v7.2: int = div v5.2 v6.2;
+  div3.2: int = id v7.2;
+  v8.2: int = id div3.2;
+  v9.2: int = const 3;
+  v10.2: int = mul v8.2 v9.2;
+  v11.2: int = id index.2;
+  v12.2: bool = eq v10.2 v11.2;
+  isFizz.2: bool = id v12.2;
+  v13.2: int = id index.2;
+  v14.2: int = const 5;
+  v15.2: int = div v13.2 v14.2;
+  div5.2: int = id v15.2;
+  v16.2: int = id div5.2;
+  v17.2: int = const 5;
+  v18.2: int = mul v16.2 v17.2;
+  v19.2: int = id index.2;
+  v20.2: bool = eq v18.2 v19.2;
+  isBuzz.2: bool = id v20.2;
+  v22.2: bool = id isFizz.2;
+  br v22.2 .then.21 .else.21;
+.then.21:
+  v24.3: bool = id isBuzz.2;
+  br v24.3 .then.23 .else.23;
+.then.23:
+  v25.3: int = const 0;
+  v26.3: int = const 1;
+  v27.3: int = sub v25.3 v26.3;
+  print v27.3;
+  v28.3: int = const 0;
+  v27.4 = id v27.3;
+  v26.4 = id v26.3;
+  v28.4 = id v28.3;
+  v25.4 = id v25.3;
+  jmp .endif.23;
+.else.23:
+  v29.3: int = const 0;
+  v30.3: int = const 2;
+  v31.3: int = sub v29.3 v30.3;
+  print v31.3;
+  v32.3: int = const 0;
+  v31.4 = id v31.3;
+  v29.4 = id v29.3;
+  v30.4 = id v30.3;
+  v32.4 = id v32.3;
+.endif.23:
+  v24.2 = id v24.3;
+  jmp .endif.21;
+.else.21:
+  v34.3: bool = id isBuzz.2;
+  br v34.3 .then.33 .else.33;
+.then.33:
+  v35.3: int = const 0;
+  v36.3: int = const 3;
+  v37.3: int = sub v35.3 v36.3;
+  print v37.3;
+  v38.3: int = const 0;
+  v36.4 = id v36.3;
+  v38.4 = id v38.3;
+  v35.4 = id v35.3;
+  v37.4 = id v37.3;
+  jmp .endif.33;
+.else.33:
+  v39.3: int = id index.2;
+  print v39.3;
+  v40.3: int = const 0;
+  v39.4 = id v39.3;
+  v40.4 = id v40.3;
+.endif.33:
+  v34.2 = id v34.3;
+.endif.21:
+  v41.2: int = id index.2;
+  v42.2: int = const 1;
+  v43.2: int = add v41.2 v42.2;
+  index.3: int = id v43.2;
+  div5.1 = id div5.2;
+  v15.1 = id v15.2;
+  v17.1 = id v17.2;
+  v5.1 = id v5.2;
+  v10.1 = id v10.2;
+  v42.1 = id v42.2;
+  v14.1 = id v14.2;
+  index.2 = id index.3;
+  v11.1 = id v11.2;
+  v7.1 = id v7.2;
+  v16.1 = id v16.2;
+  v43.1 = id v43.2;
+  isFizz.1 = id isFizz.2;
+  v18.1 = id v18.2;
+  v6.1 = id v6.2;
+  v12.1 = id v12.2;
+  v19.1 = id v19.2;
+  v41.1 = id v41.2;
+  v13.1 = id v13.2;
+  v8.1 = id v8.2;
+  v22.1 = id v22.2;
+  div3.1 = id div3.2;
+  v9.1 = id v9.2;
+  v20.1 = id v20.2;
+  isBuzz.1 = id isBuzz.2;
+  jmp .for.cond.0;
+.for.end.0:
+}
+

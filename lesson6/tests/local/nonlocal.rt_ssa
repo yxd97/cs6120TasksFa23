@@ -1,0 +1,16 @@
+@main {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  a.1: int = const 4;
+  b.1: int = const 2;
+  sum1.1: int = add a.1 b.1;
+  sum2.1: int = add a.1 b.1;
+  jmp .label;
+.label:
+  prod.1: int = mul sum1.1 sum2.1;
+  sum11.1: int = id sum1.1;
+  print prod.1;
+  print sum11.1;
+}
+

@@ -1,21 +1,20 @@
 @main(x: int, y: int) {
+.ENTRY:
 .main_bb0:
-  y.1: int = id y;
-  x.1: int = id x;
-  greater.1: int = id y.1;
-  v4.1: bool = gt x.1 y.1;
+  greater.1: int = id y;
+  v4.1: bool = gt x y;
   br v4.1 .then.1 .else.1;
 .then.1:
-  greater.2: int = id x.1;
+  greater.2: int = id x;
   jmp .endif.1;
 .else.1:
 .endif.1:
   greater.3 = phi greater.2 .then.1 greater.1 .else.1;
 .foreverloop:
-  one.1 = phi one.2 .else.2;
+  one.1 = phi one.NOT_DEFINED .endif.1 one.2 .else.2;
   greater.4 = phi greater.3 .endif.1 greater.5 .else.2;
-  modX.1: int = call @getMod greater.4 x.1;
-  modY.1: int = call @getMod greater.4 y.1;
+  modX.1: int = call @getMod greater.4 x;
+  modY.1: int = call @getMod greater.4 y;
   zero.1: int = const 0;
   xZero.1: bool = eq modX.1 zero.1;
   yZero.1: bool = eq modY.1 zero.1;
@@ -32,12 +31,11 @@
 }
 
 @getMod(val: int, mod: int): int {
+.ENTRY:
 .getMod_bb0:
-  mod.1: int = id mod;
-  val.1: int = id val;
-  divisor.1: int = div val.1 mod.1;
-  multiple.1: int = mul divisor.1 mod.1;
-  rem.1: int = sub val.1 multiple.1;
+  divisor.1: int = div val mod;
+  multiple.1: int = mul divisor.1 mod;
+  rem.1: int = sub val multiple.1;
   ret rem.1;
 }
 

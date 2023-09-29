@@ -1,0 +1,23 @@
+@main {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  i.1: int = const 0;
+  one.1: int = const 1;
+  bound.1: int = const 10;
+  acc.1: int = const 0;
+  acc.2 = id acc.1;
+  i.2 = id i.1;
+.for_cond:
+  cond.1: bool = lt i.2 bound.1;
+  br cond.1 .for_body .for_exit;
+.for_body:
+  acc.3: int = add acc.2 i.2;
+  i.3: int = add i.2 one.1;
+  acc.2 = id acc.3;
+  i.2 = id i.3;
+  jmp .for_cond;
+.for_exit:
+  print acc.2;
+}
+

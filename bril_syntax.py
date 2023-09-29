@@ -180,7 +180,7 @@ class BasicBlk:
         return len(self.instrs) == 0
 
     def has_label(self):
-        return isinstance(self.instrs[0], Label)
+        return (not self.is_empty()) and isinstance(self.instrs[0], Label)
 
     def get_label(self):
         if self.has_label():
@@ -214,16 +214,21 @@ def get_baisc_blks(func:Function) -> List[BasicBlk]:
     '''
         Separate a function into a list of basic blocks
     '''
-    basic_blks:List[BasicBlk] = []
+    basic_blks:List[BasicBlk] = [
+        BasicBlk(name='ENTRY',start=0, end=1)
+    ]
+    basic_blks[0].instrs.append(
+        Label({'label':'ENTRY'})
+    )
     bblk_count = 0
-    curr_blk = BasicBlk(start = 0)
+    curr_blk = BasicBlk(start = 1)
     for i, instr in enumerate(func.instrs):
         # commit a basic block when it's the last instruction
         if i == len(func.instrs) - 1:
             curr_blk.instrs.append(instr)
             __name_basic_blk(curr_blk, func.name, bblk_count)
             bblk_count += 1
-            curr_blk.end = i + 1
+            curr_blk.end = i + 1 + 1
             basic_blks.append(copy.deepcopy(curr_blk))
         # add label if current block is empty, otherwise commit a block
         elif isinstance(instr, Label):
@@ -232,10 +237,10 @@ def get_baisc_blks(func:Function) -> List[BasicBlk]:
             else:
                 __name_basic_blk(curr_blk, func.name, bblk_count)
                 bblk_count += 1
-                curr_blk.end = i
+                curr_blk.end = i + 1
                 basic_blks.append(copy.deepcopy(curr_blk))
                 curr_blk = BasicBlk()
-                curr_blk.start = i
+                curr_blk.start = i + 1
                 curr_blk.instrs.append(instr)
         # for instructions, check if it terminates a block
         else:
@@ -243,10 +248,10 @@ def get_baisc_blks(func:Function) -> List[BasicBlk]:
             if instr.terminate_baisc_blk():
                 __name_basic_blk(curr_blk, func.name, bblk_count)
                 bblk_count += 1
-                curr_blk.end = i + 1
+                curr_blk.end = i + 1 + 1
                 basic_blks.append(copy.deepcopy(curr_blk))
                 curr_blk = BasicBlk()
-                curr_blk.start = i + 1
+                curr_blk.start = i + 1 + 1
     return basic_blks
 
 def line_no_to_blk(blocks:List[BasicBlk], line_no:int) -> BasicBlk:

@@ -1,39 +1,35 @@
 @main(n: int, arrows: int, repeats: int) {
+.ENTRY:
 .main_bb0:
-  repeats.1: int = id repeats;
-  arrows.1: int = id arrows;
-  n.1: int = id n;
-  ans.1: int = call @up_arrow n.1 arrows.1 repeats.1;
+  ans.1: int = call @up_arrow n arrows repeats;
   print ans.1;
 }
 
 @up_arrow(num: int, arrows: int, repeats: int): int {
+.ENTRY:
 .up_arrow_bb0:
-  repeats.1: int = id repeats;
-  arrows.1: int = id arrows;
-  num.1: int = id num;
   one.1: int = const 1;
-  ans.1: int = id num.1;
+  ans.1: int = id num;
   i.1: int = const 1;
 .loopstart:
-  i.2 = phi i.1 .up_arrow_bb0 i.3 .finally;
   ans.2 = phi ans.1 .up_arrow_bb0 ans.5 .finally;
-  new_arrows.1 = phi new_arrows.3 .finally;
-  base_case.1 = phi base_case.2 .finally;
-  keepgoing.1: bool = lt i.2 repeats.1;
+  i.2 = phi i.1 .up_arrow_bb0 i.3 .finally;
+  base_case.1 = phi base_case.NOT_DEFINED .up_arrow_bb0 base_case.2 .finally;
+  new_arrows.1 = phi new_arrows.NOT_DEFINED .up_arrow_bb0 new_arrows.3 .finally;
+  keepgoing.1: bool = lt i.2 repeats;
   br keepgoing.1 .loopbody .endloop;
 .loopbody:
-  base_case.2: bool = le arrows.1 one.1;
+  base_case.2: bool = le arrows one.1;
   br base_case.2 .base .arrowsgreaterthan1;
 .base:
-  ans.3: int = mul ans.2 num.1;
+  ans.3: int = mul ans.2 num;
   jmp .finally;
 .arrowsgreaterthan1:
-  new_arrows.2: int = sub arrows.1 one.1;
-  ans.4: int = call @up_arrow num.1 new_arrows.2 ans.2;
+  new_arrows.2: int = sub arrows one.1;
+  ans.4: int = call @up_arrow num new_arrows.2 ans.2;
 .finally:
   ans.5 = phi ans.3 .base ans.4 .arrowsgreaterthan1;
-  new_arrows.3 = phi new_arrows.2 .arrowsgreaterthan1;
+  new_arrows.3 = phi new_arrows.1 .base new_arrows.2 .arrowsgreaterthan1;
   i.3: int = add i.2 one.1;
   jmp .loopstart;
 .endloop:

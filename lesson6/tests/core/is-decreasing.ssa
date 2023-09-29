@@ -1,28 +1,28 @@
 @main(x: int) {
+.ENTRY:
 .main_bb0:
-  x.1: int = id x;
-  tmp0.1: bool = call @is_decreasing x.1;
+  tmp0.1: bool = call @is_decreasing x;
   tmp.1: bool = id tmp0.1;
   print tmp.1;
 }
 
 @is_decreasing(x: int): bool {
+.ENTRY:
 .is_decreasing_bb0:
-  x.1: int = id x;
-  tmp.1: int = id x.1;
+  tmp.1: int = id x;
   tmp1.1: int = const 1;
   tmp2.1: int = const -1;
   tmp3.1: int = mul tmp1.1 tmp2.1;
   prev.1: int = id tmp3.1;
 .label4:
-  tmp10.1 = phi tmp10.2 .label13;
-  digit.1 = phi digit.2 .label13;
-  tmp9.1 = phi tmp9.2 .label13;
+  digit.1 = phi digit.NOT_DEFINED .is_decreasing_bb0 digit.2 .label13;
   prev.2 = phi prev.1 .is_decreasing_bb0 prev.3 .label13;
-  tmp15.1 = phi tmp15.2 .label13;
-  tmp14.1 = phi tmp14.3 .label13;
+  tmp16.1 = phi tmp16.NOT_DEFINED .is_decreasing_bb0 tmp16.2 .label13;
   tmp.2 = phi tmp.1 .is_decreasing_bb0 tmp.3 .label13;
-  tmp16.1 = phi tmp16.2 .label13;
+  tmp15.1 = phi tmp15.NOT_DEFINED .is_decreasing_bb0 tmp15.2 .label13;
+  tmp14.1 = phi tmp14.NOT_DEFINED .is_decreasing_bb0 tmp14.3 .label13;
+  tmp10.1 = phi tmp10.NOT_DEFINED .is_decreasing_bb0 tmp10.2 .label13;
+  tmp9.1 = phi tmp9.NOT_DEFINED .is_decreasing_bb0 tmp9.2 .label13;
   tmp7.1: int = const 0;
   tmp8.1: bool = gt tmp.2 tmp7.1;
   br tmp8.1 .label5 .label6;
@@ -38,7 +38,7 @@
 .label12:
   jmp .label13;
 .label13:
-  tmp14.3 = phi tmp14.2 .label11;
+  tmp14.3 = phi tmp14.2 .label11 tmp14.1 .label12;
   prev.3: int = id digit.2;
   tmp15.2: int = const 10;
   tmp16.2: int = div tmp.2 tmp15.2;
@@ -50,13 +50,13 @@
 }
 
 @last_digit(x: int): int {
+.ENTRY:
 .last_digit_bb0:
-  x.1: int = id x;
   tmp18.1: int = const 10;
-  tmp19.1: int = div x.1 tmp18.1;
+  tmp19.1: int = div x tmp18.1;
   tmp20.1: int = const 10;
   tmp21.1: int = mul tmp19.1 tmp20.1;
-  tmp22.1: int = sub x.1 tmp21.1;
+  tmp22.1: int = sub x tmp21.1;
   ret tmp22.1;
 }
 

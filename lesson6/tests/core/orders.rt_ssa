@@ -1,0 +1,111 @@
+@abs(a: int): int {
+.ENTRY:
+.ENTRY:
+.abs_bb0:
+  zero.1: int = const 0;
+  is_neg.1: bool = lt a zero.1;
+  a.2 = id a;
+  br is_neg.1 .mul_neg_one .abs_res;
+.mul_neg_one:
+  neg_one.1: int = const -1;
+  a.1: int = mul a neg_one.1;
+  neg_one.2 = id neg_one.1;
+  a.2 = id a.1;
+.abs_res:
+  ret a.2;
+}
+
+@mod(a: int, b: int): int {
+.ENTRY:
+.ENTRY:
+.mod_bb0:
+  q.1: int = div a b;
+  aq.1: int = mul b q.1;
+  mod.1: int = sub a aq.1;
+  ret mod.1;
+}
+
+@gcd(a: int, b: int): int {
+.ENTRY:
+.ENTRY:
+  b.1 = id b;
+  a.1 = id a;
+.while.cond:
+  mod.1: int = call @mod a.1 b.1;
+  zero.1: int = const 0;
+  is_term.1: bool = eq mod.1 zero.1;
+  br is_term.1 .while.finish .while.body;
+.while.body:
+  a.2: int = id b.1;
+  b.2: int = id mod.1;
+  b.1 = id b.2;
+  a.1 = id a.2;
+  jmp .while.cond;
+.while.finish:
+  ret b.1;
+}
+
+@lcm(a: int, b: int): int {
+.ENTRY:
+.ENTRY:
+.lcm_bb0:
+  zero.1: int = const 0;
+  a_is_zero.1: bool = eq a zero.1;
+  br a_is_zero.1 .check_b .is_good;
+.check_b:
+  b_is_zero.2: bool = eq b zero.1;
+  b_is_zero.1 = id b_is_zero.2;
+  br b_is_zero.2 .special_case .is_good;
+.special_case:
+  ret zero.1;
+.is_good:
+  ab.1: int = mul a b;
+  ab.2: int = call @abs ab.1;
+  gcdab.1: int = call @gcd a b;
+  lcm.1: int = div ab.2 gcdab.1;
+  ret lcm.1;
+}
+
+@orders(u: int, n: int, use_lcm: bool) {
+.ENTRY:
+.ENTRY:
+  u.1 = id u;
+.for.cond:
+  is_term.1: bool = eq u.1 n;
+  br is_term.1 .for.finish .for.body;
+.for.body:
+  br use_lcm .lcm .gcd;
+.lcm:
+  lcm.2: int = call @lcm u.1 n;
+  ordu.2: int = div lcm.2 u.1;
+  lcm.3 = id lcm.2;
+  ordu.4 = id ordu.2;
+  jmp .for.body.print;
+.gcd:
+  gcdun.2: int = call @gcd u.1 n;
+  ordu.3: int = div n gcdun.2;
+  gcdun.3 = id gcdun.2;
+  ordu.4 = id ordu.3;
+.for.body.print:
+  print u.1 ordu.4;
+  one.2: int = const 1;
+  u.2: int = add u.1 one.2;
+  ordu.1 = id ordu.4;
+  one.1 = id one.2;
+  u.1 = id u.2;
+  jmp .for.cond;
+.for.finish:
+  ret;
+}
+
+@main(n: int, use_lcm: bool) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  zero.1: int = const 0;
+  u.1: int = const 1;
+  n.1: int = call @abs n;
+  print zero.1 u.1;
+  call @orders u.1 n.1 use_lcm;
+}
+

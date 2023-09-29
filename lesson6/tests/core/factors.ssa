@@ -1,27 +1,27 @@
 @main(num: int) {
+.ENTRY:
 .main_bb0:
-  num.1: int = id num;
   zer.1: int = const 0;
   one.1: int = const 1;
   fac.1: int = const 2;
 .loopcheck:
-  mod.1 = phi mod.2 .ifyes mod.2 .ifno;
-  quo.1 = phi quo.2 .ifyes quo.2 .ifno;
+  num.1 = phi num .main_bb0 num.2 .ifyes num.1 .ifno;
+  tmp.1 = phi tmp.NOT_DEFINED .main_bb0 tmp.2 .ifyes tmp.2 .ifno;
+  quo.1 = phi quo.NOT_DEFINED .main_bb0 quo.2 .ifyes quo.2 .ifno;
+  iszero.1 = phi iszero.NOT_DEFINED .main_bb0 iszero.2 .ifyes iszero.2 .ifno;
+  mod.1 = phi mod.NOT_DEFINED .main_bb0 mod.2 .ifyes mod.2 .ifno;
   fac.2 = phi fac.1 .main_bb0 fac.2 .ifyes fac.3 .ifno;
-  num.2 = phi num.1 .main_bb0 num.3 .ifyes num.2 .ifno;
-  iszero.1 = phi iszero.2 .ifyes iszero.2 .ifno;
-  tmp.1 = phi tmp.2 .ifyes tmp.2 .ifno;
-  ispos.1: bool = lt one.1 num.2;
+  ispos.1: bool = lt one.1 num.1;
   br ispos.1 .loopbody .loopend;
 .loopbody:
-  quo.2: int = div num.2 fac.2;
+  quo.2: int = div num.1 fac.2;
   tmp.2: int = mul quo.2 fac.2;
-  mod.2: int = sub num.2 tmp.2;
+  mod.2: int = sub num.1 tmp.2;
   iszero.2: bool = eq mod.2 zer.1;
   br iszero.2 .ifyes .ifno;
 .ifyes:
   print fac.2;
-  num.3: int = div num.2 fac.2;
+  num.2: int = div num.1 fac.2;
   jmp .loopcheck;
 .ifno:
   fac.3: int = add fac.2 one.1;

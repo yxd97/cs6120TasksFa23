@@ -1,34 +1,33 @@
 @dot_product(vectorA: ptr<int>, vectorB: ptr<int>, size: int): int {
+.ENTRY:
 .dot_product_bb0:
-  size.1: int = id size;
-  vectorB.1: ptr<int> = id vectorB;
-  vectorA.1: ptr<int> = id vectorA;
   one.1: int = const 1;
   index.1: int = const 0;
   answer.1: int = const 0;
 .loop:
-  ptrB.1 = phi ptrB.2 .loop;
+  ptrA.1 = phi ptrA.NOT_DEFINED .dot_product_bb0 ptrA.2 .loop;
+  tmp.1 = phi tmp.NOT_DEFINED .dot_product_bb0 tmp.2 .loop;
+  valA.1 = phi valA.NOT_DEFINED .dot_product_bb0 valA.2 .loop;
+  cond.1 = phi cond.NOT_DEFINED .dot_product_bb0 cond.2 .loop;
   index.2 = phi index.1 .dot_product_bb0 index.3 .loop;
-  cond.1 = phi cond.2 .loop;
-  tmp.1 = phi tmp.2 .loop;
-  ptrA.1 = phi ptrA.2 .loop;
-  valA.1 = phi valA.2 .loop;
-  valB.1 = phi valB.2 .loop;
+  valB.1 = phi valB.NOT_DEFINED .dot_product_bb0 valB.2 .loop;
   answer.2 = phi answer.1 .dot_product_bb0 answer.3 .loop;
-  ptrA.2: ptr<int> = ptradd vectorA.1 index.2;
-  ptrB.2: ptr<int> = ptradd vectorB.1 index.2;
+  ptrB.1 = phi ptrB.NOT_DEFINED .dot_product_bb0 ptrB.2 .loop;
+  ptrA.2: ptr<int> = ptradd vectorA index.2;
+  ptrB.2: ptr<int> = ptradd vectorB index.2;
   valA.2: int = load ptrA.2;
   valB.2: int = load ptrB.2;
   tmp.2: int = mul valA.2 valB.2;
   answer.3: int = add answer.2 tmp.2;
   index.3: int = add index.2 one.1;
-  cond.2: bool = lt index.3 size.1;
+  cond.2: bool = lt index.3 size;
   br cond.2 .loop .done;
 .done:
   ret answer.3;
 }
 
 @main {
+.ENTRY:
 .main_bb0:
   a.1: int = const 25;
   b.1: int = const 50;

@@ -1,0 +1,25 @@
+@foo(x: int, y: int): int {
+.ENTRY:
+.ENTRY:
+.foo_bb0:
+  a.1: int = add x y;
+  b.1: int = mul x y;
+  r.1: int = sub b.1 a.1;
+  ret r.1;
+}
+
+@main {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  a.1: int = const 4;
+  b.1: int = const 2;
+  c.1: int = call @foo a.1 b.1;
+  c.2: int = call @foo a.1 b.1;
+  sum1.1: int = add a.1 b.1;
+  sum2.1: int = add b.1 a.1;
+  prod.1: int = mul sum1.1 sum2.1;
+  print prod.1;
+  print c.2;
+}
+

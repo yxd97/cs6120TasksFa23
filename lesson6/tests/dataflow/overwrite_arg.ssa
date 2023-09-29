@@ -1,8 +1,8 @@
 @main(a: int) {
+.ENTRY:
 .main_bb0:
+  print a;
   a.1: int = id a;
   print a.1;
-  a.2: int = id a.1;
-  print a.2;
 }
 

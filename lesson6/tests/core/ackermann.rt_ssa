@@ -1,0 +1,34 @@
+@ack(m: int, n: int): int {
+.ENTRY:
+.ENTRY:
+.ack_bb0:
+  zero.1: int = const 0;
+  one.1: int = const 1;
+  cond_m.1: bool = eq m zero.1;
+  br cond_m.1 .m_zero .m_nonzero;
+.m_zero:
+  tmp.1: int = add n one.1;
+  ret tmp.1;
+.m_nonzero:
+  cond_n.1: bool = eq n zero.1;
+  br cond_n.1 .n_zero .n_nonzero;
+.n_zero:
+  m1.1: int = sub m one.1;
+  tmp.2: int = call @ack m1.1 one.1;
+  ret tmp.2;
+.n_nonzero:
+  m1.2: int = sub m one.1;
+  n1.1: int = sub n one.1;
+  t1.1: int = call @ack m n1.1;
+  t2.1: int = call @ack m1.2 t1.1;
+  ret t2.1;
+}
+
+@main(m: int, n: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  tmp.1: int = call @ack m n;
+  print tmp.1;
+}
+

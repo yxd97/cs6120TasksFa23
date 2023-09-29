@@ -1,0 +1,33 @@
+@main(cond1: bool, cond2: bool) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  size.1: int = const 5;
+  value.1: int = const 1;
+  br cond1 .then1 .else1;
+.then1:
+  ptr.3: ptr<int> = alloc size.1;
+  br cond2 .then2 .else2;
+.then2:
+  free ptr.3;
+  ptr.4: ptr<int> = alloc size.1;
+  ptr.5 = id ptr.4;
+  jmp .endif2;
+.else2:
+  store ptr.3 value.1;
+  ptr.5 = id ptr.3;
+.endif2:
+  ptr.2 = id ptr.5;
+  jmp .endif1;
+.else1:
+  ptr.1: ptr<int> = alloc size.1;
+  store ptr.1 value.1;
+  x.1: int = load ptr.1;
+  ptr.2 = id ptr.1;
+  x.2 = id x.1;
+.endif1:
+  free ptr.2;
+  good.1: int = const 0;
+  print good.1;
+}
+

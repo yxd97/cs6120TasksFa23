@@ -1,17 +1,17 @@
 @main(n: int) {
+.ENTRY:
 .main_bb0:
-  n.1: int = id n;
   one.1: int = const 1;
-  n_sq.1: int = mul n.1 n.1;
+  n_sq.1: int = mul n n;
   a.1: int = id one.1;
 .outer_loop:
-  done.1 = phi done.4 .outer_continue;
-  b_sq.1 = phi b_sq.2 .outer_continue;
+  b_sq.1 = phi b_sq.NOT_DEFINED .main_bb0 b_sq.2 .outer_continue;
+  sum.1 = phi sum.NOT_DEFINED .main_bb0 sum.2 .outer_continue;
   a.2 = phi a.1 .main_bb0 a.3 .outer_continue;
-  a_sq.1 = phi a_sq.2 .outer_continue;
-  found.1 = phi found.2 .outer_continue;
-  sum.1 = phi sum.2 .outer_continue;
-  b.1 = phi b.4 .outer_continue;
+  a_sq.1 = phi a_sq.NOT_DEFINED .main_bb0 a_sq.2 .outer_continue;
+  found.1 = phi found.NOT_DEFINED .main_bb0 found.2 .outer_continue;
+  done.1 = phi done.NOT_DEFINED .main_bb0 done.4 .outer_continue;
+  b.1 = phi b.NOT_DEFINED .main_bb0 b.4 .outer_continue;
   b.2: int = id one.1;
 .inner_loop:
   done.2 = phi done.1 .outer_loop done.3 .inner_continue;
@@ -29,7 +29,7 @@
   br done.3 .outer_continue .inner_loop;
 .outer_continue:
   a.3: int = add a.2 one.1;
-  done.4: bool = ge a.3 n.1;
+  done.4: bool = ge a.3 n;
   br done.4 .finish .outer_loop;
 .finish:
 }

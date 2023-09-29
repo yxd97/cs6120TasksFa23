@@ -1,0 +1,9 @@
+@main(a: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  t.1: int = id a;
+  a.1: int = const 2;
+  print a.1 t.1;
+}
+

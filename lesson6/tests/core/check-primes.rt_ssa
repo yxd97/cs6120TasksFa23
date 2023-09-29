@@ -1,0 +1,111 @@
+@main(n: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  v2.1: int = const 1;
+  i.1: int = id v2.1;
+  i.2 = id i.1;
+.for.cond.1:
+  v3.1: int = id i.2;
+  v4.1: int = id n;
+  v5.1: bool = lt v3.1 v4.1;
+  br v5.1 .for.body.1 .for.end.1;
+.for.body.1:
+  v6.2: int = id i.2;
+  isPrime.2: bool = call @checkPrime v6.2;
+  isPrime.3: bool = id isPrime.2;
+  v8.2: bool = id isPrime.3;
+  br v8.2 .then.7 .else.7;
+.then.7:
+  v9.2: int = const 1;
+  print v9.2;
+  v10.2: int = const 0;
+  v10.3 = id v10.2;
+  v9.3 = id v9.2;
+  jmp .endif.7;
+.else.7:
+  v11.2: int = const 0;
+  print v11.2;
+  v12.2: int = const 0;
+  v11.3 = id v11.2;
+  v12.3 = id v12.2;
+.endif.7:
+  v13.2: int = id i.2;
+  v14.2: int = const 1;
+  v15.2: int = add v13.2 v14.2;
+  i.3: int = id v15.2;
+  v6.1 = id v6.2;
+  v13.1 = id v13.2;
+  i.2 = id i.3;
+  v14.1 = id v14.2;
+  v15.1 = id v15.2;
+  v8.1 = id v8.2;
+  isPrime.1 = id isPrime.3;
+  jmp .for.cond.1;
+.for.end.1:
+}
+
+@checkPrime(x: int): bool {
+.ENTRY:
+.ENTRY:
+.checkPrime_bb0:
+  v1.1: int = id x;
+  v2.1: int = const 1;
+  v3.1: bool = le v1.1 v2.1;
+  br v3.1 .then.0 .else.0;
+.then.0:
+  v4.1: bool = const false;
+  ret v4.1;
+.else.0:
+.endif.0:
+  v6.1: int = const 2;
+  i.1: int = id v6.1;
+  i.2 = id i.1;
+.for.cond.5:
+  v7.1: int = id i.2;
+  v8.1: int = id x;
+  v9.1: bool = lt v7.1 v8.1;
+  br v9.1 .for.body.5 .for.end.5;
+.for.body.5:
+  v10.2: int = id x;
+  v11.2: int = id i.2;
+  v12.2: int = div v10.2 v11.2;
+  div.2: int = id v12.2;
+  v13.2: int = id div.2;
+  v14.2: int = id i.2;
+  v15.2: int = mul v13.2 v14.2;
+  v16.2: int = id x;
+  v17.2: bool = eq v15.2 v16.2;
+  isDivisible.2: bool = id v17.2;
+  v19.2: bool = id isDivisible.2;
+  br v19.2 .then.18 .else.18;
+.then.18:
+  v20.1: bool = const false;
+  ret v20.1;
+.else.18:
+.endif.18:
+  v21.2: int = id i.2;
+  v22.2: int = const 1;
+  v23.2: int = add v21.2 v22.2;
+  i.3: int = id v23.2;
+  i.2 = id i.3;
+  isDivisible.1 = id isDivisible.2;
+  v14.1 = id v14.2;
+  v19.1 = id v19.2;
+  v16.1 = id v16.2;
+  v23.1 = id v23.2;
+  v11.1 = id v11.2;
+  v12.1 = id v12.2;
+  v15.1 = id v15.2;
+  v17.1 = id v17.2;
+  v10.1 = id v10.2;
+  v22.1 = id v22.2;
+  v21.1 = id v21.2;
+  v13.1 = id v13.2;
+  div.1 = id div.2;
+  jmp .for.cond.5;
+.for.end.5:
+  v24.1: bool = const true;
+  ret v24.1;
+}
+

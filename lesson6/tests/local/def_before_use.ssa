@@ -1,12 +1,12 @@
 @foo(x: int, y: int): int {
+.ENTRY:
 .foo_bb0:
-  y.1: int = id y;
-  x.1: int = id x;
-  r.1: int = add x.1 y.1;
+  r.1: int = add x y;
   ret r.1;
 }
 
 @main {
+.ENTRY:
 .main_bb0:
   a.1: int = const 1;
   b.1: int = const 2;

@@ -1,4 +1,5 @@
 @main {
+.ENTRY:
 .main_bb0:
   x.1: int = const 4;
   copy1.1: int = id x.1;

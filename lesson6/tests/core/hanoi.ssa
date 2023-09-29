@@ -1,30 +1,27 @@
 @hanoi(disks: int, src: int, dst: int, spare: int) {
+.ENTRY:
 .hanoi_bb0:
-  spare.1: int = id spare;
-  dst.1: int = id dst;
-  src.1: int = id src;
-  disks.1: int = id disks;
   zero.1: int = const 0;
-  pos.1: bool = gt disks.1 zero.1;
+  pos.1: bool = gt disks zero.1;
   br pos.1 .then .else;
 .then:
   one.1: int = const 1;
-  above.1: int = sub disks.1 one.1;
-  call @hanoi above.1 src.1 spare.1 dst.1;
-  print src.1 dst.1;
-  call @hanoi above.1 spare.1 dst.1 src.1;
+  above.1: int = sub disks one.1;
+  call @hanoi above.1 src spare dst;
+  print src dst;
+  call @hanoi above.1 spare dst src;
 .else:
-  one.2 = phi one.1 .then;
-  above.2 = phi above.1 .then;
+  above.2 = phi above.NOT_DEFINED .hanoi_bb0 above.1 .then;
+  one.2 = phi one.NOT_DEFINED .hanoi_bb0 one.1 .then;
   ret;
 }
 
 @main(disks: int) {
+.ENTRY:
 .main_bb0:
-  disks.1: int = id disks;
   src.1: int = const 0;
   dst.1: int = const 2;
   spare.1: int = const 1;
-  call @hanoi disks.1 src.1 dst.1 spare.1;
+  call @hanoi disks src.1 dst.1 spare.1;
 }
 

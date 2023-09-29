@@ -1,0 +1,43 @@
+@main(op1: int, op2: int) {
+.ENTRY:
+.ENTRY:
+.main_bb0:
+  vc0.1: int = const 0;
+  v0.1: int = id op1;
+  v1.1: int = id op2;
+  v0.2 = id v0.1;
+  v1.2 = id v1.1;
+.cmp.val:
+  v2.1: bool = lt v0.2 v1.2;
+  br v2.1 .if.1 .else.1;
+.if.1:
+  v3.2: int = sub v1.2 v0.2;
+  v3.4 = id v3.2;
+  jmp .loop.bound;
+.else.1:
+  v3.3: int = sub v0.2 v1.2;
+  v3.4 = id v3.3;
+  jmp .loop.bound;
+.loop.bound:
+  v4.2: bool = eq v3.4 vc0.1;
+  br v4.2 .program.end .update.val;
+.update.val:
+  br v2.1 .if.2 .else.2;
+.if.2:
+  v1.3: int = id v3.4;
+  v3.1 = id v3.4;
+  v4.1 = id v4.2;
+  v0.2 = id v0.2;
+  v1.2 = id v1.3;
+  jmp .cmp.val;
+.else.2:
+  v0.3: int = id v3.4;
+  v3.1 = id v3.4;
+  v4.1 = id v4.2;
+  v0.2 = id v0.3;
+  v1.2 = id v1.2;
+  jmp .cmp.val;
+.program.end:
+  print v1.2;
+}
+
