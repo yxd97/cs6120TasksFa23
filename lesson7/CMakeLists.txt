@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.6)
-project(call_tracer)
+set(CMAKE_CXX_COMPILER $ENV{LLVM}/bin/clang)
+project(BoolAlgInInt)
 
 # LLVM uses C++17.
 set(CMAKE_CXX_STANDARD 17)
 
 # Load LLVMConfig.cmake. If this fails, consider setting `LLVM_DIR` to point
 # to your LLVM installation's `lib/cmake/llvm` directory.
+set(LLVM_DIR ${ENVLLVM}/lib/cmake/llvm)
 find_package(LLVM REQUIRED CONFIG)
 
 # Include the part of LLVM's CMake libraries that defines
@@ -19,4 +21,4 @@ include_directories(${LLVM_INCLUDE_DIRS})
 link_directories(${LLVM_LIBRARY_DIRS})
 
 # Our pass lives in this subdirectory.
-add_subdirectory(call_tracer)
+add_subdirectory(BoolAlgInInt)
