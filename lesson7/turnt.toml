@@ -5,6 +5,12 @@ command = "make all"
 command = "$LLVM/bin/clang -emit-llvm -S -o build/{base}.llvm {filename}"
 output.llvm = "../build/{base}.llvm"
 
-[envs.dump_baii_llvm]
-command = "$LLVM/bin/clang -f-fpass-plugin=build/BoolAlgInInt/BoolAlgInInt.so -emit-llvm -S -o - {filename}"
-output.baai.llvm = "-"
+[envs.dump_imsa_llvm]
+command = "$LLVM/bin/clang -fpass-plugin=build/IMulToSftAdd/IMulToSftAdd.so -emit-llvm -S -o build/{base}-imsa.llvm {filename}"
+output.imsa-llvm = "../build/{base}-imsa.llvm"
+
+[envs.run]
+command = "build/{base} {args}"
+
+[envs.run_imsa]
+command = "build/{base}-imsa {args}"
