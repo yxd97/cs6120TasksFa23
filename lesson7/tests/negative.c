@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     printf("%d x %d = %d\n", x, -63, r3);
     int r4 = x * -1;
     printf("%d x %d = %d\n", x, -1, r4);
-    int r5 = x * -43959688;
-    printf("%d x %d = %d\n", x, -43959688, r5);
+    int r5 = x * -43958;
+    printf("%d x %d = %d\n", x, -43958, r5);
     return 0;
 }

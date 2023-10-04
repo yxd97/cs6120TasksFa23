@@ -25,7 +25,7 @@ define dso_local i32 @main(i32 noundef %0, ptr noundef %1) #0 {
 
 14:                                               ; preds = %2
   store i32 1, ptr %3, align 4
-  br label %315
+  br label %323
 
 15:                                               ; preds = %2
   %16 = load ptr, ptr %5, align 8
@@ -292,53 +292,61 @@ define dso_local i32 @main(i32 noundef %0, ptr noundef %1) #0 {
   %272 = load i32, ptr %10, align 4
   %273 = call i32 (ptr, ...) @printf(ptr noundef @.str, i32 noundef %271, i32 noundef -1, i32 noundef %272)
   %274 = load i32, ptr %6, align 4
-  %275 = mul nsw i32 %274, -43959688
-  %276 = shl i32 %274, 3
+  %275 = mul nsw i32 %274, -43958
+  %276 = shl i32 %274, 1
   %277 = add i32 0, %276
-  %278 = shl i32 %274, 4
+  %278 = shl i32 %274, 3
   %279 = add i32 %277, %278
-  %280 = shl i32 %274, 5
+  %280 = shl i32 %274, 6
   %281 = add i32 %279, %280
-  %282 = shl i32 %274, 6
+  %282 = shl i32 %274, 10
   %283 = add i32 %281, %282
-  %284 = shl i32 %274, 9
+  %284 = shl i32 %274, 12
   %285 = add i32 %283, %284
-  %286 = shl i32 %274, 11
+  %286 = shl i32 %274, 14
   %287 = add i32 %285, %286
-  %288 = shl i32 %274, 12
+  %288 = shl i32 %274, 16
   %289 = add i32 %287, %288
-  %290 = shl i32 %274, 13
+  %290 = shl i32 %274, 17
   %291 = add i32 %289, %290
-  %292 = shl i32 %274, 16
+  %292 = shl i32 %274, 18
   %293 = add i32 %291, %292
-  %294 = shl i32 %274, 21
+  %294 = shl i32 %274, 19
   %295 = add i32 %293, %294
-  %296 = shl i32 %274, 22
+  %296 = shl i32 %274, 20
   %297 = add i32 %295, %296
-  %298 = shl i32 %274, 24
+  %298 = shl i32 %274, 21
   %299 = add i32 %297, %298
-  %300 = shl i32 %274, 26
+  %300 = shl i32 %274, 22
   %301 = add i32 %299, %300
-  %302 = shl i32 %274, 27
+  %302 = shl i32 %274, 23
   %303 = add i32 %301, %302
-  %304 = shl i32 %274, 28
+  %304 = shl i32 %274, 24
   %305 = add i32 %303, %304
-  %306 = shl i32 %274, 29
+  %306 = shl i32 %274, 25
   %307 = add i32 %305, %306
-  %308 = shl i32 %274, 30
+  %308 = shl i32 %274, 26
   %309 = add i32 %307, %308
-  %310 = shl i32 %274, 31
+  %310 = shl i32 %274, 27
   %311 = add i32 %309, %310
-  store i32 %311, ptr %11, align 4
-  %312 = load i32, ptr %6, align 4
-  %313 = load i32, ptr %11, align 4
-  %314 = call i32 (ptr, ...) @printf(ptr noundef @.str, i32 noundef %312, i32 noundef -43959688, i32 noundef %313)
+  %312 = shl i32 %274, 28
+  %313 = add i32 %311, %312
+  %314 = shl i32 %274, 29
+  %315 = add i32 %313, %314
+  %316 = shl i32 %274, 30
+  %317 = add i32 %315, %316
+  %318 = shl i32 %274, 31
+  %319 = add i32 %317, %318
+  store i32 %319, ptr %11, align 4
+  %320 = load i32, ptr %6, align 4
+  %321 = load i32, ptr %11, align 4
+  %322 = call i32 (ptr, ...) @printf(ptr noundef @.str, i32 noundef %320, i32 noundef -43958, i32 noundef %321)
   store i32 0, ptr %3, align 4
-  br label %315
+  br label %323
 
-315:                                              ; preds = %15, %14
-  %316 = load i32, ptr %3, align 4
-  ret i32 %316
+323:                                              ; preds = %15, %14
+  %324 = load i32, ptr %3, align 4
+  ret i32 %324
 }
 
 ; Function Attrs: nounwind willreturn memory(read)

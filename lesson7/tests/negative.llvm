@@ -58,11 +58,11 @@ define dso_local i32 @main(i32 noundef %0, ptr noundef %1) #0 {
   %38 = load i32, ptr %10, align 4
   %39 = call i32 (ptr, ...) @printf(ptr noundef @.str, i32 noundef %37, i32 noundef -1, i32 noundef %38)
   %40 = load i32, ptr %6, align 4
-  %41 = mul nsw i32 %40, -43959688
+  %41 = mul nsw i32 %40, -43958
   store i32 %41, ptr %11, align 4
   %42 = load i32, ptr %6, align 4
   %43 = load i32, ptr %11, align 4
-  %44 = call i32 (ptr, ...) @printf(ptr noundef @.str, i32 noundef %42, i32 noundef -43959688, i32 noundef %43)
+  %44 = call i32 (ptr, ...) @printf(ptr noundef @.str, i32 noundef %42, i32 noundef -43958, i32 noundef %43)
   store i32 0, ptr %3, align 4
   br label %45
 

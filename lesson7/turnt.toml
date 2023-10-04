@@ -1,6 +1,3 @@
-[envs.make]
-command = "make all"
-
 [envs.dump_llvm]
 command = "$LLVM/bin/clang -emit-llvm -S -o build/{base}.llvm {filename}"
 output.llvm = "../build/{base}.llvm"

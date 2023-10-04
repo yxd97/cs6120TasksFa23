@@ -35,6 +35,21 @@ $(BUILD_DIR)/negative: $(SRC_DIR)/negative.c
 	mkdir -p $(BUILD_DIR)
 	$(CXX) $(CXX_FLAGS) $< -o $@
 
+ALL_PROGS += $(BUILD_DIR)/constOnLeft
+$(BUILD_DIR)/constOnLeft: $(SRC_DIR)/constOnLeft.c
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXX_FLAGS) $< -o $@
+
+ALL_PROGS += $(BUILD_DIR)/multiOperands
+$(BUILD_DIR)/multiOperands: $(SRC_DIR)/multiOperands.c
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXX_FLAGS) $< -o $@
+
+ALL_PROGS += $(BUILD_DIR)/overflow
+$(BUILD_DIR)/overflow: $(SRC_DIR)/overflow.c
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXX_FLAGS) $< -o $@
+
 .PHONY: all-progs
 all-progs: $(ALL_PROGS)
 
@@ -57,6 +72,21 @@ $(BUILD_DIR)/positive-imsa: $(SRC_DIR)/positive.c $(BUILD_DIR)/$(PASS_NAME)/$(PA
 
 ALL_PROGS_IMSA += $(BUILD_DIR)/negative-imsa
 $(BUILD_DIR)/negative-imsa: $(SRC_DIR)/negative.c $(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXX_FLAGS) -fpass-plugin=$(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so $< -o $@
+
+ALL_PROGS_IMSA += $(BUILD_DIR)/constOnLeft-imsa
+$(BUILD_DIR)/constOnLeft-imsa: $(SRC_DIR)/constOnLeft.c $(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXX_FLAGS) -fpass-plugin=$(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so $< -o $@
+
+ALL_PROGS_IMSA += $(BUILD_DIR)/multiOperands-imsa
+$(BUILD_DIR)/multiOperands-imsa: $(SRC_DIR)/multiOperands.c $(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXX_FLAGS) -fpass-plugin=$(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so $< -o $@
+
+ALL_PROGS_IMSA += $(BUILD_DIR)/overflow-imsa
+$(BUILD_DIR)/overflow-imsa: $(SRC_DIR)/overflow.c $(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so
 	mkdir -p $(BUILD_DIR)
 	$(CXX) $(CXX_FLAGS) -fpass-plugin=$(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so $< -o $@
 
