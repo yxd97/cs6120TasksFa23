@@ -50,6 +50,11 @@ $(BUILD_DIR)/overflow: $(SRC_DIR)/overflow.c
 	mkdir -p $(BUILD_DIR)
 	$(CXX) $(CXX_FLAGS) $< -o $@
 
+ALL_PROGS += $(BUILD_DIR)/SampleFIR
+$(BUILD_DIR)/SampleFIR: $(SRC_DIR)/SampleFIR.c
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXX_FLAGS) $< -o $@
+
 .PHONY: all-progs
 all-progs: $(ALL_PROGS)
 
@@ -87,6 +92,11 @@ $(BUILD_DIR)/multiOperands-imsa: $(SRC_DIR)/multiOperands.c $(BUILD_DIR)/$(PASS_
 
 ALL_PROGS_IMSA += $(BUILD_DIR)/overflow-imsa
 $(BUILD_DIR)/overflow-imsa: $(SRC_DIR)/overflow.c $(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so
+	mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXX_FLAGS) -fpass-plugin=$(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so $< -o $@
+
+ALL_PROGS_IMSA += $(BUILD_DIR)/SampleFIR-imsa
+$(BUILD_DIR)/SampleFIR-imsa: $(SRC_DIR)/SampleFIR.c $(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so
 	mkdir -p $(BUILD_DIR)
 	$(CXX) $(CXX_FLAGS) -fpass-plugin=$(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so $< -o $@
 
