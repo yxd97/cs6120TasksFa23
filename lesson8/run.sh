@@ -1,29 +1,66 @@
 #!/bin/bash
+build_dir="build"
+
+ALL_PROGS=(
+    "basic"
+    "predefine"
+    "pre-initialize"
+    "first-pass"
+)
+
 help() {
     echo "Usage: $0 [options] [input]"
     echo "Options:"
-    echo "  -t, --target <target>  Target to build (base, opt)"
+    echo "  -t, --target <target>  Target to build (base, opt, clean)"
     echo "  --all                  Build all programs"
     echo "  --dump-ir              Dump IR instead of building"
     echo "  -h, --help             Show this help"
     echo "Input:"
     echo "  <input>                Input file to build"
-    echo "                        (ignored if --all is set)"
+    echo "                         (ignored if --all is set)"
+}
+
+verify() {
+    # arg $1: program (test case) name
+    eval "make $build_dir/$1 PROGRAM=$1"
+    eval "make $build_dir/${1}_LICM PROGRAM=$1"
+    eval "make $build_dir/${1}_m2r.ll PROGRAM=$1"
+    eval "make $build_dir/${1}_LICM.ll PROGRAM=$1"
+    diff <(tail -n +2 $build_dir/${1}_m2r.ll) <(tail -n +2 $build_dir/${1}_LICM.ll) > /dev/null
+    if [[ $? -eq 0 ]]; then
+        echo "WARNING: IR of program \`$1' is not changed!"
+    fi
+    eval "./$build_dir/$1 > $build_dir/$1.stdout"
+    eval "./$build_dir/${1}_LICM > $build_dir/${1}_LICM.stdout"
+    diff $build_dir/$1.stdout $build_dir/${1}_LICM.stdout
+    if [[ $? -eq 0 ]]; then
+        echo "Test on program \`$1' passed"
+    else
+        echo "ERROR: Test on \`$1' failed, program output mismatch!"
+    fi
 }
 
 run_make() {
+    # arg $1: target (base, opt, test, clean)
+    # arg $2: program (test case) name
     case $1 in
         base)
-            eval "make base PROGRAM=$2"
+            eval "make $build_dir/$2 PROGRAM=$2"
         ;;
         base_ir)
-            eval "make base_ir PROGRAM=$2"
+            eval "make $build_dir/$2.ll PROGRAM=$2"
         ;;
         opt)
-            eval "make opt PROGRAM=$2"
+            eval "make $build_dir/${2}_LICM PROGRAM=$2"
         ;;
         opt_ir)
-            eval "make opt_ir PROGRAM=$2"
+            eval "make $build_dir/${2}_LICM.ll PROGRAM=$2"
+        ;;
+        test)
+            verify $2
+        ;;
+        clean)
+            eval "make clean PROGRAM=$2"
         ;;
         *)
             echo "Unknown target $1"
@@ -36,10 +73,6 @@ if [[ $# -eq 0 ]]; then
     help
     exit 1
 fi
-
-ALL_PROGS=(
-    hello_world
-)
 
 make_all_progs=0
 dump_ir=0
