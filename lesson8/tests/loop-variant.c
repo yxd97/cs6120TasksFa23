@@ -1,13 +1,14 @@
 #include <stdio.h>
 
 int foo(int a, int b) {
-    int x;
-    int y = 0;
-    for (int i = 10; i > 0; i--) {
-        x = a + b;
-        y = a * b;
+    int y, i;
+    i = 10;
+    // define i out of for statement
+    // so that if `y=a*b+i' is hoisted, i is still defined
+    for (; i > 0; i--) {
+        y = a * b + i;
     }
-    return x + y;
+    return y;
 }
 
 int main(int argc, char** argv) {

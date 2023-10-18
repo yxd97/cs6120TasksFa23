@@ -4,8 +4,12 @@ build_dir="build"
 ALL_PROGS=(
     "basic"
     "predefine"
-    "pre-initialize"
     "first-pass"
+    "loop-variant"
+    "polybench-gemm"
+    "polybench-gramschmidt"
+    "polybench-jacobi-2d"
+    "polybench-nussinov"
 )
 
 help() {
@@ -28,15 +32,17 @@ verify() {
     eval "make $build_dir/${1}_LICM.ll PROGRAM=$1"
     diff <(tail -n +2 $build_dir/${1}_m2r.ll) <(tail -n +2 $build_dir/${1}_LICM.ll) > /dev/null
     if [[ $? -eq 0 ]]; then
-        echo "WARNING: IR of program \`$1' is not changed!"
+        echo "WARNING: IR of program \`$1' is not changed! Please check if it's by design!"
     fi
     eval "./$build_dir/$1 > $build_dir/$1.stdout"
     eval "./$build_dir/${1}_LICM > $build_dir/${1}_LICM.stdout"
     diff $build_dir/$1.stdout $build_dir/${1}_LICM.stdout
     if [[ $? -eq 0 ]]; then
         echo "Test on program \`$1' passed"
+        return 0
     else
         echo "ERROR: Test on \`$1' failed, program output mismatch!"
+        return 1
     fi
 }
 
@@ -46,21 +52,29 @@ run_make() {
     case $1 in
         base)
             eval "make $build_dir/$2 PROGRAM=$2"
+            eval "./$build_dir/$2"
+            return $?
         ;;
         base_ir)
             eval "make $build_dir/$2.ll PROGRAM=$2"
+            return $?
         ;;
         opt)
             eval "make $build_dir/${2}_LICM PROGRAM=$2"
+            eval "./$build_dir/${2}_LICM"
+            return $?
         ;;
         opt_ir)
             eval "make $build_dir/${2}_LICM.ll PROGRAM=$2"
+            return $?
         ;;
         test)
             verify $2
+            return $?
         ;;
         clean)
             eval "make clean PROGRAM=$2"
+            return 0
         ;;
         *)
             echo "Unknown target $1"
@@ -117,6 +131,10 @@ if [[ $make_all_progs -eq 1 ]]; then
         else
             run_make $target $prog
         fi
+        if [[ $? -ne 0 ]]; then
+            echo "===== ERROR: Test failed. ====="
+            exit 1
+        fi
     done
 else
     if [[ $dump_ir -eq 1 ]]; then
@@ -124,6 +142,11 @@ else
     else
         run_make $target $input
     fi
+    if [[ $? -ne 0 ]]; then
+        echo "===== ERROR: Test failed. ====="
+        exit 1
+    fi
 fi
 
+echo "===== Test passed. ====="
 exit 0

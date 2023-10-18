@@ -178,7 +178,7 @@ public:
         if (LI.getTopLevelLoopsVector().size() > 0) {
             DominatorTree &DT = FAM.getResult<DominatorTreeAnalysis>(F);
             errs() << "Loops in " << F.getName() << "\n";
-            print_loops(LI, DT);
+            // print_loops(LI, DT);
             for (auto &L : LI) {
                 licm(*L, DT);
             }

@@ -1,11 +1,14 @@
 #include <stdio.h>
 
 int foo(int a, int b) {
-    int x = 0;
-    int y = 0;
-    for (int i = 10; i > 0; i--) {
-        x = a + b;
-        y = a * b;
+    int x, y, i, j;
+    i = 10;
+    j = 0;
+    for (; i > 0; i--) {
+        for (; j < 5; j++) {
+            y = a * b + i;
+            x = b + j;
+        }
     }
     return x + y;
 }

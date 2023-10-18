@@ -1,6 +1,7 @@
 CXX = clang
 
 CXX_FLAGS += -O0 -Xclang -disable-O0-optnone
+LD_FLAGS += -lm
 
 SRC_DIR = tests
 BUILD_DIR = build
@@ -31,7 +32,7 @@ $(BUILD_DIR)/$(PROGRAM)_m2r.ll: $(BUILD_DIR)/$(PROGRAM).ll
 # build the baseline program
 $(BUILD_DIR)/$(PROGRAM): $(BUILD_DIR)/$(PROGRAM)_m2r.ll
 	mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXX_FLAGS) $< -o $@
+	$(CXX) $(CXX_FLAGS) $< -o $@ $(LD_FLAGS)
 
 # also apply hand-written pass
 $(BUILD_DIR)/$(PROGRAM)_$(PASS_NAME).ll: $(BUILD_DIR)/$(PROGRAM)_m2r.ll $(BUILD_DIR)/$(PASS_NAME)/$(PASS_NAME).so
@@ -41,7 +42,7 @@ $(BUILD_DIR)/$(PROGRAM)_$(PASS_NAME).ll: $(BUILD_DIR)/$(PROGRAM)_m2r.ll $(BUILD_
 # finally build executable
 $(BUILD_DIR)/$(PROGRAM)_$(PASS_NAME): $(BUILD_DIR)/$(PROGRAM)_$(PASS_NAME).ll $(SRC_DIR)/$(PROGRAM).c
 	mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXX_FLAGS) $< -o $@
+	$(CXX) $(CXX_FLAGS) $< -o $@ $(LD_FLAGS)
 
 .PHONY: clean
 clean:
@@ -50,3 +51,5 @@ clean:
 	rm -f $(BUILD_DIR)/$(PROGRAM)_m2r.ll
 	rm -f $(BUILD_DIR)/$(PROGRAM)_$(PASS_NAME).ll
 	rm -f $(BUILD_DIR)/$(PROGRAM)_$(PASS_NAME)
+	rm -f $(BUILD_DIR)/$(PROGRAM).stdout
+	rm -f $(BUILD_DIR)/$(PROGRAM)_$(PASS_NAME).stdout
