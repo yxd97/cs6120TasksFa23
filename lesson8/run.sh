@@ -15,7 +15,7 @@ ALL_PROGS=(
 help() {
     echo "Usage: $0 [options] [input]"
     echo "Options:"
-    echo "  -t, --target <target>  Target to build (base, opt, clean)"
+    echo "  -t, --target <target>  Target to build (base, opt, test, clean)"
     echo "  --all                  Build all programs"
     echo "  --dump-ir              Dump IR instead of building"
     echo "  -h, --help             Show this help"
