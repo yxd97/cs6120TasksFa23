@@ -1,0 +1,11 @@
+@main{
+    size: int = const 10;
+    p: ptr<int> = alloc size;
+    p: ptr<int> = alloc size;
+    p: ptr<int> = alloc size;
+    p: ptr<int> = alloc size;
+    p: ptr<int> = alloc size;
+    p: ptr<int> = alloc size;
+    p: ptr<int> = alloc size;
+    p: ptr<int> = alloc size;
+}

@@ -1,0 +1,8 @@
+@main {
+    size: int = const 10;
+    pint: ptr<int> = alloc size;
+    pfloat: ptr<float> = alloc size;
+    pchar: ptr<char> = alloc size;
+    pbool: ptr<bool> = alloc size;
+    ppint: ptr<ptr<int>> = alloc size;
+}

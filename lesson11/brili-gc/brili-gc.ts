@@ -39,12 +39,70 @@ export class Key {
 }
 
 /**
+ * Returns the size of a variable of a given type (in bytes)
+ */
+function sizeof(dtype: bril.Type): number {
+  switch (dtype) {
+    case "bool": // 1 byte for bool
+      return 1;
+    case "char": // 1 byte for char (assuming UTF-8)
+      return 1;
+    default:     // 64 bits for others
+      return 8;
+  }
+}
+
+function typeToStr(t: bril.Type): string {
+  let type_string = ``;
+  if (typeof t === "object" && t.hasOwnProperty("ptr")) {
+    type_string = `ptr<${t.ptr}>`;
+  } else {
+    type_string = `${t}`;
+  }
+  return type_string;
+}
+
+/**
  * A Heap maps Keys to arrays of a given type.
  */
 export class Heap<X> {
   private readonly storage: Map<number, X[]>;
+  // type of one element in each allocated array, in bytes
+  private readonly objtype: Map<number, bril.Type>;
+  private readonly refcnt: Map<number, number>;
   constructor() {
     this.storage = new Map();
+    this.objtype = new Map();
+    this.refcnt = new Map();
+  }
+
+  incrRC(base: number) {
+    if (this.refcnt.has(base)) {
+      this.refcnt.set(base, this.refcnt.get(base) + 1);
+    } else {
+      this.refcnt.set(base, 1);
+    }
+  }
+
+  decrRC(base: number) {
+    if (this.refcnt.has(base)) {
+      let rc = this.refcnt.get(base);
+      if (rc > 0) {
+        this.refcnt.set(base, rc - 1);
+      } else {
+        throw error(`cannot further decrement reference count (already ${rc}) on ${base}!`);
+      }
+    } else {
+      throw error(`cannot find ${base} on heap!`);
+    }
+  }
+
+  clearRC(base: number) {
+    if (this.refcnt.has(base)) {
+      this.refcnt.set(base, 0);
+    } else {
+      throw error(`cannot find ${base} on heap!`);
+    }
   }
 
   isEmpty(): boolean {
@@ -53,10 +111,23 @@ export class Heap<X> {
 
   size(): number {
     let size = 0;
-    for (const [_key, arr] of this.storage) {
-      size += arr.length;
+    for (const [base, arr] of this.storage) {
+      let t = this.objtype.get(base);
+      if (t) {
+        size += (arr.length * sizeof(t));
+      }
     }
     return size;
+  }
+
+  print() {
+    let size = this.size();
+    console.log(`Heap size: ${size} bytes.`)
+    for (const [base, arr] of this.storage) {
+      let type = this.objtype.get(base);
+      let rc = this.refcnt.get(base);
+      console.log(` - ${base}: ${arr.length} (${typeToStr(type)}) [${rc} refs]`)
+    }
   }
 
   private count = 0;
@@ -70,23 +141,65 @@ export class Heap<X> {
     return;
   }
 
-  alloc(amt: number): Key {
+  alloc(amt: number, dtype:bril.Type): Key {
     if (amt <= 0) {
       throw error(`cannot allocate ${amt} entries`);
     }
     let base = this.getNewBase();
     this.storage.set(base, new Array(amt));
+    this.objtype.set(base, dtype);
+    this.incrRC(base);
     return new Key(base, 0);
   }
 
+  /* now can only be triggered by collectGarbage */
   free(key: Key) {
     if (this.storage.has(key.base) && key.offset == 0) {
       this.freeKey(key);
       this.storage.delete(key.base);
+      this.objtype.delete(key.base);
     } else {
       throw error(
         `Tried to free illegal memory location base: ${key.base}, offset: ${key.offset}. Offset must be 0.`,
       );
+    }
+  }
+
+  collectGarbage() {
+    let freelist = new Array<number>;
+    let num_objs_to_free = 0;
+    // iterate to convergence
+    while (true) {
+      // get all objects whose reference count is 0
+      for (const [base, rc] of this.refcnt) {
+        if (rc == 0 && !freelist.includes(base)) {
+          freelist.push(base);
+        }
+      }
+      // see if anyone of them contains reference to another object
+      for (const base of freelist) {
+        let t = this.objtype.get(base);
+        if (t && typeof t === "object" && t.hasOwnProperty("ptr")) {
+          let arr = this.storage.get(base);
+          if (arr) {
+            for (const ptr of arr) {
+              if (typeof ptr != "undefined") {
+                this.decrRC(ptr.base);
+              }
+            }
+          }
+        }
+      }
+      // check convergence
+      if (num_objs_to_free == freelist.length) {
+        break;
+      }
+      num_objs_to_free = freelist.length;
+    }
+    // free objects
+    for (const base of freelist) {
+      console.log(`freeing ${base}`);
+      this.free(new Key(base, 0));
     }
   }
 
@@ -233,8 +346,8 @@ function alloc(
   } else if (amt <= 0) {
     throw error(`must allocate a positive amount of memory: ${amt} <= 0`);
   } else {
-    let loc = heap.alloc(amt);
     let dataType = ptrType.ptr;
+    let loc = heap.alloc(amt, dataType);
     return {
       loc: loc,
       type: dataType,
@@ -693,12 +806,13 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
     }
 
     case "free": {
-      let val = getPtr(instr, state.env, 0);
-      state.heap.free(val.loc);
-      if (profile) {
-        console.error(`${state.icount},${state.heap.size()}`);
-      }
-      return NEXT;
+      throw error(`free is not supported by brili-gc!`);
+    //   let val = getPtr(instr, state.env, 0);
+    //   state.heap.free(val.loc);
+    //   if (profile) {
+    //     console.error(`${state.icount},${state.heap.size()}`);
+    //   }
+    //   return NEXT;
     }
 
     case "store": {
@@ -830,6 +944,29 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
   throw error(`unhandled opcode ${(instr as any).op}`);
 }
 
+/**
+ * Garbage collection routine to be called upon function return
+ */
+function gcUponReturn(state:State) {
+  console.log(`-- starting gc ...`);
+  state.heap.print();
+  // pick pointers in local variables and set their RC to 0
+  for (const [ident, val] of state.env) {
+    if (
+      typeof val === "object"
+      && val.hasOwnProperty("loc")
+      && val.hasOwnProperty("type")
+    ) {
+      console.error(`${ident} (ptr<${typeToStr(val.type)}>): ${val.loc.base}`);
+      state.heap.clearRC(val.loc.base);
+    }
+  }
+  // invoke garbage collection
+  state.heap.collectGarbage();
+  console.log(`-- gc finished`);
+  state.heap.print();
+}
+
 function evalFunc(func: bril.Function, state: State, profile?:boolean): Value | null {
   for (let i = 0; i < func.instrs.length; ++i) {
     let line = func.instrs[i];
@@ -841,6 +978,7 @@ function evalFunc(func: bril.Function, state: State, profile?:boolean): Value | 
       switch (action.action) {
         case "end": {
           // Return from this function.
+          gcUponReturn(state);
           return action.ret;
         }
         case "speculate": {
@@ -904,6 +1042,8 @@ function evalFunc(func: bril.Function, state: State, profile?:boolean): Value | 
   if (state.specparent) {
     throw error(`implicit return in speculative state`);
   }
+
+  gcUponReturn(state);
   return null;
 }
 
