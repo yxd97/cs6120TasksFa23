@@ -20,36 +20,36 @@
   .check_bound:
     end_cond: bool = ge i arr_size;
     br end_cond .end .body;
-  
+
   .body:
     cur_ptr: ptr<int> = ptradd nums i;
     cur_val: int = load cur_ptr;
     cur_major_cond: bool = eq cur_val major_elm;
     br cur_major_cond .incr_count .body.else;
-  
+
   .incr_count:
     count: int = add count one;
     i: int = add i one;
     jmp .check_bound;
-  
+
   .body.else:
     cnt_eq_0: bool = eq count zero;
     br cnt_eq_0 .eq_zero_if .eq_zero_else;
-  
+
   .eq_zero_if:
     cur_ptr: ptr<int> = ptradd nums i;
     major_elm: int = load cur_ptr;
     count: int = add count one;
     i: int = add i one;
     jmp .check_bound;
-  
+
   .eq_zero_else:
     count: int = sub count one;
     i: int = add i one;
     jmp .check_bound;
 
   .end:
-    free nums;
+    # free nums;
     print major_elm;
 }
 

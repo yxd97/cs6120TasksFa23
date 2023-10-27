@@ -1,8 +1,8 @@
-# Benchmarks an implementation of quicksort with Hoare partitioning and median 
-# of three pivot selection. We then generate several arrays with pseudorandom 
-# elements, sort them, and check that they are indeed in nondecreasing order by 
-# printing out "true" if the array is sorted correctly. This is based on my C 
-# implementation of  quicksort from ECE 4750, which is in turn based off the 
+# Benchmarks an implementation of quicksort with Hoare partitioning and median
+# of three pivot selection. We then generate several arrays with pseudorandom
+# elements, sort them, and check that they are indeed in nondecreasing order by
+# printing out "true" if the array is sorted correctly. This is based on my C
+# implementation of  quicksort from ECE 4750, which is in turn based off the
 # classic CS 2110 quicksort loop invariants. I attempted to optimize the median
 # of three procedure to use the fewest number of swaps possible, which I believe
 # I referenced from Wikipedia in my original C implementation.
@@ -29,7 +29,7 @@
   i_value: int = load i_ptr;
   mid_value: int = load mid_ptr;
   j_value: int = load j_ptr;
-  
+
   # Swap mid, j if arr[mid] < arr[j] so that arr[j] < arr[mid]
   should_swap_mid_j: bool = lt mid_value j_value;
   br should_swap_mid_j .swap_mid_j .no_swap_mid_j;
@@ -142,7 +142,7 @@
 
 ################################################################################
 #
-# The following 2 functions @rand and @randarray are taken from the matrix 
+# The following 2 functions @rand and @randarray are taken from the matrix
 # multiplication benchmark here:
 #
 # https://github.com/sampsyo/bril/blob/main/benchmarks/mem/mat-mul.bril
@@ -206,9 +206,9 @@
   call @qsort arr zero last_index;
   success: bool = call @is_nondecreasing arr len;
   print success;
-  free arr;
+  # free arr;
   narrays: int = sub narrays one;
   jmp .loop.header;
 .loop.exit:
-  free rng;
+  # free rng;
 }

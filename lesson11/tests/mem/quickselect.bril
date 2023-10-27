@@ -119,5 +119,5 @@
   array: ptr<int> = call @pack size n1 n2 n3 n4 n5 n6;
   output: int = call @quickselect array zero five k;
   print output;
-  free array;
+  # free array;
 }

@@ -1,3 +1,4 @@
+import { trace } from "https://esm.sh/typescript@5.0.4";
 import * as bril from "./bril-ts/bril.ts";
 import { readStdin, unreachable } from "./bril-ts/util.ts";
 
@@ -52,7 +53,8 @@ function sizeof(dtype: bril.Type): number {
   }
 }
 
-function typeToStr(t: bril.Type): string {
+// used for printing
+function typeToStr(t: bril.Type | undefined): string {
   let type_string = ``;
   if (typeof t === "object" && t.hasOwnProperty("ptr")) {
     type_string = `ptr<${t.ptr}>`;
@@ -61,6 +63,23 @@ function typeToStr(t: bril.Type): string {
   }
   return type_string;
 }
+
+// used for printing
+function valueToStr(v: Value|null): string {
+  let val_string = ``;
+  if (v && typeof v === "object" && !(v instanceof BigInt)) {
+    val_string = `ptr<${typeToStr(v.type)}> ${v.loc.base}`;
+    if (v.loc.offset != 0) {
+      val_string += ` +${v.loc.offset}`;
+    }
+  } else {
+    val_string = `${v}`
+  }
+  return val_string;
+}
+
+// used for printing
+const INDENTATION = `    `;
 
 /**
  * A Heap maps Keys to arrays of a given type.
@@ -78,7 +97,10 @@ export class Heap<X> {
 
   incrRC(base: number) {
     if (this.refcnt.has(base)) {
-      this.refcnt.set(base, this.refcnt.get(base) + 1);
+      let rc = this.refcnt.get(base);
+      if (rc) {
+        this.refcnt.set(base, rc + 1);
+      }
     } else {
       this.refcnt.set(base, 1);
     }
@@ -87,7 +109,7 @@ export class Heap<X> {
   decrRC(base: number) {
     if (this.refcnt.has(base)) {
       let rc = this.refcnt.get(base);
-      if (rc > 0) {
+      if (rc && rc > 0) {
         this.refcnt.set(base, rc - 1);
       } else {
         throw error(`cannot further decrement reference count (already ${rc}) on ${base}!`);
@@ -120,13 +142,13 @@ export class Heap<X> {
     return size;
   }
 
-  print() {
+  print(spaces:number) {
     let size = this.size();
-    console.log(`Heap size: ${size} bytes.`)
+    console.error(INDENTATION.repeat(spaces) + `Heap size: ${size} bytes.`)
     for (const [base, arr] of this.storage) {
       let type = this.objtype.get(base);
       let rc = this.refcnt.get(base);
-      console.log(` - ${base}: ${arr.length} (${typeToStr(type)}) [${rc} refs]`)
+      console.error(INDENTATION.repeat(spaces) + ` - ${base}: ${arr.length} (${typeToStr(type)}) [${rc} refs]`)
     }
   }
 
@@ -158,6 +180,7 @@ export class Heap<X> {
       this.freeKey(key);
       this.storage.delete(key.base);
       this.objtype.delete(key.base);
+      this.refcnt.delete(key.base);
     } else {
       throw error(
         `Tried to free illegal memory location base: ${key.base}, offset: ${key.offset}. Offset must be 0.`,
@@ -165,10 +188,10 @@ export class Heap<X> {
     }
   }
 
-  collectGarbage() {
+  collectGarbage(spaces:number) {
     let freelist = new Array<number>;
     let num_objs_to_free = 0;
-    // iterate to convergence
+    // find free objects, iterate to convergence
     while (true) {
       // get all objects whose reference count is 0
       for (const [base, rc] of this.refcnt) {
@@ -183,7 +206,7 @@ export class Heap<X> {
           let arr = this.storage.get(base);
           if (arr) {
             for (const ptr of arr) {
-              if (typeof ptr != "undefined") {
+              if (ptr && typeof ptr === "object" && ptr.hasOwnProperty("base")) {
                 this.decrRC(ptr.base);
               }
             }
@@ -198,7 +221,6 @@ export class Heap<X> {
     }
     // free objects
     for (const base of freelist) {
-      console.log(`freeing ${base}`);
       this.free(new Key(base, 0));
     }
   }
@@ -209,7 +231,7 @@ export class Heap<X> {
       data[key.offset] = val;
     } else {
       throw error(
-        `Uninitialized heap location ${key.base} and/or illegal offset ${key.offset}`,
+        `Heap.write: Uninitialized heap location ${key.base} and/or illegal offset ${key.offset}`,
       );
     }
   }
@@ -220,7 +242,7 @@ export class Heap<X> {
       return data[key.offset];
     } else {
       throw error(
-        `Uninitialized heap location ${key.base} and/or illegal offset ${key.offset}`,
+        `Heap.read: Uninitialized heap location ${key.base} and/or illegal offset ${key.offset}`,
       );
     }
   }
@@ -276,10 +298,20 @@ const argCounts: { [key in bril.OpCode]: number | null } = {
 type Pointer = {
   loc: Key;
   type: bril.Type;
+  freeable: boolean
 };
 
 type Value = boolean | BigInt | Pointer | number | string;
 type Env = Map<bril.Ident, Value>;
+
+function printEnv(env: Map<bril.Ident, Value>, spaces:number) {
+  for (const [ident, val] of env) {
+    console.error(
+      INDENTATION.repeat(spaces) +
+      ` - ${ident}: ${valueToStr(val)}`
+    )
+  }
+}
 
 /**
  * Check whether a run-time value matches the given static type.
@@ -351,6 +383,7 @@ function alloc(
     return {
       loc: loc,
       type: dataType,
+      freeable: true
     };
   }
 }
@@ -464,12 +497,20 @@ type State = {
 
   // For speculation: the state at the point where speculation began.
   specparent: State | null;
+
+  // For debugging
+  stack_level: number;
 };
 
 /**
  * Interpet a call instruction.
  */
-function evalCall(instr: bril.Operation, state: State): Action {
+function evalCall(
+  instr: bril.Operation,
+  state: State,
+  profile?: boolean,
+  tracing?: boolean
+): Action {
   // Which function are we calling?
   let funcName = getFunc(instr, 0);
   let func = findFunc(funcName, state.funcs);
@@ -510,8 +551,9 @@ function evalCall(instr: bril.Operation, state: State): Action {
     lastlabel: null,
     curlabel: null,
     specparent: null, // Speculation not allowed.
+    stack_level: state.stack_level + 1,
   };
-  let retVal = evalFunc(func, newState);
+  let retVal = evalFunc(func, newState, profile, tracing);
   state.icount = newState.icount;
 
   // Dynamically check the function's return value and type.
@@ -551,6 +593,16 @@ function evalCall(instr: bril.Operation, state: State): Action {
         `type of value returned by function does not match declaration`,
       );
     }
+    // if the retrun value is a pointer, we need to update refcnts
+    if (typeof retVal === "object" && !(retVal instanceof BigInt)) {
+      // if the lhs is already a pointer, decrease its object's refcnt
+      if (state.env.has(instr.dest)) {
+        let ptr = state.env.get(instr.dest);
+        if (ptr && typeof ptr === "object" && !(ptr instanceof BigInt)) {
+          state.heap.decrRC(ptr.loc.base);
+        }
+      }
+    }
     state.env.set(instr.dest, retVal);
   }
   return NEXT;
@@ -562,7 +614,12 @@ function evalCall(instr: bril.Operation, state: State): Action {
  * otherwise, return "next" to indicate that we should proceed to the next
  * instruction or "end" to terminate the function.
  */
-function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Action {
+function evalInstr(
+  instr: bril.Instruction,
+  state: State,
+  profile?:boolean,
+  tracing?:boolean
+): Action {
   state.icount += BigInt(1);
 
   // Check that we have the right number of arguments.
@@ -607,6 +664,18 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
 
     case "id": {
       let val = getArgument(instr, state.env, 0);
+      // if the value is a pointer, we need to update refcnts
+      if (val && typeof val === "object" && !(val instanceof BigInt)) {
+        // if the lhs is already a pointer, decrease its onbject's refcnt
+        if (state.env.has(instr.dest)) {
+          let ptr = state.env.get(instr.dest);
+          if (ptr && typeof ptr === "object" && !(ptr instanceof BigInt)) {
+            state.heap.decrRC(ptr.loc.base);
+          }
+        }
+        // increase the refcnt of the rhs' object
+        state.heap.incrRC(val.loc.base);
+      }
       state.env.set(instr.dest, val);
       return NEXT;
     }
@@ -788,7 +857,7 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
     }
 
     case "call": {
-      return evalCall(instr, state);
+      return evalCall(instr, state, profile, tracing);
     }
 
     case "alloc": {
@@ -797,10 +866,15 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
       if (!(typeof typ === "object" && typ.hasOwnProperty("ptr"))) {
         throw error(`cannot allocate non-pointer type ${instr.type}`);
       }
-      let ptr = alloc(typ, Number(amt), state.heap);
-      if (profile) {
-        console.error(`${state.icount},${state.heap.size()}`);
+      // if the lhs is alread a pointer, decrease its onbject's refcnt
+      if (state.env.has(instr.dest)) {
+        let pdest = state.env.get(instr.dest);
+        if (pdest && typeof pdest === "object" && !(pdest instanceof BigInt)) {
+          state.heap.decrRC(pdest.loc.base);
+        }
       }
+      // alloc will automatically set refcnt to 1
+      let ptr = alloc(typ, Number(amt), state.heap);
       state.env.set(instr.dest, ptr);
       return NEXT;
     }
@@ -809,18 +883,23 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
       throw error(`free is not supported by brili-gc!`);
     //   let val = getPtr(instr, state.env, 0);
     //   state.heap.free(val.loc);
-    //   if (profile) {
-    //     console.error(`${state.icount},${state.heap.size()}`);
-    //   }
     //   return NEXT;
     }
 
     case "store": {
       let target = getPtr(instr, state.env, 0);
-      state.heap.write(
-        target.loc,
-        getArgument(instr, state.env, 1, target.type),
-      );
+      let value = getArgument(instr, state.env, 1, target.type);
+      // if the value to be stored is a pointer, we need to update refcnts
+      if (typeof value === "object" && !(value instanceof BigInt)) {
+        // if the target is already defined, decrease refcnt of its object
+        let old_val = state.heap.read(target.loc);
+        if (typeof old_val === "object" && !(old_val instanceof BigInt)) {
+          state.heap.decrRC(old_val.loc.base);
+        }
+        // increase the value's object's refcnt
+        state.heap.incrRC(value.loc.base);
+      }
+      state.heap.write(target.loc, value);
       return NEXT;
     }
 
@@ -830,6 +909,18 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
       if (val === undefined || val === null) {
         throw error(`Pointer ${instr.args![0]} points to uninitialized data`);
       } else {
+        // if loaded data is a pointer, we need to update refcnts
+        if (val && typeof val == "object" && !(val instanceof BigInt)) {
+          // if lhs is already defined, decrease refcnt of its object
+          if (state.env.has(instr.dest)) {
+            let pdest = state.env.get(instr.dest);
+            if (pdest && typeof pdest === "object" && !(pdest instanceof BigInt)) {
+              state.heap.decrRC(pdest.loc.base);
+            }
+          }
+          // increase refcnt of rhs' object
+          state.heap.incrRC(val.loc.base);
+        }
         state.env.set(instr.dest, val);
       }
       return NEXT;
@@ -838,9 +929,19 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
     case "ptradd": {
       let ptr = getPtr(instr, state.env, 0);
       let val = getInt(instr, state.env, 1);
+      // if lhs is a freeable pointer, decrease its RC
+      if (state.env.has(instr.dest)) {
+        let pdest = state.env.get(instr.dest);
+        if (pdest && typeof pdest === "object" && !(pdest instanceof BigInt)) {
+          if (pdest.freeable) {
+            state.heap.decrRC(pdest.loc.base);
+          }
+        }
+      }
       state.env.set(instr.dest, {
         loc: ptr.loc.add(Number(val)),
         type: ptr.type,
+        freeable: false
       });
       return NEXT;
     }
@@ -947,38 +1048,97 @@ function evalInstr(instr: bril.Instruction, state: State, profile?:boolean): Act
 /**
  * Garbage collection routine to be called upon function return
  */
-function gcUponReturn(state:State) {
-  console.log(`-- starting gc ...`);
-  state.heap.print();
-  // pick pointers in local variables and set their RC to 0
+function gcUponReturn(
+  state:State,
+  globals:Map<bril.Ident, Value>,
+  ret?: Value | null,
+  tracing?: boolean
+) {
+  if (tracing) {
+    console.error(INDENTATION.repeat(state.stack_level) + `-- starting gc ...`);
+    console.error(INDENTATION.repeat(state.stack_level) + `visible values`);
+    printEnv(state.env, state.stack_level);
+    console.error(INDENTATION.repeat(state.stack_level) + `globals`);
+    printEnv(globals, state.stack_level);
+    console.error(INDENTATION.repeat(state.stack_level) + `GC actions`);
+  }
+  let ret_is_ptr = ret && typeof ret === "object" && !(ret instanceof BigInt);
+  // check every pointer that is currently visible
   for (const [ident, val] of state.env) {
-    if (
-      typeof val === "object"
-      && val.hasOwnProperty("loc")
-      && val.hasOwnProperty("type")
-    ) {
-      console.error(`${ident} (ptr<${typeToStr(val.type)}>): ${val.loc.base}`);
-      state.heap.clearRC(val.loc.base);
+    if (typeof val === "object" && !(val instanceof BigInt) && val.loc.offset == 0) {
+      // ignore the ones yielded by "ptradd"
+      if (val.freeable) {
+        // see if this pointer comes from outside of the function
+        let alias_with_global = false;
+        for (const [_gident, gval] of globals) {
+          if (typeof gval === "object" && !(gval instanceof BigInt) && gval.loc.offset == 0) {
+            if (val.loc.base == gval.loc.base) {
+              alias_with_global = true;
+              break;
+            }
+          }
+        }
+        if (!alias_with_global) {
+          // if not and if it is not to be returned, clear RC to 0 (kill it)
+          if (!(ret_is_ptr && val.loc.base == ret.loc.base)) {
+            if (tracing) {
+              console.error(
+                INDENTATION.repeat(state.stack_level) +
+                `   clearing RC of loc ${val.loc.base}: ${ident} (ptr<${typeToStr(val.type)}>)`
+              );
+            }
+            state.heap.clearRC(val.loc.base);
+          }
+        } else {
+          // if we also have a local copy, decrease RC
+          if (!globals.has(ident)) {
+            state.heap.decrRC(val.loc.base);
+          }
+        }
+      }
     }
   }
+  if (tracing) {
+    state.heap.print(state.stack_level);
+  }
   // invoke garbage collection
-  state.heap.collectGarbage();
-  console.log(`-- gc finished`);
-  state.heap.print();
+  state.heap.collectGarbage(state.stack_level);
+  if (tracing) {
+    console.error(INDENTATION.repeat(state.stack_level) + `-- gc finished`);
+    state.heap.print(state.stack_level);
+  }
 }
 
-function evalFunc(func: bril.Function, state: State, profile?:boolean): Value | null {
+function evalFunc(
+  func: bril.Function,
+  state: State,
+  profile?:boolean,
+  tracing?:boolean
+): Value | null {
+  let globals = new Map(state.env);
+  if (tracing) {
+    console.error(INDENTATION.repeat(state.stack_level) + `==== ${func.name} ====`);
+    console.error(INDENTATION.repeat(state.stack_level) + `globals:`)
+    printEnv(globals, state.stack_level);
+    state.heap.print(state.stack_level);
+  }
   for (let i = 0; i < func.instrs.length; ++i) {
     let line = func.instrs[i];
     if ("op" in line) {
       // Run an instruction.
-      let action = evalInstr(line, state, profile);
+      let action = evalInstr(line, state, profile, tracing);
 
       // Take the prescribed action.
       switch (action.action) {
         case "end": {
           // Return from this function.
-          gcUponReturn(state);
+          gcUponReturn(state, globals, action.ret, tracing);
+          if (tracing) {
+            console.error(
+              INDENTATION.repeat(state.stack_level) +
+              `==== return ${valueToStr(action.ret)} ====`
+            );
+          }
           return action.ret;
         }
         case "speculate": {
@@ -1043,7 +1203,13 @@ function evalFunc(func: bril.Function, state: State, profile?:boolean): Value | 
     throw error(`implicit return in speculative state`);
   }
 
-  gcUponReturn(state);
+  gcUponReturn(state, globals, null, tracing);
+  if (tracing) {
+    console.error(
+      INDENTATION.repeat(state.stack_level) +
+      `==== return ====`
+    );
+  }
   return null;
 }
 
@@ -1120,14 +1286,19 @@ function evalProg(prog: bril.Program) {
     return;
   }
 
-  console.error(`---- Bril Intepretor with GC ----`);
-
   // Silly argument parsing to find the `-p` flag.
   let args: string[] = Array.from(Deno.args);
   let profiling = false;
   let pidx = args.indexOf("-p");
   if (pidx > -1) {
     profiling = true;
+    args.splice(pidx, 1);
+  }
+
+  let tracing = false;
+  pidx = args.indexOf("-t");
+  if (pidx > -1) {
+    tracing = true;
     args.splice(pidx, 1);
   }
 
@@ -1143,8 +1314,9 @@ function evalProg(prog: bril.Program) {
     lastlabel: null,
     curlabel: null,
     specparent: null,
+    stack_level: 0,
   };
-  evalFunc(main, state, profiling);
+  evalFunc(main, state, profiling, tracing);
 
   if (!heap.isEmpty()) {
     throw error(

@@ -1,0 +1,18 @@
+@foo(n: int) {
+    zero: int = const 0;
+    continue: bool = gt n zero;
+    br continue .recursion .end;
+.recursion:
+    size: int = const 10;
+    p: ptr<int> = alloc size;
+    one: int = const 1;
+    m: int = sub n one;
+    call @foo m;
+.end:
+    ret;
+}
+
+@main {
+    n: int = const 3;
+    call @foo n;
+}

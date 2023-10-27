@@ -92,5 +92,5 @@
     array: ptr<int> = call @pack size e1 e2 e3 e4 e5;
     output: int = call @binary_search array target zero four;
     print output;
-    free array;
+    # free array;
 }

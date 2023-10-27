@@ -36,7 +36,7 @@
     curr2 : ptr<int> = ptradd curr2 one;
     jmp .repeat;
   .exit:
-  free ns;
+  # free ns;
   ret out;
 }
 
@@ -44,7 +44,7 @@
 @prime_factor(n: int): int {
   guess : int = const 2;
   inc : int = const 1;
-  
+
   .continue:
     square: int = mul guess guess;
     continue : bool = lt square n;
@@ -72,7 +72,7 @@
   .continue:
     exit : bool = eq n one;
     br exit .exit .next;
-  .next: 
+  .next:
     prime : int = call @prime_factor n;
     .repeat:
       n : int = div n prime;
@@ -86,7 +86,7 @@
   .exit:
   store num_factors count;
   ret ans;
-    
+
 }
 
 @modexp(a : int, k : int, m : int) : int {
@@ -98,28 +98,28 @@
 
   eq_zero : bool = eq zero k;
   br eq_zero .exp_zero .not_zero;
-  
+
   .exp_zero:
     ret one;
-  
+
   .not_zero:
     eq_one : bool = eq one k;
     br eq_one .exp_one .not_one;
-  
+
   .exp_one:
     ret a;
 
   .not_one:
     rem_two : int = call @rem k two;
     post_mul : bool = eq rem_two one;
-    
+
     half_exp : int = div k two;
     sqrt : int = call @modexp a half_exp m;
     res : int = mul sqrt sqrt;
     res : int = call @rem res m;
 
     br post_mul .post_multiply .no_post;
-  
+
   .post_multiply:
     res : int = mul res a;
     res : int = call @rem res m;
@@ -134,18 +134,18 @@
   zero : int = const 0;
   one : int = const 1;
   ptr : ptr<int> = id factors;
-  
+
   .check_power:
     factor : int = load ptr;
     stop : bool = eq factor zero;
     br stop .ret_true .next1;
-    
+
   .next1:
     power : int = div phi_p factor;
     exp : int = call @modexp guess power p;
     is_one : bool = eq exp one;
     br is_one .ret_false .next2;
-    
+
   .next2:
     ptr : ptr<int> = ptradd ptr one;
     count : int = add count one;
@@ -170,18 +170,18 @@
   .eval:
     too_big : bool = ge guess p;
     br too_big .done_guess .keep_trying;
-  
+
   .keep_trying:
     works : bool = call @check_ord p phi_p factors guess;
     br works .ret .inc;
-    
+
   .ret:
     ret guess;
-  
+
   .inc:
     guess : int = add guess one;
     jmp .eval;
-    
+
 
   .done_guess:
     ret fallback;
@@ -206,6 +206,6 @@
   res : int = call @search_primitive p phi_p prime_factors one;
   print res;
 
-  free count_result;
-  free prime_factors;
+  # free count_result;
+  # free prime_factors;
 }

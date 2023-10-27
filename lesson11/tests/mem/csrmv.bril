@@ -132,7 +132,7 @@
     i: int = add i one;
     jmp .loop_gen_vals_cond;
 .loop_gen_vals_exit:
-    free rng;
+    # free rng;
     ret;
 }
 
@@ -158,7 +158,7 @@
     i: int = add i one;
     jmp .loop_cond;
 .loop_exit:
-    free rng;
+    # free rng;
     ret;
 }
 
@@ -257,9 +257,9 @@
     call @csr_spmv rows cols csr_rowptr csr_colidx csr_values vec res;
     call @print_arr res rows;
 
-    free csr_rowptr;
-    free csr_colidx;
-    free csr_values;
-    free vec;
-    free res;
+    # free csr_rowptr;
+    # free csr_colidx;
+    # free csr_values;
+    # free vec;
+    # free res;
 }

@@ -1,0 +1,3 @@
+command = "bril2json < {filename} | brili-gc {args}"
+output.out = "-"
+output.err = "2"

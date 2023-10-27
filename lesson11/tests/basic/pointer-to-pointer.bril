@@ -1,0 +1,7 @@
+@main {
+    size: int = const 10;
+    incr: int = const 1;
+    p1: ptr<int> = alloc size;
+    p2: ptr<ptr<int>> = alloc size;
+    store p2 p1;
+}

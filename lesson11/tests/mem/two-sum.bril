@@ -7,7 +7,7 @@
   result: ptr<int> = call @twoSum v45 v46 target;
   result: ptr<int> = id result;
   v47: ptr<int> = id arr;
-  free v47;
+  # free v47;
   v48: int = const 0;
   v49: ptr<int> = id result;
   v50: int = const 0;
@@ -22,7 +22,7 @@
   print v57;
   v58: int = const 0;
   v59: ptr<int> = id result;
-  free v59;
+  # free v59;
   v60: int = const 0;
 }
 @initArr: ptr<int> {

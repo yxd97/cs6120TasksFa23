@@ -38,19 +38,19 @@
 # ARGS: 4096 2023
 @main(size: int, seed: int) {
   two: int = const 2;
-  rng: ptr<int> = alloc seed; 
+  rng: ptr<int> = alloc seed;
   store rng seed;
-  arr: ptr<int> = call @randarray size rng; 
-  i: int = const 0; 
+  arr: ptr<int> = call @randarray size rng;
+  i: int = const 0;
   .loop:
     cond: bool = lt i size;
     br cond .body .done;
-  .body: 
+  .body:
     loc: ptr<int> = ptradd arr i;
     val: int = load loc;
     val: int = mul val two;
     store loc val;
   .done:
-  free arr;
-  free rng;
+  # free arr;
+  # free rng;
 }

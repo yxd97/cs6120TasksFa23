@@ -99,7 +99,7 @@
   br finished .print.primes.up.to.done .print.primes.up.to.continue;
 .print.primes.up.to.done:
   call @printUnmarked table n;
-  free table;
+  # free table;
 }
 
 # ARGS: 100

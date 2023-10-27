@@ -1,0 +1,10 @@
+@foo (p: ptr<int>) {
+    size: int = const 10;
+    q: ptr<int> = alloc size;
+}
+
+@main {
+    size: int = const 10;
+    p: ptr<int> = alloc size;
+    call @foo p;
+}

@@ -16,7 +16,7 @@
     # Print array
     call @print_array array size;
 
-    free array;
+    # free array;
 }
 
 @qsort(array : ptr<int>, l: int, r:int) {
@@ -26,7 +26,7 @@
     neg_r: bool = lt r zero;
     ret_cond: bool = or l_ge_r neg_r;
 
-    br ret_cond .done .continue; 
+    br ret_cond .done .continue;
 
     .continue:
         p: int = call @partition array l r;
@@ -85,22 +85,22 @@
     one: int = const 1;
     i: int = const 0;
     array: ptr<int> = alloc size;
-# Pack data into array manually. Cannot use loop because of the different var name.     
+# Pack data into array manually. Cannot use loop because of the different var name.
     loc: ptr<int> = ptradd array i;
     store loc n1;
     i: int = add i one;
     loc: ptr<int> = ptradd array i;
     store loc n2;
-    i: int = add i one;        
+    i: int = add i one;
     loc: ptr<int> = ptradd array i;
     store loc n3;
-    i: int = add i one;        
+    i: int = add i one;
     loc: ptr<int> = ptradd array i;
     store loc n4;
-    i: int = add i one;        
+    i: int = add i one;
     loc: ptr<int> = ptradd array i;
     store loc n5;
-    i: int = add i one;        
+    i: int = add i one;
     loc: ptr<int> = ptradd array i;
     store loc n6;
 

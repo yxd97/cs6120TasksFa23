@@ -6,7 +6,7 @@
   site: ptr<int> = alloc n;
   result: int = call @queen zero n icount site;
   print result;
-  free site;
+  # free site;
 }
 @queen(n: int, queens: int, icount: int, site: ptr<int>): int {
   one: int = const 1;
@@ -37,7 +37,7 @@
   zero: int = const 0;
   one: int = const 1;
   true: bool = eq one one;
-  false: bool = eq zero one; 
+  false: bool = eq zero one;
   ite: int = id zero;
 .for.cond:
   for_cond: bool = lt ite n;
