@@ -1,0 +1,15 @@
+@main {
+    one: int = const 1;
+    bound: int = const 10;
+    sum: int = const 0;
+    i: int = const 0;
+.header:
+    cond: bool = lt i bound;
+    br cond .body .exit;
+.body:
+    sum: int = add sum i;
+    i: int = add i one;
+    jmp .header;
+.exit:
+    print sum;
+}

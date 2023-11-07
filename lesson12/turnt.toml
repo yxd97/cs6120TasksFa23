@@ -1,0 +1,3 @@
+[envs.trace]
+command = "bril2json < {filename} | brili-tr --trace {args}"
+output.trace = "2"

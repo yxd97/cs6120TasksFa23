@@ -1,0 +1,12 @@
+@main {
+    h: char = const 'h';
+    e: char = const 'e';
+    l: char = const 'l';
+    o: char = const 'o';
+    w: char = const 'w';
+    r: char = const 'r';
+    d: char = const 'd';
+    space: char = const ' ';
+    period: char = const '.';
+    print h e l l o space w o r l d period;
+}
