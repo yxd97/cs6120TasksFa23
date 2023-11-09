@@ -1,0 +1,33 @@
+@foo(m: int, n: int): int {
+  s: int = add m n;
+  ret s;
+}
+
+@main() {
+    one: int = const 1;
+    bound: int = const 10;
+    sum: int = const 0;
+    i: int = const 0;
+.header1:
+    cond: bool = lt i bound;
+    br cond .body1 .exit1;
+.body1:
+    sum: int = add sum i;
+    i: int = add i one;
+    jmp .header1;
+.exit1:
+    print sum;
+
+    sum: int = const 0;
+    i: int = const 0;
+.header2:
+    cond: bool = lt i bound;
+    br cond .body2 .exit2;
+.body2:
+    sum: int = add sum i;
+    i: int = call @foo i one;
+    jmp .header2;
+.exit2:
+    print sum;
+}
+

@@ -32,6 +32,9 @@ class Label:
     def __init__(self, label_dict) -> None:
         self.label:str = label_dict['label']
 
+    def __eq__(self, other) -> bool:
+        return isinstance(other, Label) and self.label == other.label
+
     def __str__(self):
         return f'.{self.label}'
 
@@ -71,11 +74,15 @@ class Instruction:
                 return s + ' true;'
             if self.value is False:
                 return s + ' false;'
+            if isinstance(self.value, str):
+                return s + f" '{self.value}';"
             return s + f' {self.value};'
         if self.op == 'jmp':
             return s + f' .{self.labels[0]};'
         if self.op == 'br':
             return s + f' {self.args[0]} .{self.labels[0]} .{self.labels[1]};'
+        if self.op == 'guard':
+            return s + f' {self.args[0]} .{self.labels[0]};'
         if self.op == 'phi':
             for var, lbl in zip(self.args, self.labels):
                 s += f' {var} .{lbl}'
@@ -102,6 +109,8 @@ class Instruction:
     def terminate_baisc_blk(self) -> bool:
         return self.op in ['jmp', 'br']
 
+Line = Union[Instruction, Label]
+
 class Function:
     def __init__(self, func_dict = None) -> None:
         self.name:str = func_dict['name']
@@ -109,7 +118,7 @@ class Function:
             self.args = [FunctionArg(arg) for arg in func_dict['args']]
         if 'type' in func_dict:
             self.type = Type(func_dict['type'])
-        self.instrs = []
+        self.instrs:List[Line] = []
         for instr_or_lbl in func_dict['instrs']:
             if 'op' in instr_or_lbl:
                 self.instrs.append(Instruction(instr_or_lbl))
@@ -172,7 +181,7 @@ class BasicBlk:
         end:Union[int, None] = None,
     ) -> None:
         self.name = name
-        self.instrs:List[Union[Instruction, Label]] = []
+        self.instrs:List[Line] = []
         self.start = start
         self.end = end
 
@@ -198,7 +207,7 @@ class BasicBlk:
             return False
         return self.name == other.name
 
-def __name_basic_blk(basic_blk, func_name, bblk_count):
+def __name_basic_blk(basic_blk:BasicBlk, func_name:str, bblk_count:int):
     '''
         Generate a name for a basic block. If the block starts with
         a label, use the label as its name; otherwise, name is as the
@@ -260,7 +269,7 @@ def line_no_to_blk(blocks:List[BasicBlk], line_no:int) -> BasicBlk:
             return blk
     raise ValueError(f"Line {line_no} does not fall in any of the blocks!")
 
-def concat_basic_blks(basic_blks:List[BasicBlk]) -> List[Union[Label, Instruction]]:
+def concat_basic_blks(basic_blks:List[BasicBlk]) -> List[Line]:
     '''
         Form a list of instructions|labels from a list of basic blocks.
     '''
