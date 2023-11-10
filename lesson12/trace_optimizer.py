@@ -63,6 +63,7 @@ def find_hotspot(traces:List[bst.Line]) -> List[HotTrace]:
                 idx for idx in range(len(label_history))
                 if label_history[idx] == trace
             ]
+            # print(f"[{i}] hitting label {trace.label} ({occurances})")
             if len(occurances) > OPTIMIZE_THRESHOLD:
                 results.append(HotTrace (
                     trace.label,
@@ -74,8 +75,8 @@ def find_hotspot(traces:List[bst.Line]) -> List[HotTrace]:
                         trace.label
                     )
                 ))
-                label_history.clear()
-                label_index.clear()
+                label_history = [trace]
+                label_index = [i]
         # 2. meet a call instruction, clean history
         elif trace.op == "call":
             label_history.clear()
