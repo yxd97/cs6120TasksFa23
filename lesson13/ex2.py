@@ -45,7 +45,7 @@ BINOPS = {
     'div'    : BinOp('div',    '/',  lambda lhs, rhs: lhs / rhs  ),
     'shl'    : BinOp('shl',    '<<', lambda lhs, rhs: lhs << rhs ),
     'shr'    : BinOp('shr',    '>>', lambda lhs, rhs: lhs >> rhs ),
-    'getbit' : BinOp('getbit', '::', lambda lhs, rhs: (lhs << rhs) & 1),
+    'getbit' : BinOp('getbit', '::', lambda lhs, rhs: (lhs >> rhs) & 1),
 }
 
 def interp(tree, lookup):
