@@ -17,6 +17,7 @@ GRAMMAR = """
   | term "/"  item      -> div
   | term ">>" item      -> shr
   | term "<<" item      -> shl
+  | term "::"  item     -> getbit
 
 ?item: NUMBER           -> num
   | "-" item            -> neg
@@ -29,6 +30,23 @@ GRAMMAR = """
 %ignore WS
 """.strip()
 
+BITWIDTH = 2
+
+class BinOp:
+    def __init__(self, op:str, symbol:str, eval):
+        self.op = op
+        self.symbol = symbol
+        self.eval = eval
+
+BINOPS = {
+    'add'    : BinOp('add',    '+',  lambda lhs, rhs: lhs + rhs  ),
+    'sub'    : BinOp('sub',    '-',  lambda lhs, rhs: lhs - rhs  ),
+    'mul'    : BinOp('mul',    '*',  lambda lhs, rhs: lhs * rhs  ),
+    'div'    : BinOp('div',    '/',  lambda lhs, rhs: lhs / rhs  ),
+    'shl'    : BinOp('shl',    '<<', lambda lhs, rhs: lhs << rhs ),
+    'shr'    : BinOp('shr',    '>>', lambda lhs, rhs: lhs >> rhs ),
+    'getbit' : BinOp('getbit', '::', lambda lhs, rhs: (lhs << rhs) & 1),
+}
 
 def interp(tree, lookup):
     """Evaluate the arithmetic expression.
@@ -38,29 +56,18 @@ def interp(tree, lookup):
     """
 
     op = tree.data
-    if op in ('add', 'sub', 'mul', 'div', 'shl', 'shr'):  # Binary operators.
+    if op in BINOPS.keys():  # Binary operators.
         lhs = interp(tree.children[0], lookup)
         rhs = interp(tree.children[1], lookup)
-        if op == 'add':
-            return lhs + rhs
-        elif op == 'sub':
-            return lhs - rhs
-        elif op == 'mul':
-            return lhs * rhs
-        elif op == 'div':
-            return lhs / rhs
-        elif op == 'shl':
-            return lhs << rhs
-        elif op == 'shr':
-            return lhs >> rhs
-    elif op == 'neg':  # Negation.
+        return BINOPS[op].eval(lhs, rhs)
+    elif op == 'neg':        # Negation.
         sub = interp(tree.children[0], lookup)
         return -sub
-    elif op == 'num':  # Literal number.
+    elif op == 'num':        # Literal number.
         return int(tree.children[0])
-    elif op == 'var':  # Variable lookup.
+    elif op == 'var':        # Variable lookup.
         return lookup(tree.children[0])
-    elif op == 'if':  # Conditional.
+    elif op == 'if':         # Conditional.
         cond = interp(tree.children[0], lookup)
         true = interp(tree.children[1], lookup)
         false = interp(tree.children[2], lookup)
@@ -83,21 +90,14 @@ def pretty(tree, subst={}, paren=False):
             return s
 
     op = tree.data
-    if op in ('add', 'sub', 'mul', 'div', 'shl', 'shr'):
+    if op in BINOPS.keys():
         lhs = pretty(tree.children[0], subst, True)
         rhs = pretty(tree.children[1], subst, True)
-        c = {
-            'add': '+',
-            'sub': '-',
-            'mul': '*',
-            'div': '/',
-            'shl': '<<',
-            'shr': '>>',
-        }[op]
+        c = BINOPS[op].symbol
         return par('{} {} {}'.format(lhs, c, rhs))
     elif op == 'neg':
         sub = pretty(tree.children[0], subst)
-        return '-{}'.format(sub, True)
+        return '-({})'.format(sub, True)
     elif op == 'num':
         return tree.children[0]
     elif op == 'var':
@@ -135,7 +135,7 @@ def z3_expr(tree, vars=None):
         if name in vars:
             return vars[name]
         else:
-            v = z3.BitVec(name, 8)
+            v = z3.BitVec(name, BITWIDTH)
             vars[name] = v
             return v
 
@@ -176,7 +176,6 @@ def synthesize(tree1, tree2):
     # variables.
     plain_vars = {k: v for k, v in vars1.items()
                   if not k.startswith('h')}
-
     # Formulate the constraint for Z3.
     goal = z3.ForAll(
         list(plain_vars.values()),  # For every valuation of variables...
